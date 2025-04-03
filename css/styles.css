@@ -1,0 +1,28 @@
+.table-products > tbody > tr > td {
+  vertical-align: middle;
+  padding: 0.05rem 0.75rem;
+}
+
+.table-products .avatar img {
+  width: 45px;
+  height: 45px;
+  object-fit: cover;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.table-products .no-link-style,
+.table-suppliers .no-link-style {
+  color: inherit !important;
+  text-decoration: none;
+}
+
+.table-products .no-link-style:hover {
+  text-decoration: underline;
+  color: inherit;
+  cursor: pointer;
+}
+.datatable-table,
+.datatable-table th,
+.datatable-table td {
+  border-width: 0 !important;
+}
