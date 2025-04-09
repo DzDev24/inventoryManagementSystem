@@ -1,7 +1,7 @@
 <?php
 
 
-// categories_add_edit.php
+// categories_add_edit.php nazim
 // This file handles both adding and editing categories.
 require_once "includes/db.php";
 
