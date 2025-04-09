@@ -1,7 +1,8 @@
 <?php
 
 
-
+// categories_add_edit.php
+// This file handles both adding and editing categories.
 require_once "includes/db.php";
 
 $isEdit = isset($_GET['id']);
