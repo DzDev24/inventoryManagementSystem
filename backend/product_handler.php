@@ -27,7 +27,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $unique_name = time() . "_" . $original_name;
         $target_path = $target_dir . $unique_name;
 
-
+        print_r($target_path);
+        die();
         if (move_uploaded_file($_FILES["image"]["tmp_name"], '../' . $target_path)) {
             $file_type = pathinfo($original_name, PATHINFO_EXTENSION);
             $stmt_media = $conn->prepare("INSERT INTO media (File_Name, File_Type, File_Path) VALUES (?, ?, ?)");
