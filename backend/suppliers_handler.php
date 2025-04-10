@@ -37,11 +37,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         if ($mediaId) {
             $stmt = $conn->prepare("UPDATE supplier SET Supplier_Name=?, Email=?, Phone=?, Company_Name=?, Address=?, State_ID=?, Status=?, Description=?, Media_ID=? WHERE Supplier_ID=?");
-            $stmt->bind_param("sssssiissi", $supplierName, $email, $phone, $companyName, $address, $stateId, $status, $description, $mediaId, $id);
-        } else {
+            $stmt->bind_param("sssssssiii", $supplierName, $email, $phone, $companyName, $address, $stateId, $status, $description, $mediaId, $id);
+        } else {               
             $stmt = $conn->prepare("UPDATE supplier SET Supplier_Name=?, Email=?, Phone=?, Company_Name=?, Address=?, State_ID=?, Status=?, Description=? WHERE Supplier_ID=?");
             $stmt->bind_param("sssssissi", $supplierName, $email, $phone, $companyName, $address, $stateId, $status, $description, $id);
-        }
+        }           
 
         if ($stmt->execute()) {
             header("Location: ../suppliers_list.php?updated=1");
