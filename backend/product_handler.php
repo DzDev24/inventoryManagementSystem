@@ -28,11 +28,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $target_path = $target_dir . $unique_name;
 
 
-        if ($_FILES['image']['error'] !== UPLOAD_ERR_OK) {
-            die("Upload failed with error code " . $_FILES['image']['error']);
-        }
-
-        die();
         if (move_uploaded_file($_FILES["image"]["tmp_name"], '../' . $target_path)) {
             $file_type = pathinfo($original_name, PATHINFO_EXTENSION);
             $stmt_media = $conn->prepare("INSERT INTO media (File_Name, File_Type, File_Path) VALUES (?, ?, ?)");
