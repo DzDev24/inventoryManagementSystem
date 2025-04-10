@@ -46,7 +46,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         if ($stmt->execute()) {
             header("Location: ../suppliers_list.php?updated=1");
         } else {
-            echo "Error update supplier: " . $stmt->error;
+            //echo "Error update supplier: " . $stmt->error;
+            error_log("Error update supplier: " . $stmt->error);
+
         }
         $stmt->close();
     } else {
