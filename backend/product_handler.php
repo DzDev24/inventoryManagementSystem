@@ -27,7 +27,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $unique_name = time() . "_" . $original_name;
         $target_path = $target_dir . $unique_name;
 
-        print_r($_FILES["image"]["tmp_name"]);
+
+        if ($_FILES['image']['error'] !== UPLOAD_ERR_OK) {
+            die("Upload failed with error code " . $_FILES['image']['error']);
+        }
+
         die();
         if (move_uploaded_file($_FILES["image"]["tmp_name"], '../' . $target_path)) {
             $file_type = pathinfo($original_name, PATHINFO_EXTENSION);
