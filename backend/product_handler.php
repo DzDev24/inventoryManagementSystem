@@ -64,9 +64,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->bind_param("iiisiiisssi", $media_id, $category_id, $supplier_id, $product_name, $quantity, $buy_price, $sale_price, $unit_id, $minimum_stock, $description, $report_id);
 
         if ($stmt->execute()) {
-            // header("Location: ../products_list.php?added=1");
-            echo "<p>Product added successfully!</p>";
-            echo "<p><a href='../products_list.php'>Go back to products list</a></p>";
+         header("Location: ../products_list.php?added=1");
+            //echo "<p>Product added successfully!</p>";
+            //echo "<p><a href='../products_list.php'>Go back to products list</a></p>";
         } else {
             echo "Error adding product: " . $stmt->error;
         }
