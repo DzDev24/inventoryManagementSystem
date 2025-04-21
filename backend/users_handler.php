@@ -2,17 +2,14 @@
 require_once "../includes/db.php";
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $name            = trim($_POST['name']);
-    $email           = trim($_POST['email']);
-    $phone           = trim($_POST['phone']);
-    $shippingAddress = trim($_POST['shipping_address']);
-    $stateId         = intval($_POST['state_id']);
-    $status          = $_POST['status'];
-    $orders          = intval($_POST['orders']);
-    $totalSpend      = intval($_POST['total_spend']);
-    $password        = trim($_POST['password']);
-    $confirm         = trim($_POST['confirm_password']);
-    $mediaId         = null;
+    $username   = trim($_POST['username']);
+    $realName   = trim($_POST['real_name']);
+    $email      = trim($_POST['email']);
+    $status     = $_POST['status'];
+    $roleId     = intval($_POST['role_id']);
+    $password   = trim($_POST['password']);
+    $confirm    = trim($_POST['confirm_password']);
+    $mediaId    = null;
 
     if ($password !== $confirm) {
         die("Passwords do not match!");
@@ -35,13 +32,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         }
     }
 
-    if (isset($_POST['customer_id'])) {
-        // UPDATE existing customer
-        $id = intval($_POST['customer_id']);
+    if (isset($_POST['user_id'])) {
+        // UPDATE existing user
+        $id = intval($_POST['user_id']);
 
-        $fields = "Name=?, Email=?, Phone=?, `Shipping Address`=?, State_ID=?, Status=?, Orders=?, Total_Spend=?";
-        $types = "sssssssi";
-        $params = [$name, $email, $phone, $shippingAddress, $stateId, $status, $orders, $totalSpend];
+        $fields = "Username=?, Real_Name=?, Email=?, Status=?, Role_ID=?";
+        $types = "ssssi";
+        $params = [$username, $realName, $email, $status, $roleId];
 
         if ($mediaId !== null) {
             $fields .= ", Media_ID=?";
@@ -55,31 +52,32 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $params[] = $password;
         }
 
-        $fields .= " WHERE Customer_ID=?";
+        $fields .= " WHERE User_ID=?";
         $types .= "i";
         $params[] = $id;
 
-        $sql = "UPDATE customers SET $fields";
+        $sql = "UPDATE users SET $fields";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param($types, ...$params);
 
         if ($stmt->execute()) {
-            header("Location: ../customers_list.php?updated=1");
+            header("Location: ../users_list.php?updated=1");
         } else {
-            echo "Error updating customer: " . $stmt->error;
+            echo "Error updating user: " . $stmt->error;
         }
         $stmt->close();
+
     } else {
-        // INSERT new customer
-        $sql = "INSERT INTO customers (Name, Email, Phone, `Shipping Address`, State_ID, Status, Orders, Total_Spend, Media_ID, Password)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        // INSERT new user
+        $sql = "INSERT INTO users (Username, Real_Name, Email, Status, Role_ID, Media_ID, Password)
+                VALUES (?, ?, ?, ?, ?, ?, ?)";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("sssssssiss", $name, $email, $phone, $shippingAddress, $stateId, $status, $orders, $totalSpend, $mediaId, $password);
+        $stmt->bind_param("sssssis", $username, $realName, $email, $status, $roleId, $mediaId, $password);
 
         if ($stmt->execute()) {
-            header("Location: ../customers_list.php?added=1");
+            header("Location: ../users_list.php?added=1");
         } else {
-            echo "Error adding customer: " . $stmt->error;
+            echo "Error adding user: " . $stmt->error;
         }
 
         $stmt->close();
@@ -89,16 +87,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 // Handle DELETE
 if (isset($_GET['deleteid'])) {
     $id = intval($_GET['deleteid']);
-    $stmt = $conn->prepare("DELETE FROM customers WHERE Customer_ID = ?");
+    $stmt = $conn->prepare("DELETE FROM users WHERE User_ID = ?");
     $stmt->bind_param("i", $id);
 
     if ($stmt->execute()) {
-        header("Location: ../customers_list.php?deleted=1");
+        header("Location: ../users_list.php?deleted=1");
     } else {
-        echo "Error deleting customer: " . $stmt->error;
+        echo "Error deleting user: " . $stmt->error;
     }
 
     $stmt->close();
 }
-
-

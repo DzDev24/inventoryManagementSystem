@@ -1,7 +1,6 @@
 <?php
 require_once "../includes/db.php";
 
-
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $supplierName = trim($_POST['supplier_name']);
     $companyName  = trim($_POST['company_name']);
@@ -11,6 +10,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stateId      = intval($_POST['state_id']);
     $status       = $_POST['status'];
     $description  = trim($_POST['description']);
+    $password     = trim($_POST['password']);
+    $confirm      = trim($_POST['confirm_password']);
+
+    if ($password !== $confirm) {
+        die("Passwords do not match!");
+    }
 
     $mediaId = null;
 
@@ -35,36 +40,45 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         // UPDATE existing supplier
         $id = intval($_POST['supplier_id']);
 
-        if ($mediaId) {
-            $stmt = $conn->prepare("UPDATE supplier SET Supplier_Name=?, Email=?, Phone=?, Company_Name=?, Address=?, State_ID=?, Status=?, Description=?, Media_ID=? WHERE Supplier_ID=?");
-            $stmt->bind_param("sssssssiii", $supplierName, $email, $phone, $companyName, $address, $stateId, $status, $description, $mediaId, $id);
-        } else {               
-            $stmt = $conn->prepare("UPDATE supplier SET Supplier_Name=?, Email=?, Phone=?, Company_Name=?, Address=?, State_ID=?, Status=?, Description=? WHERE Supplier_ID=?");
-            $stmt->bind_param("sssssissi", $supplierName, $email, $phone, $companyName, $address, $stateId, $status, $description, $id);
-        }           
+        $fields = "Supplier_Name=?, Email=?, Phone=?, Company_Name=?, Address=?, State_ID=?, Status=?, Description=?";
+        $types = "sssssssss";
+        $params = [$supplierName, $email, $phone, $companyName, $address, $stateId, $status, $description];
 
-        if ($stmt->execute()) {
-            header("Location: ../suppliers_list.php?updated=1");
-        } else {
-            //echo "Error update supplier: " . $stmt->error;
-            error_log("Error update supplier: " . $stmt->error);
-
+        if ($mediaId !== null) {
+            $fields .= ", Media_ID=?";
+            $types .= "i";
+            $params[] = $mediaId;
         }
-        $stmt->close();
+
+        if (!empty($password)) {
+            $fields .= ", Password=?";
+            $types .= "s";
+            $params[] = $password;
+        }
+
+        $fields .= " WHERE Supplier_ID=?";
+        $types .= "i";
+        $params[] = $id;
+
+        $sql = "UPDATE supplier SET $fields";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param($types, ...$params);
     } else {
-        // INSERT new supplier
-        $stmt = $conn->prepare("INSERT INTO supplier (Supplier_Name, Email, Phone, Company_Name, Address, State_ID, Media_ID, Status, Description) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param("sssssiiss", $supplierName, $email, $phone, $companyName, $address, $stateId, $mediaId, $status, $description);
-
-        if ($stmt->execute()) {
-            header("Location: ../suppliers_list.php?added=1");
-        } else {
-            echo "Error add supplier: " . $stmt->error;
-        }
-
-
-        $stmt->close();
+        // INSERT new supplier (password is required here)
+        $sql = "INSERT INTO supplier (Supplier_Name, Email, Phone, Company_Name, Address, State_ID, Media_ID, Status, Description, Password)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("sssssiisss", $supplierName, $email, $phone, $companyName, $address, $stateId, $mediaId, $status, $description, $password);
     }
+
+    if ($stmt->execute()) {
+        $redirect = isset($_POST['supplier_id']) ? 'updated=1' : 'added=1';
+        header("Location: ../suppliers_list.php?$redirect");
+    } else {
+        echo "Error: " . $stmt->error;
+    }
+
+    $stmt->close();
 }
 
 // Handle DELETE
@@ -73,12 +87,13 @@ if (isset($_GET['deleteid'])) {
     $stmt = $conn->prepare("DELETE FROM supplier WHERE Supplier_ID = ?");
     $stmt->bind_param("i", $id);
 
-
     if ($stmt->execute()) {
         header("Location: ../suppliers_list.php?deleted=1");
     } else {
-        echo "Error deketed supplier: " . $stmt->error;
+        echo "Error deleting supplier: " . $stmt->error;
     }
 
     $stmt->close();
 }
+
+

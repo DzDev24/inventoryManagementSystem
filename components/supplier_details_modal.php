@@ -63,10 +63,17 @@
                                 <strong><i class="fas fa-envelope me-1"></i>Email:</strong>
                                 <div><?= htmlspecialchars($supplier['Email']) ?></div>
                             </div>
+
+                            <div class="col-6 mb-2">
+                                <strong><i class="fas fa-solid fa-key"></i> Password:</strong>
+                                <div><?= htmlspecialchars($supplier['Password']) ?></div>
+                            </div>
+                            
                             <div class="col-6 mb-2">
                                 <strong><i class="fas fa-phone me-1"></i>Phone:</strong>
                                 <div><?= htmlspecialchars($supplier['Phone']) ?></div>
                             </div>
+
                             <div class="col-6 mb-2">
                                 <strong><i class="fas fa-map-marker-alt me-1"></i>Address:</strong>
                                 <div><?= htmlspecialchars($supplier['Address']) ?></div>

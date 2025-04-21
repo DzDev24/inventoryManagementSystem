@@ -49,7 +49,7 @@ if ($isEdit) {
                                 <div class="col-auto mb-3">
                                     <h1 class="page-header-title">
                                         <div class="page-header-icon">
-                                            <i data-feather="<?= $isEdit ? 'edit' : 'plus-square' ?>"></i>
+                                            <i data-feather="<?= $isEdit ? 'edit' : 'plus-circle' ?>"></i>
                                         </div>
                                         <?= $isEdit ? 'Edit Category' : 'Add New Category' ?>
                                     </h1>

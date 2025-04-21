@@ -59,7 +59,7 @@ $units = $conn->query("SELECT Unit_ID, Unit_name, Unit_abrev FROM units");
                                 <div class="col-auto mb-3">
                                     <h1 class="page-header-title">
                                         <div class="page-header-icon">
-                                            <i data-feather="<?= $isEdit ? 'edit' : 'plus-square' ?>"></i>
+                                            <i data-feather="<?= $isEdit ? 'edit' : 'plus-circle' ?>"></i>
                                         </div>
                                         <?= $isEdit ? 'Edit Product' : 'Add Product' ?>
                                     </h1>

@@ -64,10 +64,20 @@ $statusClass = match ($customer['Status']) {
                                 <div><?= htmlspecialchars($customer['Email']) ?></div>
                             </div>
 
+                        <div class="col-6 mb-2">
+                               <strong><i class="fas fa-solid fa-key"></i> Password:</strong>
+                               <div><?= htmlspecialchars($customer['Password']) ?></div>
+                            </div>
+
 
                             <div class="col-6 mb-2">
                                 <strong><i class="fas fa-phone me-1"></i>Phone:</strong>
                                 <div><?= htmlspecialchars($customer['Phone']) ?></div>
+                            </div>
+
+                            <div class="col-6 mb-2">
+                                <strong><i class="fas fa-map me-1"></i>State:</strong>
+                                <div><?= htmlspecialchars($customer['State_Name'] ?? 'N/A') ?></div>
                             </div>
                            
                             <div class="col-6 mb-2">
@@ -80,10 +90,7 @@ $statusClass = match ($customer['Status']) {
                                 <div><?= htmlspecialchars($customer['Total_Spend']) ?> DZD</div>
                             </div>
 
-                            <div class="col-6 mb-2">
-                                <strong><i class="fas fa-map me-1"></i>State:</strong>
-                                <div><?= htmlspecialchars($customer['State_Name'] ?? 'N/A') ?></div>
-                            </div>
+                            
                         </div>
 
                         <!-- Bottom: ID + Actions -->

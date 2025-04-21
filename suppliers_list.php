@@ -39,7 +39,8 @@ while ($row = $result->fetch_assoc()) {
     table#datatablesSimple thead th:nth-child(6),  
     table#datatablesSimple thead th:nth-child(7),  
     table#datatablesSimple thead th:nth-child(8),  
-    table#datatablesSimple thead th:nth-child(9) 
+    table#datatablesSimple thead th:nth-child(9),
+    table#datatablesSimple thead th:nth-child(10) 
     {
         text-align: center !important;
     }
@@ -51,7 +52,8 @@ while ($row = $result->fetch_assoc()) {
     table#datatablesSimple tbody td:nth-child(6),  
     table#datatablesSimple tbody td:nth-child(7),  
     table#datatablesSimple tbody td:nth-child(8),  
-    table#datatablesSimple tbody td:nth-child(9)  
+    table#datatablesSimple tbody td:nth-child(9),
+    table#datatablesSimple thead th:nth-child(10)  
     {
         text-align: center !important;
         vertical-align: middle !important;
@@ -136,6 +138,7 @@ while ($row = $result->fetch_assoc()) {
                                         <th>Supplier</th>
                                         <th>Address</th>
                                         <th>Email</th>
+                                        <th>Password</th>
                                         <th>Phone</th>                                       
                                         <th>State</th>
                                         <th>Status</th>
@@ -164,6 +167,7 @@ while ($row = $result->fetch_assoc()) {
 
                                             <td><?= htmlspecialchars($row['Address']) ?></td>
                                             <td class="text-nowrap"><?= htmlspecialchars($row['Email']) ?></td>
+                                            <td><?= htmlspecialchars($row['Password']) ?></td>
                                             <td><?= htmlspecialchars($row['Phone']) ?></td>
                                             <td class="text-center"><?= htmlspecialchars($row['State_Name']) ?></td>
                                             <td class="text-center">

@@ -65,7 +65,7 @@
 
 
                 <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseDashboards" aria-expanded="false" aria-controls="collapseDashboards">
-                    <div class="nav-link-icon"><i data-feather="users"></i></div>
+                    <div class="nav-link-icon"><i data-feather="shopping-cart"></i></div>
                     Customers
                     <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                 </a>
@@ -73,6 +73,43 @@
                     <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
                         <a class="nav-link" href="customers_list.php">List Customers</a>
                         <a class="nav-link" href="customers_add_edit.php">Add Customer</a>
+                    </nav>
+                </div>
+
+
+                <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseDashboards" aria-expanded="false" aria-controls="collapseDashboards">
+                    <div class="nav-link-icon"><i data-feather="users"></i></div>
+                    Users
+                    <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                </a>
+                <div class="collapse" id="collapseDashboards" data-bs-parent="#accordionSidenav">
+                    <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
+                        <a class="nav-link" href="users_list.php">List Users</a>
+                        <a class="nav-link" href="users_add_edit.php">Add User</a>
+                    </nav>
+                </div>
+
+                <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseDashboards" aria-expanded="false" aria-controls="collapseDashboards">
+                    <div class="nav-link-icon"><i data-feather="users"></i></div>
+                    Purchases
+                    <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                </a>
+                <div class="collapse" id="collapseDashboards" data-bs-parent="#accordionSidenav">
+                    <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
+                        <a class=" nav-link" href="users_list.php">Purhcases List</a>
+                        <a class="nav-link" href="users_add_edit.php">Add Purchase</a>
+                    </nav>
+                </div>
+
+                <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseDashboards" aria-expanded="false" aria-controls="collapseDashboards">
+                    <div class="nav-link-icon"><i data-feather="users"></i></div>
+                    Sales
+                    <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                </a>
+                <div class="collapse" id="collapseDashboards" data-bs-parent="#accordionSidenav">
+                    <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
+                        <a class="nav-link" href="users_list.php">Sales List</a>
+                        <a class="nav-link" href="users_add_edit.php">Add Sale</a>
                     </nav>
                 </div>
 
