@@ -13,7 +13,19 @@ if ($isEdit) {
     $result = $stmt->get_result();
     $product = $result->fetch_assoc();
     $stmt->close();
+
+    // ✅ Add this block to fetch multiple suppliers
+    $selected_suppliers = [];
+    $stmt = $conn->prepare("SELECT Supplier_ID FROM product_supplier WHERE Product_ID = ?");
+    $stmt->bind_param("i", $product_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    while ($row = $result->fetch_assoc()) {
+        $selected_suppliers[] = $row['Supplier_ID'];
+    }
+    $stmt->close();
 }
+
 
 
 // Fetch categories and suppliers
@@ -39,6 +51,7 @@ $units = $conn->query("SELECT Unit_ID, Unit_name, Unit_abrev FROM units");
     <title><?= $isEdit ? 'Edit Product' : 'Add Product' ?></title>
     <link href="css/vendor/bootstrap.css" rel="stylesheet" />
     <link rel="icon" type="image/x-icon" href="assets/img/favicon.png" />
+    <link href="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/css/tom-select.css" rel="stylesheet">
     <script data-search-pseudo-elements defer src="js/vendor/font-awesome.min.js" crossorigin="anonymous"></script>
     <script src="js/vendor/feather.min.js" crossorigin="anonymous"></script>
 </head>
@@ -149,16 +162,27 @@ $units = $conn->query("SELECT Unit_ID, Unit_name, Unit_abrev FROM units");
                                         </select>
                                     </div>
                                     <div class="col-md-6">
-                                        <label class="form-label">Supplier <span class="text-danger">*</span></label>
-                                        <select class="form-select" name="supplier_id" required>
-                                            <option value="">-- Select Supplier --</option>
-                                            <?php mysqli_data_seek($suppliers, 0);
-                                            while ($sup = $suppliers->fetch_assoc()): ?>
-                                                <option value="<?= $sup['Supplier_ID'] ?>" <?= (isset($product['Supplier_ID']) && $product['Supplier_ID'] == $sup['Supplier_ID']) ? 'selected' : '' ?>>
-                                                    <?= $sup['Supplier_Name'] ?>
-                                                </option>
-                                            <?php endwhile; ?>
-                                        </select>
+                                    <?php
+$selectedSuppliers = [];
+if ($isEdit) {
+    $supplierResult = $conn->query("SELECT Supplier_ID FROM product_supplier WHERE Product_ID = $product_id");
+    while ($row = $supplierResult->fetch_assoc()) {
+        $selectedSuppliers[] = $row['Supplier_ID'];
+    }
+}
+?>
+<label class="form-label">Suppliers <span class="text-danger">*</span></label>
+<select id="supplierSelect" name="supplier_ids[]" multiple required>
+    <?php mysqli_data_seek($suppliers, 0); ?>
+    <?php while ($sup = $suppliers->fetch_assoc()): ?>
+        <option value="<?= $sup['Supplier_ID'] ?>" <?= in_array($sup['Supplier_ID'], $selected_suppliers ?? []) ? 'selected' : '' ?>>
+    <?= $sup['Supplier_Name'] ?>
+</option>
+
+    <?php endwhile; ?>
+</select>
+
+
                                     </div>
                                 </div>
 
@@ -238,6 +262,19 @@ $units = $conn->query("SELECT Unit_ID, Unit_name, Unit_abrev FROM units");
             removeBtn.style.display = 'none';
         }
     </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/js/tom-select.complete.min.js"></script>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        new TomSelect('#supplierSelect', {
+            placeholder: 'Select Supplier(s)',
+            plugins: ['remove_button'],
+            maxOptions: 1000
+        });
+    });
+</script>
+
 
 </body>
 

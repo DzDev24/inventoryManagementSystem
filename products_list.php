@@ -1,18 +1,32 @@
 <?php
 require_once "includes/db.php";
 
-$sql = "SELECT  p.Product_ID, p.Product_Name, p.Quantity, p.Buy_Price, p.Sale_Price,
-                p.Minimum_Stock, p.Description, p.Updated_At, p.Created_At,
-                c.Category_Name,
-                s.Supplier_Name,
-                m.File_Path,
-                u.Unit_abrev, u.Unit_name
-                FROM products p
-                LEFT JOIN category c ON p.Category_ID = c.Category_ID
-                LEFT JOIN supplier s ON p.Supplier_ID = s.Supplier_ID
-                LEFT JOIN media m ON p.Media_ID = m.Media_ID
-                LEFT JOIN units u ON p.Unit_ID = u.Unit_ID
-                ORDER BY p.Updated_At DESC";
+$sql = "
+SELECT 
+    p.Product_ID, 
+    p.Product_Name, 
+    p.Quantity, 
+    p.Buy_Price, 
+    p.Sale_Price,
+    p.Minimum_Stock, 
+    p.Description, 
+    p.Updated_At, 
+    p.Created_At,
+    c.Category_Name,
+    m.File_Path,
+    u.Unit_abrev, 
+    u.Unit_name,
+    GROUP_CONCAT(s.Supplier_Name SEPARATOR ', ') AS Supplier_Names
+FROM products p
+LEFT JOIN category c ON p.Category_ID = c.Category_ID
+LEFT JOIN media m ON p.Media_ID = m.Media_ID
+LEFT JOIN units u ON p.Unit_ID = u.Unit_ID
+LEFT JOIN product_supplier ps ON p.Product_ID = ps.Product_ID
+LEFT JOIN supplier s ON ps.Supplier_ID = s.Supplier_ID
+GROUP BY p.Product_ID
+ORDER BY p.Updated_At DESC
+";
+
 
 $result = $conn->query($sql);
 
@@ -136,9 +150,28 @@ while ($row = $result->fetch_assoc()) {
                             <!-- end of alert messages -->
 
 
-                            <?php foreach ($products as $product):
-                                include 'components/product_details_modal.php';
-                            endforeach; ?>
+                            <?php foreach ($products as &$product): ?>
+    <?php
+    // 🔁 Step 1: Fetch all suppliers for this product
+    $product_id = $product['Product_ID'];
+    $supplier_stmt = $conn->prepare("SELECT s.Supplier_Name FROM product_supplier ps JOIN supplier s ON ps.Supplier_ID = s.Supplier_ID WHERE ps.Product_ID = ?");
+    $supplier_stmt->bind_param("i", $product_id);
+    $supplier_stmt->execute();
+    $supplier_result = $supplier_stmt->get_result();
+    $suppliers_list = [];
+    while ($row = $supplier_result->fetch_assoc()) {
+        $suppliers_list[] = $row['Supplier_Name'];
+    }
+    $supplier_stmt->close();
+
+    // Add supplier names to the product array
+    $product['Suppliers_List'] = $suppliers_list;
+    ?>
+
+    <!-- 🔁 Include modal with the enriched $product -->
+    <?php include 'components/product_details_modal.php'; ?>
+<?php endforeach; ?>
+
 
 
                             <table id="datatablesSimple" class="table-products">
@@ -188,10 +221,16 @@ while ($row = $result->fetch_assoc()) {
 
 
                                             <td>
-                                                <div class="d-flex justify-content-center">
-                                                    <span class="badge bg-purple-soft text-purple"><?= $row['Supplier_Name'] ?></span>
-                                                </div>
-                                            </td>
+    <div class="d-flex justify-content-center flex-column text-center">
+        <?php 
+        $suppliers = explode(',', $row['Supplier_Names']);
+        foreach ($suppliers as $supplierName): ?>
+            <span class="badge bg-purple-soft text-purple mb-1"><?= trim($supplierName) ?></span>
+        <?php endforeach; ?>
+    </div>
+</td>
+
+
                                             <td>
                                                 <div class="d-flex justify-content-center align-items-baseline gap-1">
                                                     <strong><?= $row['Quantity'] ?></strong><small class="text-muted"><?= $row['Unit_abrev'] ?></small>
@@ -273,8 +312,7 @@ while ($row = $result->fetch_assoc()) {
         }
 
         window.addEventListener("DOMContentLoaded", (event) => {
-            // Simple-DataTables
-            // https://github.com/fiduswriter/Simple-DataTables/wiki
+            
 
             const datatablesSimple = document.getElementById("datatablesSimple");
             if (datatablesSimple) {

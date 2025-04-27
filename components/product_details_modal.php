@@ -36,7 +36,14 @@
                                 <h4 class="fw-bold mb-1"><?= htmlspecialchars($product['Product_Name']) ?></h4>
                                 <div class="d-flex flex-wrap gap-2">
                                     <span class="badge bg-primary-soft text-primary"><?= htmlspecialchars($product['Category_Name']) ?></span>
-                                    <span class="badge bg-purple-soft text-purple"><?= htmlspecialchars($product['Supplier_Name']) ?></span>
+                                    <?php if (!empty($product['Suppliers_List'])): ?>
+    <?php foreach ($product['Suppliers_List'] as $supplierName): ?>
+        <span class="badge bg-purple-soft text-purple"><?= htmlspecialchars($supplierName) ?></span>
+    <?php endforeach; ?>
+<?php else: ?>
+    <span class="text-muted small">No suppliers</span>
+<?php endif; ?>
+
                                 </div>
                             </div>
                             <?php

@@ -15,7 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $minimum_stock = $_POST["minimum_stock"];
     $description = $_POST["description"];
     $category_id = $_POST["category_id"];
-    $supplier_id = $_POST["supplier_id"];
+    $supplier_ids = isset($_POST["supplier_ids"]) ? $_POST["supplier_ids"] : [];
     $unit_id = $_POST["unit_id"];
     $report_id = null;
 
@@ -39,16 +39,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
     if ($isEdit) {
         // UPDATE
-        $sql = "UPDATE products SET Category_ID = ?, Supplier_ID = ?, Product_Name = ?, Quantity = ?, Buy_Price = ?, Sale_Price = ?, Unit_ID = ?, Minimum_Stock = ?, Description = ?, Report_ID = ?" .
-            ($media_id ? ", Media_ID = ?" : "") .
-            " WHERE Product_ID = ?";
-        if ($media_id) {
-            $stmt = $conn->prepare($sql);
-            $stmt->bind_param("iisiiiiisiii", $category_id, $supplier_id, $product_name, $quantity, $buy_price, $sale_price, $unit_id, $minimum_stock, $description, $report_id, $media_id, $product_id);
-        } else {
-            $stmt = $conn->prepare($sql);
-            $stmt->bind_param("iisiiiiisii", $category_id, $supplier_id, $product_name, $quantity, $buy_price, $sale_price, $unit_id, $minimum_stock, $description, $report_id, $product_id);
-        }
+        $sql = "UPDATE products SET Category_ID = ?, Product_Name = ?, Quantity = ?, Buy_Price = ?, Sale_Price = ?, Unit_ID = ?, Minimum_Stock = ?, Description = ?, Report_ID = ?" .
+        ($media_id ? ", Media_ID = ?" : "") . " WHERE Product_ID = ?";
+if ($media_id) {
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("isiiiisiiii", $category_id, $product_name, $quantity, $buy_price, $sale_price, $unit_id, $minimum_stock, $description, $report_id, $media_id, $product_id);
+
+} else {
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("isiiiisiii", $category_id, $product_name, $quantity, $buy_price, $sale_price, $unit_id, $minimum_stock, $description, $report_id, $product_id);
+
+}
+
+// Clear existing links
+$conn->query("DELETE FROM product_supplier WHERE Product_ID = $product_id");
+
+// Re-insert selected suppliers
+foreach ($supplier_ids as $sid) {
+    $sid = intval($sid);
+    $conn->query("INSERT INTO product_supplier (Product_ID, Supplier_ID, Proposal_Status) VALUES ($product_id, $sid, 'Accepted')");
+}
+
 
         if ($stmt->execute()) {
             header("Location: ../products_list.php?updated=1");
@@ -58,19 +69,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->close();
     } else {
         // INSERT
-        $sql = "INSERT INTO products (Media_ID, Category_ID, Supplier_ID, Product_Name, Quantity, Buy_Price, Sale_Price, Unit_ID, Minimum_Stock, Description, Report_ID)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("iiisiiisssi", $media_id, $category_id, $supplier_id, $product_name, $quantity, $buy_price, $sale_price, $unit_id, $minimum_stock, $description, $report_id);
+        $sql = "INSERT INTO products (Media_ID, Category_ID, Product_Name, Quantity, Buy_Price, Sale_Price, Unit_ID, Minimum_Stock, Description, Report_ID)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-        if ($stmt->execute()) {
-         header("Location: ../products_list.php?added=1");
-            //echo "<p>Product added successfully!</p>";
-            //echo "<p><a href='../products_list.php'>Go back to products list</a></p>";
-        } else {
-            echo "Error adding product: " . $stmt->error;
-        }
-        $stmt->close();
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("iissiiissi", $media_id, $category_id, $product_name, $quantity, $buy_price, $sale_price, $unit_id, $minimum_stock, $description, $report_id);
+
+if ($stmt->execute()) {
+    $product_id = $stmt->insert_id;
+
+    foreach ($supplier_ids as $sid) {
+        $sid = intval($sid);
+        $conn->query("INSERT INTO product_supplier (Product_ID, Supplier_ID, Proposal_Status) VALUES ($product_id, $sid, 'Accepted')");
+    }
+
+    header("Location: ../products_list.php?added=1");
+} else {
+    echo "Error adding product: " . $stmt->error;
+}
+$stmt->close();
+
+        
     }
 }
 
