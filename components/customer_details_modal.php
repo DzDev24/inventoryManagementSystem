@@ -35,13 +35,13 @@
                         <div class="mb-3">
                         <div class="d-flex justify-content-between align-items-center">
                         <?php
-$statusClass = match ($customer['Status']) {
-    'Shipped' => 'bg-green-soft text-green',
-    'Pending' => 'bg-yellow-soft text-yellow',
-    'Returned' => 'bg-red-soft text-red',
-    default => 'bg-secondary'
-};
-?>
+                        $statusClass = match ($customer['Status']) {
+                            'Available' => 'bg-green-soft text-green',
+                            'Unavailable' => 'bg-red-soft text-red',
+                            default => 'bg-secondary'
+                        };
+                        
+                        ?>
 <h4 class="fw-bold mb-0"><?= htmlspecialchars($customer['Name']) ?></h4>
 <span class="badge <?= $statusClass ?> text-white">
     Status: <?= htmlspecialchars($customer['Status']) ?>

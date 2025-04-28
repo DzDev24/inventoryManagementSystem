@@ -142,10 +142,10 @@ if (!empty($customer['Media_ID'])) {
                                 <div class="col-md-6">
                                     <label class="form-label">Status <span class="text-danger">*</span></label>
                                     <select class="form-select" name="status" required>
-                                        <option value="Pending" <?= $customer['Status'] === 'Pending' ? 'selected' : '' ?>>Pending</option>
-                                        <option value="Shipped" <?= $customer['Status'] === 'Shipped' ? 'selected' : '' ?>>Shipped</option>
-                                        <option value="Returned" <?= $customer['Status'] === 'Returned' ? 'selected' : '' ?>>Returned</option>
-                                    </select>
+    <option value="Available" <?= $customer['Status'] === 'Available' ? 'selected' : '' ?>>Available</option>
+    <option value="Unavailable" <?= $customer['Status'] === 'Unavailable' ? 'selected' : '' ?>>Unavailable</option>
+</select>
+
                                 </div>
                             </div>
 

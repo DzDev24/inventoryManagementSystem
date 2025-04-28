@@ -166,11 +166,10 @@ while ($row = $result->fetch_assoc()) {
                                     <td class="text-center">
     <?php
     $statusClass = match ($row['Status']) {
-        'Shipped' => 'bg-success',
-        'Pending' => 'bg-warning',
-        'Returned' => 'bg-danger',
+        'Available' => 'bg-success',
+        'Unavailable' => 'bg-danger',
         default => 'bg-secondary'
-    };
+    };    
     ?>
     <span class="badge <?= $statusClass ?> text-white"><?= $row['Status'] ?></span>
 </td>
