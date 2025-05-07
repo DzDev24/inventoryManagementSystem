@@ -28,6 +28,6 @@ session_unset();
 session_destroy();
 
 // Redirect to login page
-header("Location: login_register/login.php");
+header("Location: ../login_register/login.php");
 exit;
 ?>

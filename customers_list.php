@@ -113,8 +113,10 @@ while ($row = $result->fetch_assoc()) {
                             </div>
                         <?php endif; ?>
 
-                        <?php foreach ($customers as $customer): 
+                        <?php foreach ($customers as $customer):
+                        
                             include 'components/customer_details_modal.php';
+                            include 'components/order_history_modal.php';
                         endforeach; ?>
 
                         <table id="datatablesSimple" class="table-customers table">
@@ -159,7 +161,7 @@ while ($row = $result->fetch_assoc()) {
                                     <td class="text-center"><?= htmlspecialchars($row['State_Name']) ?></td>
 
                                     <td class="text-center"><?= $row['Orders'] ?></td>
-                                    <td class="text-center"><?= $row['Total_Spend'] ?> DZD</td>
+                                    <td class="text-center"><?= $row['Total_Spend'] ?> DA</td>
 
 
 
@@ -185,6 +187,13 @@ while ($row = $result->fetch_assoc()) {
                                         <a class="btn btn-datatable btn-icon btn-transparent-dark" data-bs-toggle="modal" data-bs-target="#viewCustomerModal<?= $row['Customer_ID'] ?>" title="View"><i data-feather="eye"></i></a>
                                         <a href="customers_add_edit.php?id=<?= $row['Customer_ID'] ?>" class="btn btn-datatable btn-icon btn-transparent-dark" title="Edit"><i data-feather="edit"></i></a>
                                         <a class="btn btn-datatable btn-icon btn-transparent-dark" title="Delete" onclick="return confirmDelete(<?= $row['Customer_ID'] ?>)"><i data-feather="trash-2"></i></a>
+                                        <a class="btn btn-datatable btn-icon btn-transparent-dark" title="Order History"
+   data-bs-toggle="modal" data-bs-target="#orderHistoryModal<?= $row['Customer_ID'] ?>">
+   <i class="fas fa-clock-rotate-left"></i>
+</a>
+
+
+
                                     </td>
                                 </tr>
                             <?php endforeach; ?>

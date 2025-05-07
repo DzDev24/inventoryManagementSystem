@@ -19,8 +19,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $totalAmount += $qty * $price;
     }
 
-    // 2️⃣ Rollback stock if editing (before checking!)
+    // 2️⃣ Rollback stock and customer values if editing
     if ($saleId) {
+        // Rollback product stock
         $stmtOldProducts = $conn->prepare("SELECT Product_ID, QTY FROM sales_order_details WHERE Sale_ID = ?");
         $stmtOldProducts->bind_param("i", $saleId);
         $stmtOldProducts->execute();
@@ -32,27 +33,39 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $updateStock->close();
         }
         $stmtOldProducts->close();
+
+        // Rollback old customer orders and spend
+        $stmtOldSale = $conn->prepare("SELECT Customer_ID, Total_Amount FROM sales WHERE Sale_ID = ?");
+        $stmtOldSale->bind_param("i", $saleId);
+        $stmtOldSale->execute();
+        $oldSaleData = $stmtOldSale->get_result()->fetch_assoc();
+        $stmtOldSale->close();
+
+        if ($oldSaleData) {
+            $rollbackCustomer = $conn->prepare("UPDATE customers SET Orders = Orders - 1, Total_Spend = Total_Spend - ? WHERE Customer_ID = ?");
+            $rollbackCustomer->bind_param("di", $oldSaleData['Total_Amount'], $oldSaleData['Customer_ID']);
+            $rollbackCustomer->execute();
+            $rollbackCustomer->close();
+        }
     }
 
-    // 3️⃣ Check if enough stock
+    // 3️⃣ Check stock availability
     foreach ($products as $product) {
         $productId = intval($product['product_id']);
         $quantity = intval($product['quantity']);
 
-        // Fetch current stock (after rollback if editing)
         $stockResult = $conn->query("SELECT Quantity, Product_Name FROM products WHERE Product_ID = $productId");
         $stockData = $stockResult->fetch_assoc();
         $availableStock = intval($stockData['Quantity']);
         $productName = $stockData['Product_Name'];
 
         if ($quantity > $availableStock) {
-            // 🚨 Not enough stock! Redirect back with error.
             header("Location: ../sales_add_edit.php?error_stock=1&product=" . urlencode($productName) . "&available=$availableStock&requested=$quantity" . ($saleId ? "&id=$saleId" : ""));
             exit;
         }
     }
 
-    // 4️⃣ Save sale
+    // 4️⃣ Insert or Update sale
     if ($saleId) {
         $conn->query("DELETE FROM sales_order_details WHERE Sale_ID = $saleId");
 
@@ -60,15 +73,27 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $stmtUpdate->bind_param("ssssssii", $saleDate, $deliveryStatus, $paymentMethod, $paymentStatus, $notes, $totalAmount, $customerId, $saleId);
         $stmtUpdate->execute();
         $stmtUpdate->close();
+
+        // ✅ Update customer orders & spend
+        $updateCustomer = $conn->prepare("UPDATE customers SET Orders = Orders + 1, Total_Spend = Total_Spend + ? WHERE Customer_ID = ?");
+        $updateCustomer->bind_param("di", $totalAmount, $customerId);
+        $updateCustomer->execute();
+        $updateCustomer->close();
     } else {
         $stmt = $conn->prepare("INSERT INTO sales (Sale_Date, Delivery_Status, Payment_Method, Payment_Status, Notes, Total_Amount, Customer_ID) VALUES (?, ?, ?, ?, ?, ?, ?)");
         $stmt->bind_param("ssssssi", $saleDate, $deliveryStatus, $paymentMethod, $paymentStatus, $notes, $totalAmount, $customerId);
         $stmt->execute();
         $saleId = $stmt->insert_id;
         $stmt->close();
+
+        // ✅ Update customer orders & spend for new sale
+        $updateCustomer = $conn->prepare("UPDATE customers SET Orders = Orders + 1, Total_Spend = Total_Spend + ? WHERE Customer_ID = ?");
+        $updateCustomer->bind_param("di", $totalAmount, $customerId);
+        $updateCustomer->execute();
+        $updateCustomer->close();
     }
 
-    // 5️⃣ Insert sale details + Update new stock
+    // 5️⃣ Insert sale details & update stock
     foreach ($products as $product) {
         $productId = intval($product['product_id']);
         $quantity = intval($product['quantity']);
@@ -87,11 +112,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
 
     header("Location: ../sales_list.php?updated=1");
+    exit;
 }
 
 // Handle delete
 if (isset($_GET['deleteid'])) {
     $id = intval($_GET['deleteid']);
+
+    // Optional: rollback stock or customer data on delete
+
     $conn->query("DELETE FROM sales_order_details WHERE Sale_ID = $id");
 
     $stmt = $conn->prepare("DELETE FROM sales WHERE Sale_ID = ?");
@@ -101,5 +130,3 @@ if (isset($_GET['deleteid'])) {
     }
     $stmt->close();
 }
-?>
-
