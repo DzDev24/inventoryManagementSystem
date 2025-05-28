@@ -27,7 +27,7 @@ if (isset($_SESSION['user_role'])) {
 // Default values
 $userName = "Guest";
 $userEmail = "";
-$userImage = "inventoryManagementSystem/assets/img/illustrations/profiles/profile-1.png";
+$userImage = "../assets/img/illustrations/profiles/profile-1.png";
 
 // Check for logged-in user
 if (isset($_SESSION['user_id'])) {
@@ -48,22 +48,24 @@ if (isset($_SESSION['user_id'])) {
 ?>
 
 <style>
-.cart-dropdown {
-    max-height: 400px;
-    overflow-y: auto;
-    scrollbar-width: none;
-}
-.cart-dropdown::-webkit-scrollbar {
-    display: none;
-}
-.dropdown-notifications-item-content-text {
-    white-space: normal !important;
-    overflow: visible !important;
-    text-overflow: unset !important;
-    display: block !important;
-    word-break: break-word !important;
-    max-width: 100% !important;
-}
+    .cart-dropdown {
+        max-height: 400px;
+        overflow-y: auto;
+        scrollbar-width: none;
+    }
+
+    .cart-dropdown::-webkit-scrollbar {
+        display: none;
+    }
+
+    .dropdown-notifications-item-content-text {
+        white-space: normal !important;
+        overflow: visible !important;
+        text-overflow: unset !important;
+        display: block !important;
+        word-break: break-word !important;
+        max-width: 100% !important;
+    }
 </style>
 
 <nav class="topnav navbar navbar-expand shadow justify-content-between justify-content-sm-start navbar-light bg-white" id="sidenavAccordion">
@@ -74,7 +76,7 @@ if (isset($_SESSION['user_id'])) {
 
     <!-- Navbar Brand -->
     <a class="navbar-brand pe-3 ps-4 ps-lg-2 d-flex align-items-center gap-2 fw-semibold fs-4 text-dark" href="<?= $dashboardLink ?>">
-        <img src="/inventoryManagementSystem/assets/img/icon.svg" alt="IMS Logo" class="me-1" style="height: 30px;" />
+        <img src="../assets/img/icon.svg" alt="IMS Logo" class="me-1" style="height: 30px;" />
         <span><strong>IMS-25</strong></span>
     </a>
 
@@ -139,6 +141,3 @@ if (isset($_SESSION['user_id'])) {
         </li>
     </ul>
 </nav>
-
-
-
