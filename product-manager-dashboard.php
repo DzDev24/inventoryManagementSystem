@@ -16,27 +16,37 @@
     <link href="css/styles.css" rel="stylesheet" />
 </head>
 <body class="nav-fixed">
-    <div class="container-xl px-4 mt-n10">
-        <!-- Welcome Card -->
-        <div class="row">
-            <div class="col-xxl-4 col-xl-12 mb-4">
-                <div class="card h-100">
-                    <div class="card-body h-100 p-5">
-                        <div class="row align-items-center">
-                            <div class="col-xl-8 col-xxl-12">
-                                <div class="text-center text-xl-start text-xxl-center mb-4 mb-xl-0 mb-xxl-4">
-                                    <h1 class="text-primary">Product Management Dashboard</h1>
-                                    <p class="text-gray-700 mb-0">Monitor products, stock levels, suppliers, and product performance metrics</p>
-                                </div>
+<?php include 'includes/header.php'; ?>
+    <div id="layoutSidenav">
+        <div id="layoutSidenav_nav">
+            <?php include 'includes/sidebar.php'; ?>
+        </div>
+        <div id="layoutSidenav_content">
+            <main>
+
+            <header class="page-header page-header-compact page-header-light border-bottom bg-white mb-4">
+                <div class="container-fluid px-4">
+                    <div class="page-header-content">
+                        <div class="row align-items-center justify-content-between pt-3">
+                            <div class="col-auto mb-3">
+                                <h1 class="page-header-title">
+                                    <div class="page-header-icon"><i data-feather="users"></i></div>
+                                    Product Manager Dashboard
+                                </h1>
                             </div>
-                            <div class="col-xl-4 col-xxl-12 text-center">
-                                <img class="img-fluid" src="assets/img/icon.svg" style="max-width: 26rem" />
-                            </div>
+                            <div class="col-12 col-xl-auto mb-3">
+    <a class="btn btn-sm btn-light text-primary invisible">
+        <i class="me-1" data-feather="plus-circle"></i>
+        Placeholder
+    </a>
+</div>
+
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
+            </header>
+                <div class="container-fluid px-4 mt-4">
+    
 
         <!-- Product Stats Cards -->
         <div class="row">
@@ -303,7 +313,7 @@
             datasets: [{
                 label: 'Units Sold',
                 data: [],
-                backgroundColor: 'rgba(54, 185, 204, 0.7)',
+                backgroundColor: 'rgba(54, 185, 204, 0.75)',
                 borderColor: 'rgba(54, 185, 204, 1)',
                 borderWidth: 1
             }]
@@ -326,8 +336,8 @@
             datasets: [{
                 label: 'Products Added',
                 data: [],
-                backgroundColor: 'rgba(54, 185, 204, 0.5)',
-                borderColor: 'rgba(54, 185, 204, 1)',
+                backgroundColor: 'rgba(124, 54, 204, 0.75)',
+                borderColor: 'rgba(124, 54, 204, 1)',
                 borderWidth: 1
             }]
         },
@@ -519,7 +529,7 @@ function initializeTopProductsChart() {
             datasets: [{
                 label: 'Units Sold',
                 data: [],
-                backgroundColor: 'rgba(54, 185, 204, 0.7)',
+                backgroundColor: 'rgba(54, 185, 204, 0.5)',
                 borderColor: 'rgba(54, 185, 204, 1)',
                 borderWidth: 1
             }]
@@ -567,6 +577,11 @@ function updateTopProductsChart(days) {
             });
         }
     </script>
+
+            </main>
+            <?php include 'includes/footer.php'; ?>
+        </div> <!-- closes layoutSidenav_content -->
+    </div> <!-- closes layoutSidenav -->
 </body>
 </html>
 
