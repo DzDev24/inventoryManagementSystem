@@ -13,8 +13,7 @@ try {
               LEFT JOIN product_supplier ps ON s.Supplier_ID = ps.Supplier_ID
               WHERE ps.Proposal_Status = 'Accepted'
               GROUP BY s.Supplier_ID
-              ORDER BY product_count DESC
-              LIMIT 5";
+              ORDER BY product_count DESC";
     
     $result = $conn->query($query);
     

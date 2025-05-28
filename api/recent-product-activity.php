@@ -12,7 +12,7 @@ try {
                 'added' as type
               FROM products
               ORDER BY Created_At DESC
-              LIMIT 10";
+              LIMIT 5";
     
     $result = $conn->query($query);
     $activities = [];

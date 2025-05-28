@@ -1,3 +1,15 @@
+<?php
+// includes/sidebar.php
+
+// Check if user is logged in and is a system user
+if (!isset($_SESSION['user_id']) || $_SESSION['user_type'] !== 'user') {
+    header("Location: ../login_register/login.php");
+    exit;
+}
+
+$roleId = $_SESSION['user_role'];
+?>
+
 <nav class="sidenav shadow-right sidenav-light">
     <div class="sidenav-menu">
         <div class="nav accordion" id="accordionSidenav">
@@ -5,8 +17,9 @@
             <!-- Sidenav Menu Heading -->
             <div class="sidenav-menu-heading">Management</div>
 
+            <?php if ($roleId == 1 || $roleId == 3): ?>
             <!-- Products -->
-            <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseProducts" aria-expanded="false" aria-controls="collapseProducts">
+            <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseProducts">
                 <div class="nav-link-icon"><i data-feather="package"></i></div>
                 Products
                 <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
@@ -17,9 +30,11 @@
                     <a class="nav-link" href="products_add_edit.php">Add Product</a>
                 </nav>
             </div>
+            <?php endif; ?>
 
+            <?php if ($roleId == 1 || $roleId == 3): ?>
             <!-- Categories -->
-            <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseCategories" aria-expanded="false" aria-controls="collapseCategories">
+            <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseCategories">
                 <div class="nav-link-icon"><i data-feather="tag"></i></div>
                 Categories
                 <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
@@ -30,9 +45,11 @@
                     <a class="nav-link" href="categories_add_edit.php">Add Category</a>
                 </nav>
             </div>
+            <?php endif; ?>
 
+            <?php if ($roleId == 1 || $roleId == 3): ?>
             <!-- Suppliers -->
-            <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseSuppliers" aria-expanded="false" aria-controls="collapseSuppliers">
+            <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseSuppliers">
                 <div class="nav-link-icon"><i data-feather="truck"></i></div>
                 Suppliers
                 <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
@@ -43,9 +60,11 @@
                     <a class="nav-link" href="suppliers_add_edit.php">Add Supplier</a>
                 </nav>
             </div>
+            <?php endif; ?>
 
+            <?php if ($roleId == 1 || $roleId == 2): ?>
             <!-- Customers -->
-            <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseCustomers" aria-expanded="false" aria-controls="collapseCustomers">
+            <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseCustomers">
                 <div class="nav-link-icon"><i data-feather="users"></i></div>
                 Customers
                 <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
@@ -56,9 +75,11 @@
                     <a class="nav-link" href="customers_add_edit.php">Add Customer</a>
                 </nav>
             </div>
+            <?php endif; ?>
 
+            <?php if ($roleId == 1): ?>
             <!-- Users -->
-            <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseUsers" aria-expanded="false" aria-controls="collapseUsers">
+            <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseUsers">
                 <div class="nav-link-icon"><i data-feather="users"></i></div>
                 Users
                 <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
@@ -69,9 +90,11 @@
                     <a class="nav-link" href="users_add_edit.php">Add User</a>
                 </nav>
             </div>
+            <?php endif; ?>
 
+            <?php if ($roleId == 1 || $roleId == 3): ?>
             <!-- Purchases -->
-            <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapsePurchases" aria-expanded="false" aria-controls="collapsePurchases">
+            <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapsePurchases">
                 <div class="nav-link-icon"><i data-feather="shopping-cart"></i></div>
                 Purchases
                 <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
@@ -82,9 +105,11 @@
                     <a class="nav-link" href="purchases_add_edit.php">Add Purchase</a>
                 </nav>
             </div>
+            <?php endif; ?>
 
+            <?php if ($roleId == 1 || $roleId == 2): ?>
             <!-- Sales -->
-            <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseSales" aria-expanded="false" aria-controls="collapseSales">
+            <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseSales">
                 <div class="nav-link-icon"><i data-feather="shopping-bag"></i></div>
                 Sales
                 <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
@@ -95,7 +120,8 @@
                     <a class="nav-link" href="sales_add_edit.php">Add Sale</a>
                 </nav>
             </div>
+            <?php endif; ?>
 
-    </nav>
-
-    
+        </div>
+    </div>
+</nav>

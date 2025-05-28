@@ -13,9 +13,8 @@ try {
               FROM products p
               JOIN category c ON p.Category_ID = c.Category_ID
               LEFT JOIN units u ON p.Unit_ID = u.Unit_ID
-              WHERE p.Quantity <= p.Minimum_Stock * 1.5
-              ORDER BY (p.Quantity / p.Minimum_Stock) ASC
-              LIMIT 5";
+              WHERE p.Quantity <= p.Minimum_Stock
+              ORDER BY (p.Quantity / p.Minimum_Stock) ASC";
     
     $result = $conn->query($query);
     

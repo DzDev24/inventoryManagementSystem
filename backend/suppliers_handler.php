@@ -39,30 +39,62 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if (isset($_POST['supplier_id'])) {
         // UPDATE existing supplier
         $id = intval($_POST['supplier_id']);
+        $fields = [];
+$types = '';
+$params = [];
 
-        $fields = "Supplier_Name=?, Email=?, Phone=?, Company_Name=?, Address=?, State_ID=?, Status=?, Description=?";
-        $types = "sssssssss";
-        $params = [$supplierName, $email, $phone, $companyName, $address, $stateId, $status, $description];
+$fields[] = "Supplier_Name=?";
+$types .= "s";
+$params[] = $supplierName;
 
-        if ($mediaId !== null) {
-            $fields .= ", Media_ID=?";
-            $types .= "i";
-            $params[] = $mediaId;
-        }
+$fields[] = "Email=?";
+$types .= "s";
+$params[] = $email;
 
-        if (!empty($password)) {
-            $fields .= ", Password=?";
-            $types .= "s";
-            $params[] = $password;
-        }
+$fields[] = "Phone=?";
+$types .= "s";
+$params[] = $phone;
 
-        $fields .= " WHERE Supplier_ID=?";
-        $types .= "i";
-        $params[] = $id;
+$fields[] = "Company_Name=?";
+$types .= "s";
+$params[] = $companyName;
 
-        $sql = "UPDATE supplier SET $fields";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param($types, ...$params);
+$fields[] = "Address=?";
+$types .= "s";
+$params[] = $address;
+
+$fields[] = "State_ID=?";
+$types .= "i";
+$params[] = $stateId;
+
+$fields[] = "Status=?";
+$types .= "s";
+$params[] = $status;
+
+$fields[] = "Description=?";
+$types .= "s";
+$params[] = $description;
+
+if ($mediaId !== null) {
+    $fields[] = "Media_ID=?";
+    $types .= "i";
+    $params[] = $mediaId;
+}
+
+if (!empty($password)) {
+    $fields[] = "Password=?";
+    $types .= "s";
+    $params[] = $password;
+}
+
+$fieldsSQL = implode(", ", $fields) . " WHERE Supplier_ID=?";
+$types .= "i";
+$params[] = $id;
+
+$sql = "UPDATE supplier SET $fieldsSQL";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param($types, ...$params);
+
     } else {
         // INSERT new supplier (password is required here)
         $sql = "INSERT INTO supplier (Supplier_Name, Email, Phone, Company_Name, Address, State_ID, Media_ID, Status, Description, Password)

@@ -43,11 +43,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         ($media_id ? ", Media_ID = ?" : "") . " WHERE Product_ID = ?";
 if ($media_id) {
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("isiiiisiiii", $category_id, $product_name, $quantity, $buy_price, $sale_price, $unit_id, $minimum_stock, $description, $report_id, $media_id, $product_id);
+    $stmt->bind_param("isiiiissiii", $category_id, $product_name, $quantity, $buy_price, $sale_price, $unit_id, $minimum_stock, $description, $report_id, $media_id, $product_id);
 
 } else {
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("isiiiisiii", $category_id, $product_name, $quantity, $buy_price, $sale_price, $unit_id, $minimum_stock, $description, $report_id, $product_id);
+    $stmt->bind_param("isiiiissii", $category_id, $product_name, $quantity, $buy_price, $sale_price, $unit_id, $minimum_stock, $description, $report_id, $product_id);
 
 }
 

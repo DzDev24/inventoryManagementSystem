@@ -106,13 +106,13 @@ if (!empty($supplier['Media_ID'])) {
                             <div class="col-md-6">
     <label class="form-label">Password <span class="text-danger">*</span></label>
     <input class="form-control" type="text" name="password" required placeholder="Enter password"
-           value="<?= $isEdit && isset($customer['Password']) ? htmlspecialchars($customer['Password']) : '' ?>">
+           value="<?= $isEdit && isset($supplier['Password']) ? htmlspecialchars($supplier['Password']) : '' ?>">
 </div>
 
 <div class="col-md-6">
     <label class="form-label">Confirm Password <span class="text-danger">*</span></label>
     <input class="form-control" type="text" name="confirm_password" required placeholder="Confirm password"
-           value="<?= $isEdit && isset($customer['Password']) ? htmlspecialchars($customer['Password']) : '' ?>">
+           value="<?= $isEdit && isset($supplier['Password']) ? htmlspecialchars($supplier['Password']) : '' ?>">
 </div>
                                 </div>
                                 <div class="row gx-3 mb-3">

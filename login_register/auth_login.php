@@ -37,11 +37,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         // ✅ Role-based redirect
         $roleId = $user['Role_ID'];
         if ($roleId == 1) {
-            header("Location: ../Dashboards/admin_dashboard.php");
+            header("Location: ../admin_dashboard.php");
         } elseif ($roleId == 2) {
-            header("Location: ../Dashboards/sales_dashboard.php");
+            header("Location: ../sales_dashboard.php");
         } elseif ($roleId == 3) {
-            header("Location: ../Dashboards/products_dashboard.php");
+            header("Location: ../product-manager-dashboard.php");
         } else {
             header("Location: ../login_register/login.php?error=unauthorized");
         }

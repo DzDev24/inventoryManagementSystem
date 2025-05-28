@@ -25,27 +25,47 @@
             <main>
 
             <header class="page-header page-header-compact page-header-light border-bottom bg-white mb-4">
-                <div class="container-fluid px-4">
-                    <div class="page-header-content">
-                        <div class="row align-items-center justify-content-between pt-3">
-                            <div class="col-auto mb-3">
-                                <h1 class="page-header-title">
-                                    <div class="page-header-icon"><i data-feather="users"></i></div>
-                                    Product Manager Dashboard
-                                </h1>
-                            </div>
-                            <div class="col-12 col-xl-auto mb-3">
-    <a class="btn btn-sm btn-light text-primary invisible">
-        <i class="me-1" data-feather="plus-circle"></i>
-        Placeholder
-    </a>
-</div>
-
-                        </div>
+    <div class="container-fluid px-4">
+        <div class="page-header-content">
+            <div class="row align-items-center justify-content-between pt-3">
+                <div class="col-auto mb-3">
+                    <h1 class="page-header-title">
+                        <div class="page-header-icon"><i data-feather="users"></i></div>
+                        Product Manager Dashboard
+                    </h1>
+                </div>
+                <div class="col-auto mb-3">
+                    <div class="small">
+                        <span class="fw-500 text-primary" id="current-day"></span>
+                        &middot; <span id="current-date"></span>
+                        &middot; <span id="current-time"></span>
                     </div>
                 </div>
-            </header>
+            </div>
+        </div>
+    </div>
+</header>
+
+
                 <div class="container-fluid px-4 mt-4">
+
+
+                <!-- Add this after your existing welcome card -->
+<!-- Illustration dashboard card example-->
+<div class="card card-waves mb-4 mt-5">
+    <div class="card-body p-5">
+        <div class="row align-items-center justify-content-between">
+            <div class="col">
+                <h2 class="text-primary">Welcome back, Product Manager!</h2>
+                <p class="text-gray-700">in this Dashboard, you can monitor product sales, added products, latest activity, suppliers, and more!</p>
+                
+            </div>
+            <div class="col d-none d-lg-block mt-xxl-n4">
+                <img class="img-fluid px-xl-4 mt-xxl-n5" src="assets/img/illustrations/statistics.svg" />
+            </div>
+        </div>
+    </div>
+</div>
     
 
         <!-- Product Stats Cards -->
@@ -79,7 +99,7 @@
                         </div>
                     </div>
                     <div class="card-footer d-flex align-items-center justify-content-between small">
-                        <a class="text-white stretched-link" href="low-stock.php">View Low Stock</a>
+                        <a class="text-white stretched-link" href="products_list.php">View Low Stock</a>
                         <div class="text-white"><i class="fas fa-angle-right"></i></div>
                     </div>
                 </div>
@@ -96,7 +116,7 @@
                         </div>
                     </div>
                     <div class="card-footer d-flex align-items-center justify-content-between small">
-                        <a class="text-white stretched-link" href="categories.php">Manage Categories</a>
+                        <a class="text-white stretched-link" href="categories_list.php">Manage Categories</a>
                         <div class="text-white"><i class="fas fa-angle-right"></i></div>
                     </div>
                 </div>
@@ -113,7 +133,7 @@
                         </div>
                     </div>
                     <div class="card-footer d-flex align-items-center justify-content-between small">
-                        <a class="text-white stretched-link" href="suppliers.php">View Suppliers</a>
+                        <a class="text-white stretched-link" href="suppliers_list.php">View Suppliers</a>
                         <div class="text-white"><i class="fas fa-angle-right"></i></div>
                     </div>
                 </div>
@@ -222,7 +242,7 @@
                 <div class="card h-100">
                     <div class="card-header">
                         Top Suppliers by Products Supplied
-                        <a class="btn btn-sm btn-primary-soft text-primary" href="suppliers.php">View All</a>
+                        <a class="btn btn-sm btn-primary-soft text-primary" href="suppliers_list.php">View All</a>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -249,7 +269,7 @@
                 <div class="card h-100">
                     <div class="card-header">
                         Low Stock Products
-                        <a class="btn btn-sm btn-warning-soft text-warning" href="low-stock.php">View All</a>
+                        <a class="btn btn-sm btn-warning-soft text-warning" href="products_list.php">View All</a>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -271,7 +291,31 @@
                 </div>
             </div>
         </div>
+
+<!-- Report summary card example (adapted for Product Manager Reports) -->
+<div class="card mb-4">
+    <div class="card-header bg-primary text-white"> <i class="fas fa-file-pdf me-2"></i> Generate Reports</div>
+    <div class="list-group list-group-flush small">
+        <a class="list-group-item list-group-item-action" href="reports/inventory_report.php" target="_blank">
+            <i class="fas fa-warehouse fa-fw text-danger me-2"></i>
+            Inventory Status Report
+        </a>
+        <a class="list-group-item list-group-item-action" href="reports/product_performance_report.php" target="_blank">
+            <i class="fas fa-chart-line fa-fw text-primary me-2"></i>
+            Product Performance Report
+        </a>
+        <a class="list-group-item list-group-item-action" href="reports/category_performance_report.php" target="_blank">
+            <i class="fas fa-sitemap fa-fw text-success me-2"></i>
+            Category Analysis Report
+        </a>
+        <a class="list-group-item list-group-item-action" href="reports/supplier_performance_report.php" target="_blank">
+            <i class="fas fa-truck fa-fw text-warning me-2"></i>
+            Supplier Performance Report
+        </a>
     </div>
+</div>
+
+
 
     <!-- JavaScript Libraries -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
@@ -279,6 +323,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/litepicker/dist/bundle.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     
     <!-- Custom JavaScript for Product Manager Dashboard -->
     <script>
@@ -461,7 +506,7 @@
                                 <div class="timeline-item-content">
                                     <i class="me-1" data-feather="${icon}"></i>
                                     ${activity.description}
-                                    <a class="fw-bold text-dark" href="product-details.php?id=${activity.product_id}">${activity.product_name}</a>
+                                    <span class="fw-bold text-dark">${activity.product_name}</span>
                                 </div>
                             </div>
                         `;
@@ -496,7 +541,7 @@
                     data.forEach(product => {
                         productsHtml += `
                             <tr>
-                                <td><a href="product-details.php?id=${product.id}">${product.name}</a></td>
+                                <td><a href="product_details_modal.php?id=${product.id}">${product.name}</a></td>
                                 <td>${product.category}</td>
                                 <td>
                                     <div class="progress" style="height: 6px;">
@@ -577,6 +622,36 @@ function updateTopProductsChart(days) {
             });
         }
     </script>
+
+    <script>
+    // Function to update date and time display
+    function updateDateTime() {
+        const now = new Date();
+        
+        // Format day of week
+        const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+        document.getElementById('current-day').textContent = days[now.getDay()];
+        
+        // Format date (e.g., September 20, 2021)
+        const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+        const dateStr = `${months[now.getMonth()]} ${now.getDate()}, ${now.getFullYear()}`;
+        document.getElementById('current-date').textContent = dateStr;
+        
+        // Format time (12-hour format with AM/PM)
+        let hours = now.getHours();
+        const ampm = hours >= 12 ? 'PM' : 'AM';
+        hours = hours % 12;
+        hours = hours ? hours : 12; // Convert 0 to 12
+        const minutes = now.getMinutes().toString().padStart(2, '0');
+        document.getElementById('current-time').textContent = `${hours}:${minutes} ${ampm}`;
+    }
+
+    // Update immediately when page loads
+    updateDateTime();
+
+    // Update every minute to keep time current
+    setInterval(updateDateTime, 60000);
+</script>
 
             </main>
             <?php include 'includes/footer.php'; ?>

@@ -13,8 +13,7 @@ try {
               JOIN products p ON sod.Product_ID = p.Product_ID
               WHERE s.Sale_Date >= DATE_SUB(NOW(), INTERVAL ? DAY)
               GROUP BY p.Product_ID
-              ORDER BY total_sold DESC
-              LIMIT 10";
+              ORDER BY total_sold DESC";
     
     $stmt = $conn->prepare($query);
     $stmt->bind_param('i', $days);

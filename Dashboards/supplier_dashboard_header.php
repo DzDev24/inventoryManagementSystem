@@ -54,7 +54,7 @@ if (!empty($query) && $query->num_rows > 0) {
 
     <a class="navbar-brand pe-3 ps-4 ps-lg-2 d-flex align-items-center gap-2 fw-semibold fs-4 text-dark" href="supplier_dashboard.php">
         <img src="../assets/img/icon.svg" alt="IMS Logo" class="me-1" style="height: 30px;" />
-        <span><strong>IMS-24</strong></span>
+        <span><strong>IMS-25</strong></span>
     </a>
 
     <div class="d-none d-lg-block" style="flex: 1; max-width: 300px;">
