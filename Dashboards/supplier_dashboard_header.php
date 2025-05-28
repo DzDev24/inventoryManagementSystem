@@ -138,7 +138,7 @@ if (!empty($query) && $query->num_rows > 0) {
                 <a class="dropdown-item" href="supplier_profile.php">
                     <div class="dropdown-item-icon"><i data-feather="settings"></i></div>Account
                 </a>
-                <a class="dropdown-item" href="/inventoryManagementSystem/login_register/logout.php">
+                <a class="dropdown-item" href="../../login_register/logout.php">
                     <div class="dropdown-item-icon"><i data-feather="log-out"></i></div>Logout
                 </a>
             </div>

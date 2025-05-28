@@ -7,7 +7,7 @@ if (
     !isset($_SESSION['customer_id']) && 
     !isset($_SESSION['supplier_id'])
 ) {
-    header("Location: /inventoryManagementSystem/login_register/login.php");
+    header("Location: ./login.php");
     exit;
 }
 ?>

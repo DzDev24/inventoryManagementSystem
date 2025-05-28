@@ -10,16 +10,16 @@ $dashboardLink = null; // default fallback
 if (isset($_SESSION['user_role'])) {
     switch ($_SESSION['user_role']) {
         case 1:
-            $dashboardLink = "/inventoryManagementSystem/admin_dashboard.php";
+            $dashboardLink = "../admin_dashboard.php";
             break;
         case 2:
-            $dashboardLink = "/inventoryManagementSystem/sales_dashboard.php";
+            $dashboardLink = "../sales_dashboard.php";
             break;
         case 3:
-            $dashboardLink = "/inventoryManagementSystem/product-manager-dashboard.php";
+            $dashboardLink = "../product-manager-dashboard.php";
             break;
         default:
-            $dashboardLink = "/inventoryManagementSystem/login_register/login.php";
+            $dashboardLink = "../login_register/login.php";
             break;
     }
 }
@@ -134,7 +134,7 @@ if (isset($_SESSION['user_id'])) {
                 <a class="dropdown-item" href="user_profile.php">
                     <div class="dropdown-item-icon"><i data-feather="settings"></i></div>Account
                 </a>
-                <a class="dropdown-item" href="/inventoryManagementSystem/login_register/logout.php">
+                <a class="dropdown-item" href="../login_register/logout.php">
                     <div class="dropdown-item-icon"><i data-feather="log-out"></i></div>Logout
                 </a>
             </div>
