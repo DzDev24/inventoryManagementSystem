@@ -3,7 +3,7 @@
 
 // Check if user is logged in and is a system user
 if (!isset($_SESSION['user_id']) || $_SESSION['user_type'] !== 'user') {
-    header("Location: ../login_register/login.php");
+    header("Location: ./login_register/login.php");
     exit;
 }
 

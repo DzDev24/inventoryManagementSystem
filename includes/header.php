@@ -10,16 +10,16 @@ $dashboardLink = null; // default fallback
 if (isset($_SESSION['user_role'])) {
     switch ($_SESSION['user_role']) {
         case 1:
-            $dashboardLink = "../admin_dashboard.php";
+            $dashboardLink = "./admin_dashboard.php";
             break;
         case 2:
-            $dashboardLink = "../sales_dashboard.php";
+            $dashboardLink = "./sales_dashboard.php";
             break;
         case 3:
-            $dashboardLink = "../product-manager-dashboard.php";
+            $dashboardLink = "./product-manager-dashboard.php";
             break;
         default:
-            $dashboardLink = "../login_register/login.php";
+            $dashboardLink = "./login_register/login.php";
             break;
     }
 }
@@ -27,7 +27,7 @@ if (isset($_SESSION['user_role'])) {
 // Default values
 $userName = "Guest";
 $userEmail = "";
-$userImage = "../assets/img/illustrations/profiles/profile-1.png";
+$userImage = "./assets/img/illustrations/profiles/profile-1.png";
 
 // Check for logged-in user
 if (isset($_SESSION['user_id'])) {
@@ -76,7 +76,7 @@ if (isset($_SESSION['user_id'])) {
 
     <!-- Navbar Brand -->
     <a class="navbar-brand pe-3 ps-4 ps-lg-2 d-flex align-items-center gap-2 fw-semibold fs-4 text-dark" href="<?= $dashboardLink ?>">
-        <img src="../assets/img/icon.svg" alt="IMS Logo" class="me-1" style="height: 30px;" />
+        <img src="./assets/img/icon.svg" alt="IMS Logo" class="me-1" style="height: 30px;" />
         <span><strong>IMS-25</strong></span>
     </a>
 
@@ -134,7 +134,7 @@ if (isset($_SESSION['user_id'])) {
                 <a class="dropdown-item" href="user_profile.php">
                     <div class="dropdown-item-icon"><i data-feather="settings"></i></div>Account
                 </a>
-                <a class="dropdown-item" href="../login_register/logout.php">
+                <a class="dropdown-item" href="./login_register/logout.php">
                     <div class="dropdown-item-icon"><i data-feather="log-out"></i></div>Logout
                 </a>
             </div>

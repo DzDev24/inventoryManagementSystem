@@ -13,6 +13,7 @@ if (in_array($_SERVER['HTTP_HOST'], ['localhost', '127.0.0.1'])) {
 
 }
 
+
 $dbname = "inventory_management_system"; // Your database name
 
 
