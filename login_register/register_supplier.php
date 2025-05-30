@@ -14,7 +14,7 @@ $states = $conn->query("SELECT State_ID, State_Name FROM states");
     <title>Register Supplier - Inventory System</title>
     <link href="../css/styles.css" rel="stylesheet" />
     <link href="../css/vendor/bootstrap.css" rel="stylesheet" />
-    <link rel="icon" type="image/x-icon" href="../../assets/img/favicon.png" />
+    <link rel="icon" type="image/x-icon" href="../../assets/img/icon.svg" />
     <script data-search-pseudo-elements defer src="../../js/vendor/font-awesome.min.js" crossorigin="anonymous"></script>
     <script src="../../js/vendor/feather.min.js" crossorigin="anonymous"></script>
 </head>

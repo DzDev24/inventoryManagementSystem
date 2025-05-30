@@ -63,7 +63,7 @@ foreach ($categories as $cat) {
     <link href="css/vendor/datatables-style.min.css" rel="stylesheet" />
     <link href="css/vendor/bootstrap.css" rel="stylesheet" />
     <link href="css/styles.css" rel="stylesheet" />
-    <link rel="icon" type="image/x-icon" href="assets/img/favicon.png" />
+    <link rel="icon" type="image/x-icon" href="assets/img/icon.svg" />
     <script data-search-pseudo-elements defer src="js/vendor/font-awesome.min.js" crossorigin="anonymous"></script>
     <script src="js/vendor/feather.min.js" crossorigin="anonymous"></script>
     <style>
@@ -90,6 +90,7 @@ foreach ($categories as $cat) {
             vertical-align: middle !important;
         }
     </style>
+    <?php include 'includes/common_head_elements.php'; ?>
 
 </head>
 

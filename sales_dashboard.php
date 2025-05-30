@@ -22,10 +22,12 @@ if ($_SESSION['user_role'] != 2) {
     <link href="https://cdn.jsdelivr.net/npm/litepicker/dist/css/litepicker.css" rel="stylesheet" />
     <link href="css/vendor/datatables-style.min.css" rel="stylesheet" />
     <link href="css/vendor/bootstrap.css" rel="stylesheet" />
-    <link rel="icon" type="image/x-icon" href="assets/img/favicon.png" />
+    <link rel="icon" type="image/x-icon" href="assets/img/icon.svg" />
     <script data-search-pseudo-elements defer src="js/vendor/font-awesome.min.js" crossorigin="anonymous"></script>
     <script src="js/vendor/feather.min.js" crossorigin="anonymous"></script>
     <link href="css/styles.css" rel="stylesheet" />
+    <?php include 'includes/common_head_elements.php'; ?>
+
 </head>
 
 <body class="nav-fixed">

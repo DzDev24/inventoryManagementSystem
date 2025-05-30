@@ -9,7 +9,7 @@
     <meta name="author" content="" />
     <title>401 Error - SB Admin Pro</title>
     <link href="css/vendor/bootstrap.css" rel="stylesheet" />
-    <link rel="icon" type="image/x-icon" href="assets/img/favicon.png" />
+    <link rel="icon" type="image/x-icon" href="assets/img/icon.svg" />
     <script data-search-pseudo-elements defer src="js/vendor/font-awesome.min.js" crossorigin="anonymous"></script>
     <script src="js/vendor/feather.min.js" crossorigin="anonymous"></script>
 </head>

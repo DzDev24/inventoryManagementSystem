@@ -54,9 +54,10 @@ if (!empty($supplier['Media_ID'])) {
     <title><?= $isEdit ? 'Edit Supplier' : 'Add Supplier' ?></title>
     <link href="css/vendor/bootstrap.css" rel="stylesheet" />
     <link href="css/styles.css" rel="stylesheet" />
-    <link rel="icon" type="image/x-icon" href="assets/img/favicon.png" />
+    <link rel="icon" type="image/x-icon" href="assets/img/icon.svg" />
     <script data-search-pseudo-elements defer src="js/vendor/font-awesome.min.js" crossorigin="anonymous"></script>
     <script src="js/vendor/feather.min.js" crossorigin="anonymous"></script>
+    <?php include 'includes/common_head_elements.php'; ?>
 
 </head>
 

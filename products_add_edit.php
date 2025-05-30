@@ -63,10 +63,12 @@ $units = $conn->query("SELECT Unit_ID, Unit_name, Unit_abrev FROM units");
     <meta name="author" content="" />
     <title><?= $isEdit ? 'Edit Product' : 'Add Product' ?></title>
     <link href="css/vendor/bootstrap.css" rel="stylesheet" />
-    <link rel="icon" type="image/x-icon" href="assets/img/favicon.png" />
+    <link rel="icon" type="image/x-icon" href="assets/img/icon.svg" />
     <link href="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/css/tom-select.css" rel="stylesheet">
     <script data-search-pseudo-elements defer src="js/vendor/font-awesome.min.js" crossorigin="anonymous"></script>
     <script src="js/vendor/feather.min.js" crossorigin="anonymous"></script>
+    <?php include 'includes/common_head_elements.php'; ?>
+
 </head>
 
 <body class="nav-fixed">

@@ -91,7 +91,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
     <title><?= $editingSale ? 'Edit Sale' : 'Add Sale' ?></title>
     <link href="css/vendor/bootstrap.css" rel="stylesheet" />
     <link href="css/styles.css" rel="stylesheet" />
-    <link rel="icon" type="image/x-icon" href="assets/img/favicon.png" />
+    <link rel="icon" type="image/x-icon" href="assets/img/icon.svg" />
     <script src="js/vendor/bootstrap.bundle.min.js"></script>
     <script src="js/vendor/font-awesome.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
@@ -110,6 +110,8 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
             width: auto;
         }
     </style>
+    <?php include 'includes/common_head_elements.php'; ?>
+
 </head>
 
 <body class="nav-fixed">

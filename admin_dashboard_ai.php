@@ -19,16 +19,12 @@ if ($_SESSION['user_role'] != 1) {
     <link href="https://cdn.jsdelivr.net/npm/litepicker/dist/css/litepicker.css" rel="stylesheet" />
     <link href="css/vendor/datatables-style.min.css" rel="stylesheet" />
     <link href="css/vendor/bootstrap.css" rel="stylesheet" />
-    <link rel="icon" type="image/x-icon" href="assets/img/favicon.png" />
+    <link rel="icon" type="image/x-icon" href="assets/img/icon.svg" />
     <script data-search-pseudo-elements defer src="js/vendor/font-awesome.min.js" crossorigin="anonymous"></script>
     <script src="js/vendor/feather.min.js" crossorigin="anonymous"></script>
     <link href="css/styles.css" rel="stylesheet" />
-    <link rel="stylesheet" href="chatbot/style.css" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,1,0" />
-    <meta name="api-url" content="chatbot/chatbot_api.php" />
-    <script src="chatbot/script.js" defer></script>
 
+    <?php include 'includes/common_head_elements.php'; ?>
 
 </head>
 
@@ -385,27 +381,7 @@ if ($_SESSION['user_role'] != 1) {
                 </div>
 
             </main>
-            <button class="chatbot-toggler">
-                <span class="material-symbols-rounded">mode_comment</span>
-                <span class="material-symbols-outlined">close</span>
-            </button>
-            <div class="chatbot">
-                <header>
-                    <h2>Chatbot</h2>
-                    <span class="close-btn material-symbols-outlined">close</span>
-                </header>
-                <ul class="chatbox">
-                    <li class="chat incoming">
-                        <span class="material-symbols-outlined">smart_toy</span>
-                        <p>Hi there 👋<br />I am chatbot of IMS-25. How can I help you today?</p>
 
-                    </li>
-                </ul>
-                <div class="chat-input">
-                    <textarea placeholder="Enter a message..." spellcheck="false" required></textarea>
-                    <span id="send-btn" class="material-symbols-rounded">send</span>
-                </div>
-            </div>
             <?php include 'includes/footer.php'; ?>
         </div>
     </div>
