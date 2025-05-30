@@ -1,5 +1,17 @@
+<?php
+
+require_once "./login_register/auth_session.php";
+
+if ($_SESSION['user_role'] != 2) {
+    header("Location: ./unauthorized.php");
+    exit;
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -15,8 +27,9 @@
     <script src="js/vendor/feather.min.js" crossorigin="anonymous"></script>
     <link href="css/styles.css" rel="stylesheet" />
 </head>
+
 <body class="nav-fixed">
-<?php include 'includes/header.php'; ?>
+    <?php include 'includes/header.php'; ?>
     <div id="layoutSidenav">
         <div id="layoutSidenav_nav">
             <?php include 'includes/sidebar.php'; ?>
@@ -60,7 +73,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <!-- Sales KPI Cards -->
                     <div class="row">
                         <div class="col-lg-6 col-xl-3 mb-4">
@@ -114,25 +127,25 @@
                                 </div>
                             </div>
                         </div>
-                        
-<div class="col-lg-6 col-xl-3 mb-4">
-    <div class="card bg-danger text-white h-100">
-        <div class="card-body">
-            <div class="d-flex justify-content-between align-items-center">
-                <div class="me-3">
-                    <div class="text-white-75 small">Total Customers</div>
-                    <div class="text-lg fw-bold" id="totalCustomers">Loading...</div>
-                </div>
-                <i class="feather-xl text-white-50" data-feather="users"></i>
-            </div>
-        </div>
-        <div class="card-footer d-flex align-items-center justify-content-between small">
-            <a class="text-white stretched-link" href="customers_list.php">View All</a>
-            <div class="text-white"><i class="fas fa-angle-right"></i></div>
-        </div>
-    </div>
-</div>
-</div>
+
+                        <div class="col-lg-6 col-xl-3 mb-4">
+                            <div class="card bg-danger text-white h-100">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="me-3">
+                                            <div class="text-white-75 small">Total Customers</div>
+                                            <div class="text-lg fw-bold" id="totalCustomers">Loading...</div>
+                                        </div>
+                                        <i class="feather-xl text-white-50" data-feather="users"></i>
+                                    </div>
+                                </div>
+                                <div class="card-footer d-flex align-items-center justify-content-between small">
+                                    <a class="text-white stretched-link" href="customers_list.php">View All</a>
+                                    <div class="text-white"><i class="fas fa-angle-right"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <!-- Charts Row -->
                     <div class="row">
                         <!-- Monthly Sales/Revenue Chart -->
@@ -158,7 +171,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <!-- Sales by Product Chart -->
                         <div class="col-xl-6 mb-4">
                             <div class="card card-header-actions h-100">
@@ -212,7 +225,7 @@
                                                     <th>Date</th>
                                                     <th>Amount</th>
                                                     <th>Status</th>
-                                                    
+
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -223,13 +236,13 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <!-- Top Customers -->
                         <div class="col-lg-4 mb-4">
                             <div class="card h-100">
                                 <div class="card-header">
                                     Top Customers
-                                    
+
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive">
@@ -288,7 +301,7 @@
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/litepicker/dist/bundle.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-    
+
     <!-- Custom JavaScript for Sales Manager Dashboard -->
     <script>
         // Global chart variables
@@ -300,16 +313,16 @@
             // Initialize charts and load data
             initializeCharts();
             loadDashboardData();
-            
+
             // Initialize tooltips
             var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-            var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            var tooltipList = tooltipTriggerList.map(function(tooltipTriggerEl) {
                 return new bootstrap.Tooltip(tooltipTriggerEl);
             });
-            
+
             // Feather icons
             feather.replace();
-            
+
             // Initialize date/time display
             updateDateTime();
             setInterval(updateDateTime, 60000);
@@ -374,7 +387,7 @@
                     indexAxis: 'y', // Horizontal bar chart
                     maintainAspectRatio: false,
                     scales: {
-                        x: { 
+                        x: {
                             beginAtZero: true,
                             ticks: {
                                 callback: function(value) {
@@ -481,7 +494,7 @@
                         } else {
                             statusBadge = '<span class="badge bg-red-soft text-red">Canceled</span>';
                         }
-                        
+
                         let paymentStatus = '';
                         if (order.payment_status === 'Paid') {
                             paymentStatus = '<span class="badge bg-green-soft text-green">Paid</span>';
@@ -490,7 +503,7 @@
                         } else {
                             paymentStatus = '<span class="badge bg-red-soft text-red">Unpaid</span>';
                         }
-                        
+
                         ordersHtml += `
                             <tr>
                                 <td>#${order.Sale_ID}</td>
@@ -518,16 +531,16 @@
         // Function to update date and time display
         function updateDateTime() {
             const now = new Date();
-            
+
             // Format day of week
             const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
             document.getElementById('current-day').textContent = days[now.getDay()];
-            
+
             // Format date (e.g., September 20, 2021)
             const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
             const dateStr = `${months[now.getMonth()]} ${now.getDate()}, ${now.getFullYear()}`;
             document.getElementById('current-date').textContent = dateStr;
-            
+
             // Format time (12-hour format with AM/PM)
             let hours = now.getHours();
             const ampm = hours >= 12 ? 'PM' : 'AM';
@@ -538,4 +551,5 @@
         }
     </script>
 </body>
+
 </html>

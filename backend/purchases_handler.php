@@ -42,13 +42,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $stmtUpdate->bind_param("ssssssi", $purchaseDate, $deliveryStatus, $paymentMethod, $paymentStatus, $notes, $totalAmount, $purchaseId);
         $stmtUpdate->execute();
         $stmtUpdate->close();
-
     } else {
         // --- ➕ Add Mode ---
 
-        $stmt = $conn->prepare("INSERT INTO purchases (Purchase_Date, Delivery_Status, Payment_Method, Payment_Status, Notes, Total_Amount, Report_ID) 
-                                VALUES (?, ?, ?, ?, ?, ?, NULL)");
-        $stmt->bind_param("sssssi", $purchaseDate, $deliveryStatus, $paymentMethod, $paymentStatus, $notes, $totalAmount);
+        $stmt = $conn->prepare("INSERT INTO purchases (Purchase_Date, Delivery_Status, Payment_Method, Payment_Status, Notes, Total_Amount, Report_ID, Accepted) 
+                                VALUES (?, ?, ?, ?, ?, ?, NULL, ?)");
+        $accepted = 1;
+        $stmt->bind_param("sssssid", $purchaseDate, $deliveryStatus, $paymentMethod, $paymentStatus, $notes, $totalAmount, $accepted);
+
         $stmt->execute();
         $purchaseId = $stmt->insert_id;
         $stmt->close();
@@ -70,10 +71,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $stmtDetails->close();
 
         // 5. Update stock
-        $updateStock = $conn->prepare("UPDATE products SET Quantity = Quantity + ? WHERE Product_ID = ?");
-        $updateStock->bind_param("ii", $quantity, $productId);
-        $updateStock->execute();
-        $updateStock->close();
+        // $updateStock = $conn->prepare("UPDATE products SET Quantity = Quantity + ? WHERE Product_ID = ?");
+        // $updateStock->bind_param("ii", $quantity, $productId);
+        // $updateStock->execute();
+        // $updateStock->close();
     }
 
     header("Location: ../purchases_list.php?updated=1");
@@ -98,4 +99,3 @@ if (isset($_GET['deleteid'])) {
 
     $stmt->close();
 }
-?>

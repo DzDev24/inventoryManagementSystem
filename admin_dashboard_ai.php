@@ -26,6 +26,7 @@ if ($_SESSION['user_role'] != 1) {
     <link rel="stylesheet" href="chatbot/style.css" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,1,0" />
+    <meta name="api-url" content="chatbot/chatbot_api.php" />
     <script src="chatbot/script.js" defer></script>
 
 
@@ -396,7 +397,8 @@ if ($_SESSION['user_role'] != 1) {
                 <ul class="chatbox">
                     <li class="chat incoming">
                         <span class="material-symbols-outlined">smart_toy</span>
-                        <p>Hi there 👋<br />How can I help you today?</p>
+                        <p>Hi there 👋<br />I am chatbot of IMS-25. How can I help you today?</p>
+
                     </li>
                 </ul>
                 <div class="chat-input">

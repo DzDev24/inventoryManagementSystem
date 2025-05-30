@@ -37,6 +37,7 @@ while ($row = $result->fetch_assoc()) {
 $query = "SELECT p.Purchase_ID, s.Supplier_Name, p.Purchase_Date, p.Total_Amount 
           FROM purchases p
           LEFT JOIN supplier s ON p.Supplier_ID = s.Supplier_ID
+          WHERE p.Accepted = 1
           ORDER BY p.Purchase_Date DESC LIMIT 5";
 $result = $conn->query($query);
 
@@ -64,7 +65,7 @@ while ($row = $result->fetch_assoc()) {
 }
 
 // Sort all activities by time (newest first)
-usort($activities, function($a, $b) {
+usort($activities, function ($a, $b) {
     return strtotime($b['time']) - strtotime($a['time']);
 });
 
@@ -73,10 +74,11 @@ $recentActivities = array_slice($activities, 0, 10);
 
 echo json_encode($recentActivities);
 
-function formatTimeAgo($datetime) {
+function formatTimeAgo($datetime)
+{
     $time = strtotime($datetime);
     $diff = time() - $time;
-    
+
     if ($diff < 60) {
         return 'Just now';
     } elseif ($diff < 3600) {
@@ -92,4 +94,3 @@ function formatTimeAgo($datetime) {
         return date('M j, Y', $time);
     }
 }
-?>

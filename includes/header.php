@@ -93,29 +93,76 @@ if (isset($_SESSION['user_id'])) {
 
         <!-- Alerts -->
         <li class="nav-item dropdown no-caret d-none d-sm-block me-3 dropdown-notifications">
-            <a class="btn btn-icon btn-transparent-dark dropdown-toggle" id="navbarDropdownAlerts" href="#" role="button" data-bs-toggle="dropdown">
-                <i data-feather="bell"></i>
+            <?php
+            $pendingCount = 0;
+            if (isset($_SESSION['user_role']) && in_array($_SESSION['user_role'], [1, 3])) {
+
+                $stmt = $conn->prepare("SELECT COUNT(*) AS count FROM purchases WHERE Accepted = 0");
+                $stmt->execute();
+                $stmt->bind_result($pendingCount);
+                $stmt->fetch();
+                $stmt->close();
+            }
+            ?>
+            <a class="btn btn-icon btn-transparent-dark dropdown-toggle position-relative" id="navbarDropdownAlerts" href="#" role="button" data-bs-toggle="dropdown">
+                <i data-feather="bell" style="width: 24px; height: 24px;"></i>
+
+                <?php if ($pendingCount > 0 && isset($_SESSION['user_role']) && in_array($_SESSION['user_role'], [1, 3])): ?>
+                    <span class="badge rounded-pill bg-danger"
+                        style="font-size: 0.5rem; padding: 3px 6px;">
+                        <?= $pendingCount ?>
+                    </span>
+
+                <?php endif; ?>
             </a>
+
+
             <div class="dropdown-menu dropdown-menu-end border-0 shadow animated--fade-in-up" aria-labelledby="navbarDropdownAlerts">
                 <h6 class="dropdown-header dropdown-notifications-header"><i class="me-2" data-feather="bell"></i>Alerts Center</h6>
 
-                <?php if (!empty($_SESSION['alerts'])): ?>
-                    <?php foreach ($_SESSION['alerts'] as $alert): ?>
-                        <a class="dropdown-item dropdown-notifications-item" href="#">
-                            <div class="dropdown-notifications-item-icon bg-<?= htmlspecialchars($alert['color']) ?>">
-                                <i data-feather="<?= htmlspecialchars($alert['icon']) ?>"></i>
-                            </div>
-                            <div class="dropdown-notifications-item-content">
-                                <div class="dropdown-notifications-item-content-details"><?= htmlspecialchars($alert['time']) ?></div>
-                                <div class="dropdown-notifications-item-content-text"><?= htmlspecialchars($alert['message']) ?></div>
-                            </div>
-                        </a>
-                    <?php endforeach; ?>
-                <?php else: ?>
+                <?php
+                // التحقق من الدور
+                if (isset($_SESSION['user_role']) && in_array($_SESSION['user_role'], [1, 3])) {
+
+                    $stmt = $conn->prepare("SELECT Purchase_ID, Purchase_Date FROM purchases WHERE Accepted = 0 ORDER BY Purchase_Date DESC LIMIT 5");
+                    $stmt->execute();
+                    $result = $stmt->get_result();
+                    if ($result->num_rows > 0):
+                        while ($row = $result->fetch_assoc()):
+                ?>
+                            <a class="dropdown-item dropdown-notifications-item" href="proposals_list.php">
+                                <div class="dropdown-notifications-item-icon bg-warning">
+                                    <i data-feather="alert-circle"></i>
+                                </div>
+                                <div class="dropdown-notifications-item-content">
+                                    <div class="dropdown-notifications-item-content-details">
+                                        <?= htmlspecialchars(date("Y-m-d", strtotime($row['Purchase_Date']))) ?>
+                                    </div>
+                                    <div class="dropdown-notifications-item-content-text">
+                                        New pending proposal (ID: <?= $row['Purchase_ID'] ?>)
+                                    </div>
+                                </div>
+                            </a>
+                        <?php
+                        endwhile;
+                    else:
+                        ?>
+                        <div class="text-center p-3 text-muted">No pending proposals.</div>
+                    <?php
+                    endif;
+                    $stmt->close();
+                } else {
+                    ?>
                     <div class="text-center p-3 text-muted">No alerts.</div>
-                <?php endif; ?>
+                <?php } ?>
             </div>
         </li>
+
+
+
+
+
+
 
         <!-- User Menu -->
         <li class="nav-item dropdown no-caret dropdown-user me-3 me-lg-4">

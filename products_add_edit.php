@@ -1,4 +1,17 @@
 <?php
+
+require_once "./login_register/auth_session.php";
+
+if ($_SESSION['user_role'] != 1 && $_SESSION['user_role'] != 3) {
+    header("Location: ./unauthorized.php");
+    exit;
+}
+
+?>
+
+
+
+<?php
 require_once "includes/db.php";
 
 
@@ -162,25 +175,25 @@ $units = $conn->query("SELECT Unit_ID, Unit_name, Unit_abrev FROM units");
                                         </select>
                                     </div>
                                     <div class="col-md-6">
-                                    <?php
-$selectedSuppliers = [];
-if ($isEdit) {
-    $supplierResult = $conn->query("SELECT Supplier_ID FROM product_supplier WHERE Product_ID = $product_id");
-    while ($row = $supplierResult->fetch_assoc()) {
-        $selectedSuppliers[] = $row['Supplier_ID'];
-    }
-}
-?>
-<label class="form-label">Suppliers <span class="text-danger">*</span></label>
-<select id="supplierSelect" name="supplier_ids[]" multiple required>
-    <?php mysqli_data_seek($suppliers, 0); ?>
-    <?php while ($sup = $suppliers->fetch_assoc()): ?>
-        <option value="<?= $sup['Supplier_ID'] ?>" <?= in_array($sup['Supplier_ID'], $selected_suppliers ?? []) ? 'selected' : '' ?>>
-    <?= $sup['Supplier_Name'] ?>
-</option>
+                                        <?php
+                                        $selectedSuppliers = [];
+                                        if ($isEdit) {
+                                            $supplierResult = $conn->query("SELECT Supplier_ID FROM product_supplier WHERE Product_ID = $product_id");
+                                            while ($row = $supplierResult->fetch_assoc()) {
+                                                $selectedSuppliers[] = $row['Supplier_ID'];
+                                            }
+                                        }
+                                        ?>
+                                        <label class="form-label">Suppliers <span class="text-danger">*</span></label>
+                                        <select id="supplierSelect" name="supplier_ids[]" multiple required>
+                                            <?php mysqli_data_seek($suppliers, 0); ?>
+                                            <?php while ($sup = $suppliers->fetch_assoc()): ?>
+                                                <option value="<?= $sup['Supplier_ID'] ?>" <?= in_array($sup['Supplier_ID'], $selected_suppliers ?? []) ? 'selected' : '' ?>>
+                                                    <?= $sup['Supplier_Name'] ?>
+                                                </option>
 
-    <?php endwhile; ?>
-</select>
+                                            <?php endwhile; ?>
+                                        </select>
 
 
                                     </div>
@@ -266,14 +279,14 @@ if ($isEdit) {
     <script src="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/js/tom-select.complete.min.js"></script>
 
     <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        new TomSelect('#supplierSelect', {
-            placeholder: 'Select Supplier(s)',
-            plugins: ['remove_button'],
-            maxOptions: 1000
+        document.addEventListener('DOMContentLoaded', function() {
+            new TomSelect('#supplierSelect', {
+                placeholder: 'Select Supplier(s)',
+                plugins: ['remove_button'],
+                maxOptions: 1000
+            });
         });
-    });
-</script>
+    </script>
 
 
 </body>

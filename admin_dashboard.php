@@ -1,13 +1,18 @@
 <?php
-session_start();
+
+require_once "./login_register/auth_session.php";
+
+
 if ($_SESSION['user_role'] != 1) {
-    header("Location: ../unauthorized.php");
+    header("Location: ./unauthorized.php");
     exit;
 }
 ?>
 
+
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -23,15 +28,16 @@ if ($_SESSION['user_role'] != 1) {
     <script src="js/vendor/feather.min.js" crossorigin="anonymous"></script>
     <link href="css/styles.css" rel="stylesheet" />
 </head>
+
 <body class="nav-fixed">
-<?php include 'includes/header.php'; ?>
+    <?php include 'includes/header.php'; ?>
     <div id="layoutSidenav">
         <div id="layoutSidenav_nav">
             <?php include 'includes/sidebar.php'; ?>
         </div>
         <div id="layoutSidenav_content">
             <main>
-                
+
 
                 <header class="page-header page-header-compact page-header-light border-bottom bg-white mb-4">
                     <div class="container-fluid px-4">
@@ -70,7 +76,7 @@ if ($_SESSION['user_role'] != 1) {
                             </div>
                         </div>
                     </div>
-                    
+
                     <!-- System Stats Cards -->
                     <div class="row">
                         <!-- Monthly Revenue -->
@@ -92,7 +98,7 @@ if ($_SESSION['user_role'] != 1) {
                                 </div>
                             </div>
                         </div>
-                        
+
                         <!-- New Signups -->
                         <div class="col-lg-6 col-xl-3 mb-4">
                             <div class="card bg-success text-white h-100">
@@ -112,7 +118,7 @@ if ($_SESSION['user_role'] != 1) {
                                 </div>
                             </div>
                         </div>
-                        
+
                         <!-- Inventory Value -->
                         <div class="col-lg-6 col-xl-3 mb-4">
                             <div class="card bg-warning text-white h-100">
@@ -132,7 +138,7 @@ if ($_SESSION['user_role'] != 1) {
                                 </div>
                             </div>
                         </div>
-                        
+
                         <!-- Low Stock Items -->
                         <div class="col-lg-6 col-xl-3 mb-4">
                             <div class="card bg-danger text-white h-100">
@@ -179,19 +185,19 @@ if ($_SESSION['user_role'] != 1) {
                                 </div>
                             </div>
                         </div>
-                        
+
                         <!-- User Roles Distribution -->
                         <div class="col-xl-6 mb-4">
                             <div class="card h-100">
                                 <div class="card-header">
                                     User Roles Distribution
                                     <div class="dropdown no-caret">
-                                        
+
                                         <div class="dropdown-menu dropdown-menu-end animated--fade-in-up" aria-labelledby="rolesDropdown">
                                             <h6 class="dropdown-header">Filter By:</h6>
                                             <a class="dropdown-item" href="#" onclick="updateRolesChart('all')">All Users</a>
                                             <a class="dropdown-item" href="#" onclick="updateRolesChart('active')">Active Users</a>
-                                        </div> 
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="card-body">
@@ -233,7 +239,7 @@ if ($_SESSION['user_role'] != 1) {
                                 </div>
                             </div>
                         </div>
-                        
+
                         <!-- System Health -->
                         <div class="col-lg-6 mb-4">
                             <div class="card h-100">
@@ -313,7 +319,7 @@ if ($_SESSION['user_role'] != 1) {
                                 </div>
                             </div>
                         </div>
-                        
+
                         <!-- Recent Purchases -->
                         <div class="col-lg-6 mb-4">
                             <div class="card h-100">
@@ -343,10 +349,10 @@ if ($_SESSION['user_role'] != 1) {
                     </div>
 
                     <!-- Reports and Quick Actions -->
-                    
 
 
-                            <!-- Reports Section -->
+
+                    <!-- Reports Section -->
                     <div class="card mb-4">
                         <div class="card-header bg-primary text-white">
                             <i class="fas fa-file-pdf me-2"></i> Generate Reports
@@ -370,11 +376,11 @@ if ($_SESSION['user_role'] != 1) {
                             </a>
                         </div>
                     </div>
-                        
-                        
-                           
-                    </div>
-                
+
+
+
+                </div>
+
             </main>
             <?php include 'includes/footer.php'; ?>
         </div>
@@ -387,7 +393,7 @@ if ($_SESSION['user_role'] != 1) {
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/litepicker/dist/bundle.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-    
+
     <!-- Custom JavaScript for Admin Dashboard -->
     <script>
         // Global chart variables
@@ -399,16 +405,16 @@ if ($_SESSION['user_role'] != 1) {
             // Initialize charts and load data
             initializeCharts();
             loadDashboardData();
-            
+
             // Initialize tooltips
             var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-            var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            var tooltipList = tooltipTriggerList.map(function(tooltipTriggerEl) {
                 return new bootstrap.Tooltip(tooltipTriggerEl);
             });
-            
+
             // Feather icons
             feather.replace();
-            
+
             // Update date and time
             updateDateTime();
             setInterval(updateDateTime, 60000);
@@ -491,7 +497,7 @@ if ($_SESSION['user_role'] != 1) {
                     document.getElementById('newSignups').textContent = data.newSignups;
                     document.getElementById('inventoryValue').textContent = formatCurrency(data.inventoryValue);
                     document.getElementById('lowStockCount').textContent = data.lowStockCount;
-                    
+
                     // Update change indicators
                     updateChangeIndicator('revenueChange', data.revenueChange);
                     updateChangeIndicator('signupsChange', data.signupsChange);
@@ -512,7 +518,7 @@ if ($_SESSION['user_role'] != 1) {
                     data.forEach(activity => {
                         let iconColor = '';
                         let icon = '';
-                        
+
                         if (activity.type === 'login') {
                             iconColor = 'bg-blue';
                             icon = 'log-in';
@@ -529,7 +535,7 @@ if ($_SESSION['user_role'] != 1) {
                             iconColor = 'bg-gray';
                             icon = 'activity';
                         }
-                        
+
                         timelineHtml += `
                             <div class="timeline-item" data-type="${activity.type}">
                                 <div class="timeline-item-marker">
@@ -638,7 +644,7 @@ if ($_SESSION['user_role'] != 1) {
         function updateChangeIndicator(elementId, change) {
             const element = document.getElementById(elementId);
             if (!element) return;
-            
+
             if (change > 0) {
                 element.innerHTML = `<i class="fas fa-arrow-up text-success"></i> ${Math.abs(change)}% increase`;
                 element.classList.add('text-success');
@@ -661,16 +667,16 @@ if ($_SESSION['user_role'] != 1) {
         // Function to update date and time display
         function updateDateTime() {
             const now = new Date();
-            
+
             // Format day of week
             const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
             document.getElementById('current-day').textContent = days[now.getDay()];
-            
+
             // Format date (e.g., September 20, 2021)
             const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
             const dateStr = `${months[now.getMonth()]} ${now.getDate()}, ${now.getFullYear()}`;
             document.getElementById('current-date').textContent = dateStr;
-            
+
             // Format time (12-hour format with AM/PM)
             let hours = now.getHours();
             const ampm = hours >= 12 ? 'PM' : 'AM';
@@ -681,4 +687,5 @@ if ($_SESSION['user_role'] != 1) {
         }
     </script>
 </body>
+
 </html>

@@ -2,7 +2,7 @@
 
 require_once "./login_register/auth_session.php";
 
-if ($_SESSION['user_role'] != 1 && $_SESSION['user_role'] != 2) {
+if ($_SESSION['user_role'] != 1 && $_SESSION['user_role'] != 3) {
     header("Location: ./unauthorized.php");
     exit;
 }
@@ -12,20 +12,23 @@ if ($_SESSION['user_role'] != 1 && $_SESSION['user_role'] != 2) {
 <?php
 require_once "includes/db.php";
 
-// Fetch Sales
+// Fetch Purchases
+$sql = "SELECT p.*, 
+               GROUP_CONCAT(DISTINCT s.Supplier_Name SEPARATOR ', ') AS Suppliers
+        FROM purchases p
+        LEFT JOIN purchases_details pd ON p.Purchase_ID = pd.Purchase_ID
+        LEFT JOIN supplier s ON pd.Supplier_ID = s.Supplier_ID
+        WHERE p.Accepted = 0
+        GROUP BY p.Purchase_ID
+        ORDER BY p.Purchase_Date DESC";
 
-$sql = "SELECT s.*, 
-               c.Name AS Customer_Name
-        FROM sales s
-        LEFT JOIN customers c ON s.Customer_ID = c.Customer_ID
-        ORDER BY s.Sale_Date DESC";
 
 
 $result = $conn->query($sql);
 
-$sales = [];
+$purchases = [];
 while ($row = $result->fetch_assoc()) {
-    $sales[] = $row;
+    $purchases[] = $row;
 }
 ?>
 
@@ -34,7 +37,7 @@ while ($row = $result->fetch_assoc()) {
 
 <head>
     <meta charset="utf-8" />
-    <title>Sales List</title>
+    <title>Purchases List</title>
     <link href="css/vendor/datatables-style.min.css" rel="stylesheet" />
     <link href="css/vendor/bootstrap.css" rel="stylesheet" />
     <link href="css/styles.css" rel="stylesheet" />
@@ -53,7 +56,10 @@ while ($row = $result->fetch_assoc()) {
         table#datatablesSimple thead th:nth-child(8),
         table#datatablesSimple thead th:nth-child(9) {
             text-align: center !important;
+
         }
+
+
 
         /* Center table body cells */
         table#datatablesSimple tbody td:nth-child(2),
@@ -83,14 +89,14 @@ while ($row = $result->fetch_assoc()) {
                             <div class="row align-items-center justify-content-between pt-3">
                                 <div class="col-auto mb-3">
                                     <h1 class="page-header-title">
-                                        <div class="page-header-icon"><i data-feather="shopping-bag"></i></div>
-                                        Sales List
+                                        <div class="page-header-icon"><i data-feather="shopping-cart"></i></div>
+                                        Purchases List
                                     </h1>
                                 </div>
                                 <div class="col-12 col-xl-auto mb-3">
-                                    <a class="btn btn-sm btn-light text-primary" href="sales_add_edit.php">
+                                    <a class="btn btn-sm btn-light text-primary" href="purchases_add_edit.php">
                                         <i class="me-1" data-feather="plus-circle"></i>
-                                        Add New Sale
+                                        Add New Purchase
                                     </a>
                                 </div>
                             </div>
@@ -109,7 +115,7 @@ while ($row = $result->fetch_assoc()) {
                                         <i class="fas fa-trash-alt"></i>
                                     </div>
                                     <div class="alert-icon-content">
-                                        <strong>Sale Deleted:</strong> The sale has been successfully removed.
+                                        <strong>Purchase Deleted:</strong> The purchase has been successfully removed.
                                     </div>
                                 </div>
                             <?php elseif (isset($_GET['added']) && $_GET['added'] == '1'): ?>
@@ -119,7 +125,7 @@ while ($row = $result->fetch_assoc()) {
                                         <i class="fas fa-plus-circle"></i>
                                     </div>
                                     <div class="alert-icon-content">
-                                        <strong>Sale Added:</strong> The sale has been added.
+                                        <strong>Purchase Added:</strong> The purchase has been added.
                                     </div>
                                 </div>
                             <?php elseif (isset($_GET['updated']) && $_GET['updated'] == '1'): ?>
@@ -129,76 +135,64 @@ while ($row = $result->fetch_assoc()) {
                                         <i class="fas fa-save"></i>
                                     </div>
                                     <div class="alert-icon-content">
-                                        <strong>Sale Updated:</strong> Changes have been saved.
+                                        <strong>Purchase Updated:</strong> Changes have been saved.
                                     </div>
                                 </div>
                             <?php endif; ?>
 
-                            <?php foreach ($sales as $sale): ?>
-                                <?php include 'components/sale_details_modal.php'; ?>
+                            <?php foreach ($purchases as $purchase): ?>
+                                <?php include 'components/proposal_details_modal.php'; ?>
                             <?php endforeach; ?>
 
                             <table id="datatablesSimple" class="table">
                                 <thead>
                                     <tr>
                                         <th>ID</th>
-                                        <th>Sale Date</th>
-                                        <th>Customer</th>
+                                        <th>Purchase Date</th>
+                                        <th>Suppliers</th>
                                         <th>Payment Method</th>
-                                        <th>Delivery Status</th>
-                                        <th>Payment Status</th>
                                         <th>Total Amount</th>
-                                        <th>Updated At</th>
-                                        <th>Actions</th>
+                                        <th>View</th>
+
+                                        <th>Accepted ?</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php foreach ($sales as $row): ?>
+                                    <?php foreach ($purchases as $row): ?>
                                         <tr>
-                                            <td><?= $row['Sale_ID'] ?></td>
-                                            <td><?= date('Y-m-d', strtotime($row['Sale_Date'])) ?></td>
-                                            <td><?= htmlspecialchars($row['Customer_Name']) ?></td>
-                                            <td><?= htmlspecialchars($row['Payment_Method']) ?></td>
-
-                                            <td> <!-- Delivery Status -->
-                                                <?php
-                                                $deliveryBadge = match ($row['Delivery_Status']) {
-                                                    'Delivered' => 'bg-success',
-                                                    'Pending'   => 'bg-warning text-dark',
-                                                    'Canceled'  => 'bg-danger',
-                                                    default     => 'bg-secondary'
-                                                };
-                                                ?>
-                                                <span class="badge <?= $deliveryBadge ?>"><?= $row['Delivery_Status'] ?></span>
-                                            </td>
+                                            <td><?= $row['Purchase_ID'] ?></td>
+                                            <td><?= date('Y-m-d', strtotime($row['Purchase_Date'])) ?></td>
 
                                             <td>
-                                                <?php
-                                                $paymentBadge = match ($row['Payment_Status']) {
-                                                    'Paid' => 'bg-success',
-                                                    'Partial' => 'bg-warning text-dark',
-                                                    'Unpaid' => 'bg-danger'
-                                                };
-                                                ?>
-                                                <span class="badge <?= $paymentBadge ?>"><?= $row['Payment_Status'] ?></span>
-                                            </td>
-                                            <td><?= number_format($row['Total_Amount'], 2) ?> DA</td>
-                                            <td>
-                                                <div class="text-center">
-                                                    <div class="fw-bold text-dark"><?= date('Y-m-d', strtotime($row['Updated_At'])) ?></div>
-                                                    <div class="text-muted small"><?= date('H:i:s', strtotime($row['Updated_At'])) ?></div>
+                                                <div class="d-flex justify-content-center flex-column text-center">
+                                                    <?php
+                                                    $suppliers = explode(',', $row['Suppliers']);
+                                                    foreach ($suppliers as $supplierName): ?>
+                                                        <span class="badge bg-purple-soft text-purple mb-1"><?= trim($supplierName) ?></span>
+                                                    <?php endforeach; ?>
                                                 </div>
                                             </td>
+
+                                            <td><?= htmlspecialchars($row['Payment_Method']) ?></td>
+
+                                            <td><?= number_format($row['Total_Amount'], 2) ?> DA</td>
+
                                             <td style="width: 120px;">
                                                 <a class="btn btn-datatable btn-icon btn-transparent-dark" title="View"
-                                                    data-bs-toggle="modal" data-bs-target="#viewModalDetails<?= $row['Sale_ID'] ?>">
+                                                    data-bs-toggle="modal" data-bs-target="#viewModalDetails<?= $row['Purchase_ID'] ?>">
                                                     <i data-feather="eye"></i>
                                                 </a>
-                                                <a href="sales_add_edit.php?id=<?= $row['Sale_ID'] ?>" class="btn btn-datatable btn-icon btn-transparent-dark" title="Edit">
-                                                    <i data-feather="edit"></i>
+
+                                            </td>
+
+                                            <td style="width: 120px;">
+
+                                                <a class="btn btn-datatable btn-icon text-success" title="Accept" onclick="return confirmAccept(<?= $row['Purchase_ID'] ?>)">
+                                                    <i data-feather="check-circle" style="width: 24px; height: 24px;"></i>
                                                 </a>
-                                                <a class="btn btn-datatable btn-icon btn-transparent-dark" title="Delete" onclick="return confirmDelete(<?= $row['Sale_ID'] ?>)">
-                                                    <i data-feather="trash-2"></i>
+
+                                                <a class="btn btn-datatable btn-icon text-danger" title="Reject" onclick="return confirmDelete(<?= $row['Purchase_ID'] ?>)">
+                                                    <i data-feather="x-circle" style="width: 24px; height: 24px;"></i>
                                                 </a>
                                             </td>
                                         </tr>
@@ -220,18 +214,34 @@ while ($row = $result->fetch_assoc()) {
     <script src="js/scripts.js"></script>
 
     <script>
-        function confirmDelete(saleId) {
+        function confirmDelete(purchaseId) {
             Swal.fire({
-                title: 'Are you sure?',
-                text: "This sale will be permanently deleted!",
+                title: 'Are you sure to reject the proposal?',
+                text: "This proposal will be permanently deleted!",
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#d33',
                 cancelButtonColor: '#3085d6',
-                confirmButtonText: 'Yes, delete it!'
+                confirmButtonText: 'Yes, Reject it!'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    window.location.href = 'backend/sales_handler.php?deleteid=' + saleId;
+                    window.location.href = 'backend/proposals_handler.php?rejectedid=' + purchaseId;
+                }
+            });
+        }
+
+        function confirmAccept(purchaseId) {
+            Swal.fire({
+                title: 'Are you sure you want to accept this proposal?',
+                text: "This proposal will be marked as accepted.",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6', // Blue for accept
+                cancelButtonColor: '#d33', // Red for cancel
+                confirmButtonText: 'Yes, Accept it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = 'backend/proposals_handler.php?acceptid=' + purchaseId;
                 }
             });
         }

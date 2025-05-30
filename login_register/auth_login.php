@@ -1,5 +1,8 @@
 <?php
 session_start();
+ini_set('session.gc_maxlifetime', 3600 * 24); // 1 hour on server
+session_set_cookie_params(3600 * 24);         // 1 hour in browser cookie
+
 require_once "../includes/db.php";
 
 // Check if form is submitted
@@ -85,10 +88,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     // ❌ No match found
     header("Location: login.php?error=invalid");
     exit;
-
 } else {
     header("Location: login.php");
     exit;
 }
-?>
-

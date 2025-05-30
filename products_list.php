@@ -1,4 +1,16 @@
 <?php
+
+require_once "./login_register/auth_session.php";
+
+if ($_SESSION['user_role'] != 1 && $_SESSION['user_role'] != 3) {
+    header("Location: ./unauthorized.php");
+    exit;
+}
+
+?>
+
+
+<?php
 require_once "includes/db.php";
 
 $sql = "
@@ -53,29 +65,45 @@ while ($row = $result->fetch_assoc()) {
     <script src="js/vendor/feather.min.js" crossorigin="anonymous"></script>
 
     <style>
-    /* Center header columns */
-    table#datatablesSimple thead th:nth-child(3),  /* Supplier */
-    table#datatablesSimple thead th:nth-child(4),  /* Quantity */
-    table#datatablesSimple thead th:nth-child(5),  /* Buy Price */
-    table#datatablesSimple thead th:nth-child(6),  /* Sale Price */
-    table#datatablesSimple thead th:nth-child(7),  /* Updated At */
-    table#datatablesSimple thead th:nth-child(8)   /* Actions */ {
-        text-align: center !important;
-    }
+        /* Center header columns */
+        table#datatablesSimple thead th:nth-child(3),
+        /* Supplier */
+        table#datatablesSimple thead th:nth-child(4),
+        /* Quantity */
+        table#datatablesSimple thead th:nth-child(5),
+        /* Buy Price */
+        table#datatablesSimple thead th:nth-child(6),
+        /* Sale Price */
+        table#datatablesSimple thead th:nth-child(7),
+        /* Updated At */
+        table#datatablesSimple thead th:nth-child(8)
+
+        /* Actions */
+            {
+            text-align: center !important;
+        }
 
 
-    
-    /* Center table body cells */
-    table#datatablesSimple tbody td:nth-child(3),  /* Supplier */
-    table#datatablesSimple tbody td:nth-child(4),  /* Quantity */
-    table#datatablesSimple tbody td:nth-child(5),  /* Buy Price */
-    table#datatablesSimple tbody td:nth-child(6),  /* Sale Price */
-    table#datatablesSimple tbody td:nth-child(7),  /* Updated At */
-    table#datatablesSimple tbody td:nth-child(8)   /* Actions */ {
-        text-align: center !important;
-        vertical-align: middle !important;
-    }
-</style>
+
+        /* Center table body cells */
+        table#datatablesSimple tbody td:nth-child(3),
+        /* Supplier */
+        table#datatablesSimple tbody td:nth-child(4),
+        /* Quantity */
+        table#datatablesSimple tbody td:nth-child(5),
+        /* Buy Price */
+        table#datatablesSimple tbody td:nth-child(6),
+        /* Sale Price */
+        table#datatablesSimple tbody td:nth-child(7),
+        /* Updated At */
+        table#datatablesSimple tbody td:nth-child(8)
+
+        /* Actions */
+            {
+            text-align: center !important;
+            vertical-align: middle !important;
+        }
+    </style>
 
 </head>
 
@@ -151,26 +179,26 @@ while ($row = $result->fetch_assoc()) {
 
 
                             <?php foreach ($products as &$product): ?>
-    <?php
-    // 🔁 Step 1: Fetch all suppliers for this product
-    $product_id = $product['Product_ID'];
-    $supplier_stmt = $conn->prepare("SELECT s.Supplier_Name FROM product_supplier ps JOIN supplier s ON ps.Supplier_ID = s.Supplier_ID WHERE ps.Product_ID = ?");
-    $supplier_stmt->bind_param("i", $product_id);
-    $supplier_stmt->execute();
-    $supplier_result = $supplier_stmt->get_result();
-    $suppliers_list = [];
-    while ($row = $supplier_result->fetch_assoc()) {
-        $suppliers_list[] = $row['Supplier_Name'];
-    }
-    $supplier_stmt->close();
+                                <?php
+                                // 🔁 Step 1: Fetch all suppliers for this product
+                                $product_id = $product['Product_ID'];
+                                $supplier_stmt = $conn->prepare("SELECT s.Supplier_Name FROM product_supplier ps JOIN supplier s ON ps.Supplier_ID = s.Supplier_ID WHERE ps.Product_ID = ?");
+                                $supplier_stmt->bind_param("i", $product_id);
+                                $supplier_stmt->execute();
+                                $supplier_result = $supplier_stmt->get_result();
+                                $suppliers_list = [];
+                                while ($row = $supplier_result->fetch_assoc()) {
+                                    $suppliers_list[] = $row['Supplier_Name'];
+                                }
+                                $supplier_stmt->close();
 
-    // Add supplier names to the product array
-    $product['Suppliers_List'] = $suppliers_list;
-    ?>
+                                // Add supplier names to the product array
+                                $product['Suppliers_List'] = $suppliers_list;
+                                ?>
 
-    <!-- 🔁 Include modal with the enriched $product -->
-    <?php include 'components/product_details_modal.php'; ?>
-<?php endforeach; ?>
+                                <!-- 🔁 Include modal with the enriched $product -->
+                                <?php include 'components/product_details_modal.php'; ?>
+                            <?php endforeach; ?>
 
 
 
@@ -221,14 +249,14 @@ while ($row = $result->fetch_assoc()) {
 
 
                                             <td>
-    <div class="d-flex justify-content-center flex-column text-center">
-        <?php 
-        $suppliers = explode(',', $row['Supplier_Names']);
-        foreach ($suppliers as $supplierName): ?>
-            <span class="badge bg-purple-soft text-purple mb-1"><?= trim($supplierName) ?></span>
-        <?php endforeach; ?>
-    </div>
-</td>
+                                                <div class="d-flex justify-content-center flex-column text-center">
+                                                    <?php
+                                                    $suppliers = explode(',', $row['Supplier_Names']);
+                                                    foreach ($suppliers as $supplierName): ?>
+                                                        <span class="badge bg-purple-soft text-purple mb-1"><?= trim($supplierName) ?></span>
+                                                    <?php endforeach; ?>
+                                                </div>
+                                            </td>
 
 
                                             <td>
@@ -312,7 +340,7 @@ while ($row = $result->fetch_assoc()) {
         }
 
         window.addEventListener("DOMContentLoaded", (event) => {
-            
+
 
             const datatablesSimple = document.getElementById("datatablesSimple");
             if (datatablesSimple) {

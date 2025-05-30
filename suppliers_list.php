@@ -1,4 +1,15 @@
 <?php
+
+require_once "./login_register/auth_session.php";
+
+if ($_SESSION['user_role'] != 1 && $_SESSION['user_role'] != 3) {
+    header("Location: ./unauthorized.php");
+    exit;
+}
+
+?>
+
+<?php
 require_once "includes/db.php";
 
 // Query suppliers with media and state info
@@ -34,31 +45,29 @@ while ($row = $result->fetch_assoc()) {
     <link href="css/styles.css" rel="stylesheet" />
 
     <style>
-    /* Center header columns */
-    table#datatablesSimple thead th:nth-child(5), 
-    table#datatablesSimple thead th:nth-child(6),  
-    table#datatablesSimple thead th:nth-child(7),  
-    table#datatablesSimple thead th:nth-child(8),  
-    table#datatablesSimple thead th:nth-child(9),
-    table#datatablesSimple thead th:nth-child(10) 
-    {
-        text-align: center !important;
-    }
+        /* Center header columns */
+        table#datatablesSimple thead th:nth-child(5),
+        table#datatablesSimple thead th:nth-child(6),
+        table#datatablesSimple thead th:nth-child(7),
+        table#datatablesSimple thead th:nth-child(8),
+        table#datatablesSimple thead th:nth-child(9),
+        table#datatablesSimple thead th:nth-child(10) {
+            text-align: center !important;
+        }
 
 
-    
-    /* Center table body cells */
-    table#datatablesSimple tbody td:nth-child(5), 
-    table#datatablesSimple tbody td:nth-child(6),  
-    table#datatablesSimple tbody td:nth-child(7),  
-    table#datatablesSimple tbody td:nth-child(8),  
-    table#datatablesSimple tbody td:nth-child(9),
-    table#datatablesSimple thead th:nth-child(10)  
-    {
-        text-align: center !important;
-        vertical-align: middle !important;
-    }
-</style>
+
+        /* Center table body cells */
+        table#datatablesSimple tbody td:nth-child(5),
+        table#datatablesSimple tbody td:nth-child(6),
+        table#datatablesSimple tbody td:nth-child(7),
+        table#datatablesSimple tbody td:nth-child(8),
+        table#datatablesSimple tbody td:nth-child(9),
+        table#datatablesSimple thead th:nth-child(10) {
+            text-align: center !important;
+            vertical-align: middle !important;
+        }
+    </style>
 
 </head>
 
@@ -139,7 +148,7 @@ while ($row = $result->fetch_assoc()) {
                                         <th>Address</th>
                                         <th>Email</th>
                                         <th>Password</th>
-                                        <th>Phone</th>                                       
+                                        <th>Phone</th>
                                         <th>State</th>
                                         <th>Status</th>
                                         <th>Updated At</th>

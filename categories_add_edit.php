@@ -1,5 +1,12 @@
 <?php
 
+require_once "./login_register/auth_session.php";
+
+if ($_SESSION['user_role'] != 1 && $_SESSION['user_role'] != 3) {
+    header("Location: ./unauthorized.php");
+    exit;
+}
+
 
 // categories_add_edit.php nazim
 // This file handles both adding and editing categories.

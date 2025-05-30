@@ -1,4 +1,15 @@
 <?php
+
+require_once "./login_register/auth_session.php";
+
+if ($_SESSION['user_role'] != 1 && $_SESSION['user_role'] != 3) {
+    header("Location: ./unauthorized.php");
+    exit;
+}
+
+?>
+
+<?php
 require_once "includes/db.php";
 
 $sql = "SELECT c.Category_ID, c.Category_Name, c.Description, COUNT(p.Product_ID) as ProductCount, c.Created_At, c.Updated_At 
@@ -56,20 +67,29 @@ foreach ($categories as $cat) {
     <script data-search-pseudo-elements defer src="js/vendor/font-awesome.min.js" crossorigin="anonymous"></script>
     <script src="js/vendor/feather.min.js" crossorigin="anonymous"></script>
     <style>
-        
-    table#datatablesSimple thead th:nth-child(3),  /* Category */
-    table#datatablesSimple thead th:nth-child(4),  /* Products */
-    table#datatablesSimple thead th:nth-child(5),  /* Updated At */
-    table#datatablesSimple thead th:nth-child(6)   /* Actions */ {
-        text-align: center !important;
-    }
+        table#datatablesSimple thead th:nth-child(3),
+        /* Category */
+        table#datatablesSimple thead th:nth-child(4),
+        /* Products */
+        table#datatablesSimple thead th:nth-child(5),
+        /* Updated At */
+        table#datatablesSimple thead th:nth-child(6)
 
-    table#datatablesSimple tbody td:nth-child(4),  /* Products */
-    table#datatablesSimple tbody td:nth-child(6)   /* Actions */ {
-        text-align: center !important;
-        vertical-align: middle !important;
-    }
-</style>
+        /* Actions */
+            {
+            text-align: center !important;
+        }
+
+        table#datatablesSimple tbody td:nth-child(4),
+        /* Products */
+        table#datatablesSimple tbody td:nth-child(6)
+
+        /* Actions */
+            {
+            text-align: center !important;
+            vertical-align: middle !important;
+        }
+    </style>
 
 </head>
 
@@ -167,25 +187,25 @@ foreach ($categories as $cat) {
                                             <td class="text-nowrap"><?= htmlspecialchars($category['Description']) ?></td>
 
                                             <td>
-                                            <div class="d-flex justify-content-center">
-                                             <span class="badge bg-primary-soft text-primary fs-7"><?= $category['Category_Name'] ?></span>
-                                             </div>  
+                                                <div class="d-flex justify-content-center">
+                                                    <span class="badge bg-primary-soft text-primary fs-7"><?= $category['Category_Name'] ?></span>
+                                                </div>
                                             </td>
 
                                             <td class="text-nowrap">
 
 
 
-<a href="#" class="text-decoration-none d-inline-flex align-items-center gap-1"
-    data-bs-toggle="modal"
-    data-bs-target="#productsModal<?= $category['Category_ID'] ?>">
-    <i class="fas fa-box-open text-info small"></i>
-    <span class="badge bg-info-soft text-info fw-semibold"><?= $category['ProductCount'] ?></span>
-    <small class="text-muted">products</small>
-</a>
+                                                <a href="#" class="text-decoration-none d-inline-flex align-items-center gap-1"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#productsModal<?= $category['Category_ID'] ?>">
+                                                    <i class="fas fa-box-open text-info small"></i>
+                                                    <span class="badge bg-info-soft text-info fw-semibold"><?= $category['ProductCount'] ?></span>
+                                                    <small class="text-muted">products</small>
+                                                </a>
 
 
-</td>
+                                            </td>
 
 
 
@@ -265,7 +285,6 @@ foreach ($categories as $cat) {
                 new simpleDatatables.DataTable(datatablesSimple);
             }
         });
-
     </script>
 </body>
 

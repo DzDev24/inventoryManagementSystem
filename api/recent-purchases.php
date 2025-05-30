@@ -12,6 +12,7 @@ $query = "SELECT
           FROM purchases p
           LEFT JOIN purchases_details pd ON p.Purchase_ID = pd.Purchase_ID
           LEFT JOIN supplier s ON pd.Supplier_ID = s.Supplier_ID
+          WHERE p.Accepted = 1
           GROUP BY p.Purchase_ID
           ORDER BY p.Purchase_Date DESC
           LIMIT 5";
@@ -30,4 +31,3 @@ while ($row = $result->fetch_assoc()) {
 }
 
 echo json_encode($purchases);
-?>

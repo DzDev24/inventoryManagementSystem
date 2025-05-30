@@ -29,22 +29,24 @@ if (!empty($query) && $query->num_rows > 0) {
 ?>
 
 <style>
-.cart-dropdown {
-    max-height: 400px;
-    overflow-y: auto;
-    scrollbar-width: none;
-}
-.cart-dropdown::-webkit-scrollbar {
-    display: none;
-}
-.dropdown-notifications-item-content-text {
-    white-space: normal !important;
-    overflow: visible !important;
-    text-overflow: unset !important;
-    display: block !important;
-    word-break: break-word !important;
-    max-width: 100% !important;
-}
+    .cart-dropdown {
+        max-height: 400px;
+        overflow-y: auto;
+        scrollbar-width: none;
+    }
+
+    .cart-dropdown::-webkit-scrollbar {
+        display: none;
+    }
+
+    .dropdown-notifications-item-content-text {
+        white-space: normal !important;
+        overflow: visible !important;
+        text-overflow: unset !important;
+        display: block !important;
+        word-break: break-word !important;
+        max-width: 100% !important;
+    }
 </style>
 
 <nav class="topnav navbar navbar-expand shadow justify-content-between justify-content-sm-start navbar-light bg-white" id="sidenavAccordion">
@@ -66,14 +68,119 @@ if (!empty($query) && $query->num_rows > 0) {
 
     <ul class="navbar-nav align-items-center ms-auto">
 
-        <!-- Alerts -->
         <li class="nav-item dropdown no-caret d-none d-sm-block me-3 dropdown-notifications">
-            <a class="btn btn-icon btn-transparent-dark dropdown-toggle" id="navbarDropdownAlerts" href="#" role="button" data-bs-toggle="dropdown"><i data-feather="bell"></i></a>
-            <div class="dropdown-menu dropdown-menu-end border-0 shadow animated--fade-in-up" aria-labelledby="navbarDropdownAlerts">
-                <h6 class="dropdown-header dropdown-notifications-header"><i class="me-2" data-feather="bell"></i>Alerts Center</h6>
+            <?php
+            // Calculate total alerts
+            $totalAlerts = 0;
 
-                <?php if (!empty($_SESSION['alerts'])): ?>
-                    <?php foreach ($_SESSION['alerts'] as $alert): ?>
+            if (isset($_SESSION['supplier_id'])) {
+                $supplierId = $_SESSION['supplier_id'];
+
+                // Count accepted proposals
+                $stmt = $conn->prepare("SELECT COUNT(*) FROM purchases WHERE Accepted = 1 AND Supplier_ID = ?");
+                $stmt->bind_param("i", $supplierId);
+                $stmt->execute();
+                $stmt->bind_result($acceptedCount);
+                $stmt->fetch();
+                $stmt->close();
+                $totalAlerts += $acceptedCount;
+
+                // Count rejected proposals
+                $stmt = $conn->prepare("SELECT COUNT(*) FROM purchases WHERE Accepted = 2 AND Supplier_ID = ?");
+                $stmt->bind_param("i", $supplierId);
+                $stmt->execute();
+                $stmt->bind_result($rejectedCount);
+                $stmt->fetch();
+                $stmt->close();
+                $totalAlerts += $rejectedCount;
+            }
+
+            // Count session alerts
+            if (!empty($_SESSION['alerts'])) {
+                $totalAlerts += count($_SESSION['alerts']);
+            }
+            ?>
+
+            <a class="btn btn-icon btn-transparent-dark dropdown-toggle" id="navbarDropdownAlerts" href="#" role="button" data-bs-toggle="dropdown">
+                <i data-feather="bell" style="width: 24px; height: 24px;"></i>
+                <?php if ($totalAlerts > 0): ?>
+                    <span class="badge rounded-pill bg-danger" style="font-size: 0.5rem; padding: 3px 6px;">
+                        <?= $totalAlerts ?>
+                    </span>
+                <?php endif; ?>
+            </a>
+
+            <div class="dropdown-menu dropdown-menu-end border-0 shadow animated--fade-in-up" aria-labelledby="navbarDropdownAlerts">
+                <h6 class="dropdown-header dropdown-notifications-header">
+                    <i class="me-2" data-feather="bell"></i>Alerts Center
+                </h6>
+
+                <?php
+                $hasAlerts = false;
+
+                if (isset($_SESSION['supplier_id'])) {
+                    $supplierId = $_SESSION['supplier_id'];
+
+                    // Accepted proposals
+                    $stmt = $conn->prepare("SELECT Purchase_ID, Purchase_Date FROM purchases WHERE Accepted = 1 AND Supplier_ID = ? ORDER BY Purchase_Date DESC LIMIT 5");
+                    $stmt->bind_param("i", $supplierId);
+                    $stmt->execute();
+                    $result = $stmt->get_result();
+                    if ($result->num_rows > 0) {
+                        $hasAlerts = true;
+                        while ($row = $result->fetch_assoc()) {
+                ?>
+                            <a class="dropdown-item dropdown-notifications-item" href="my_accepted_proposals.php">
+                                <div class="dropdown-notifications-item-icon bg-success">
+                                    <i data-feather="check-circle"></i>
+                                </div>
+                                <div class="dropdown-notifications-item-content">
+                                    <div class="dropdown-notifications-item-content-details">
+                                        <?= htmlspecialchars(date("Y-m-d", strtotime($row['Purchase_Date']))) ?>
+                                    </div>
+                                    <div class="dropdown-notifications-item-content-text">
+                                        Your proposal (ID: <?= $row['Purchase_ID'] ?>) has been accepted.
+                                    </div>
+                                </div>
+                            </a>
+                        <?php
+                        }
+                    }
+                    $stmt->close();
+
+                    // Rejected proposals
+                    $stmt = $conn->prepare("SELECT Purchase_ID, Purchase_Date FROM purchases WHERE Accepted = 2 AND Supplier_ID = ? ORDER BY Purchase_Date DESC LIMIT 5");
+                    $stmt->bind_param("i", $supplierId);
+                    $stmt->execute();
+                    $result = $stmt->get_result();
+                    if ($result->num_rows > 0) {
+                        $hasAlerts = true;
+                        while ($row = $result->fetch_assoc()) {
+                        ?>
+                            <a class="dropdown-item dropdown-notifications-item" href="my_rejected_proposals.php">
+                                <div class="dropdown-notifications-item-icon bg-danger">
+                                    <i data-feather="x-circle"></i>
+                                </div>
+                                <div class="dropdown-notifications-item-content">
+                                    <div class="dropdown-notifications-item-content-details">
+                                        <?= htmlspecialchars(date("Y-m-d", strtotime($row['Purchase_Date']))) ?>
+                                    </div>
+                                    <div class="dropdown-notifications-item-content-text">
+                                        Your proposal (ID: <?= $row['Purchase_ID'] ?>) has been rejected.
+                                    </div>
+                                </div>
+                            </a>
+                        <?php
+                        }
+                    }
+                    $stmt->close();
+                }
+
+                // Session alerts
+                if (!empty($_SESSION['alerts'])) {
+                    $hasAlerts = true;
+                    foreach ($_SESSION['alerts'] as $alert) {
+                        ?>
                         <a class="dropdown-item dropdown-notifications-item" href="#">
                             <div class="dropdown-notifications-item-icon bg-<?= htmlspecialchars($alert['color']) ?>">
                                 <i data-feather="<?= htmlspecialchars($alert['icon']) ?>"></i>
@@ -83,16 +190,24 @@ if (!empty($query) && $query->num_rows > 0) {
                                 <div class="dropdown-notifications-item-content-text"><?= htmlspecialchars($alert['message']) ?></div>
                             </div>
                         </a>
-                    <?php endforeach; ?>
-                <?php else: ?>
+                    <?php
+                    }
+                }
+
+                if (!$hasAlerts) {
+                    ?>
                     <div class="text-center p-3 text-muted">No alerts.</div>
-                <?php endif; ?>
+                <?php } ?>
             </div>
         </li>
 
+
+
+
+
         <!-- Supply Proposal Cart -->
         <li class="nav-item dropdown no-caret d-none d-sm-block me-3 dropdown-notifications">
-            <a class="btn btn-icon btn-transparent-dark dropdown-toggle" id="navbarDropdownMessages" href="#" role="button" data-bs-toggle="dropdown"><i data-feather="package"></i></a>
+            <a class="btn btn-icon btn-transparent-dark dropdown-toggle" id="navbarDropdownMessages" href="#" role="button" data-bs-toggle="dropdown"><i data-feather="package" style="width: 24px; height: 24px;"></i></a>
             <div class="dropdown-menu dropdown-menu-end border-0 shadow animated--fade-in-up cart-dropdown" aria-labelledby="navbarDropdownMessages">
                 <h6 class="dropdown-header dropdown-notifications-header">
                     <i class="me-2" data-feather="package"></i>Supply Proposals Cart
@@ -138,7 +253,7 @@ if (!empty($query) && $query->num_rows > 0) {
                 <a class="dropdown-item" href="supplier_profile.php">
                     <div class="dropdown-item-icon"><i data-feather="settings"></i></div>Account
                 </a>
-                <a class="dropdown-item" href="../../login_register/logout.php">
+                <a class="dropdown-item" href="../login_register/logout.php">
                     <div class="dropdown-item-icon"><i data-feather="log-out"></i></div>Logout
                 </a>
             </div>

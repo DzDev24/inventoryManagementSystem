@@ -1,4 +1,15 @@
 <?php
+
+require_once "./login_register/auth_session.php";
+
+if ($_SESSION['user_role'] != 1 && $_SESSION['user_role'] != 3) {
+    header("Location: ./unauthorized.php");
+    exit;
+}
+
+?>
+
+<?php
 require_once "includes/db.php";
 
 $isEdit = isset($_GET['id']);
@@ -103,17 +114,17 @@ if (!empty($supplier['Media_ID'])) {
                                 </div>
 
                                 <div class="row gx-3 mb-3">
-                            <div class="col-md-6">
-    <label class="form-label">Password <span class="text-danger">*</span></label>
-    <input class="form-control" type="text" name="password" required placeholder="Enter password"
-           value="<?= $isEdit && isset($supplier['Password']) ? htmlspecialchars($supplier['Password']) : '' ?>">
-</div>
+                                    <div class="col-md-6">
+                                        <label class="form-label">Password <span class="text-danger">*</span></label>
+                                        <input class="form-control" type="text" name="password" required placeholder="Enter password"
+                                            value="<?= $isEdit && isset($supplier['Password']) ? htmlspecialchars($supplier['Password']) : '' ?>">
+                                    </div>
 
-<div class="col-md-6">
-    <label class="form-label">Confirm Password <span class="text-danger">*</span></label>
-    <input class="form-control" type="text" name="confirm_password" required placeholder="Confirm password"
-           value="<?= $isEdit && isset($supplier['Password']) ? htmlspecialchars($supplier['Password']) : '' ?>">
-</div>
+                                    <div class="col-md-6">
+                                        <label class="form-label">Confirm Password <span class="text-danger">*</span></label>
+                                        <input class="form-control" type="text" name="confirm_password" required placeholder="Confirm password"
+                                            value="<?= $isEdit && isset($supplier['Password']) ? htmlspecialchars($supplier['Password']) : '' ?>">
+                                    </div>
                                 </div>
                                 <div class="row gx-3 mb-3">
                                     <div class="col-md-6">
