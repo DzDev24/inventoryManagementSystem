@@ -1,15 +1,64 @@
-/* Import Google font - Poppins */
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap");
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Poppins", sans-serif;
+@font-face {
+  font-family: "Material Symbols Rounded";
+  font-style: normal;
+  font-weight: 400;
+  src: url("../assets/fonts/font1.woff2") format("woff2");
 }
 
-body {
-  background: #e3f2fd;
+.material-symbols-rounded {
+  font-family: "Material Symbols Rounded";
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-feature-settings: "liga";
+  -webkit-font-smoothing: antialiased;
+}
+
+/* fallback */
+@font-face {
+  font-family: "Material Symbols Outlined";
+  font-style: normal;
+  font-weight: 400;
+  src: url("../assets/fonts/font2.woff2") format("woff2");
+}
+
+.material-symbols-outlined {
+  font-family: "Material Symbols Outlined";
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-feature-settings: "liga";
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Add these NEW styles for the .chatbot-main wrapper */
+.chatbot-main {
+  position: fixed; /* This establishes a stacking context for the whole chatbot */
+
+  bottom: 0;
+  right: 0;
+
+  z-index: 2000; /* A high value. Increase if it's still behind something. */
+  pointer-events: none;
+}
+
+.chatbot-main > * {
+  /* Re-enable pointer events for direct children of .chatbot-main (the button and the window) */
+  pointer-events: auto;
 }
 
 .chatbot-toggler {
@@ -25,7 +74,7 @@ body {
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  background: #724ae8;
+  background: #0061f2;
   transition: all 0.2s ease;
 }
 
@@ -75,7 +124,7 @@ body.show-chatbot .chatbot {
   position: relative;
   text-align: center;
   color: #fff;
-  background: #724ae8;
+  background: #0061f2;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
@@ -131,7 +180,7 @@ header h2 {
   text-align: center;
   line-height: 32px;
   align-self: flex-end;
-  background: #724ae8;
+  background: #0061f2;
   border-radius: 4px;
   margin: 0 10px 7px 0;
 }
@@ -143,7 +192,7 @@ header h2 {
   max-width: 75%;
   color: #fff;
   font-size: 0.95rem;
-  background: #724ae8;
+  background: #0061f2;
 }
 
 .chatbox .incoming p {
