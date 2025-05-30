@@ -1,4 +1,3 @@
-
 const chatbotToggler = document.querySelector(".chatbot-toggler");
 const closeBtn = document.querySelector(".close-btn");
 const chatbox = document.querySelector(".chatbox");
@@ -152,7 +151,7 @@ const generateResponse = async (chatElement) => {
     }
 
     const aiReply = data.candidates[0].content.parts[0].text;
-    messageElement.textContent = aiReply;
+    messageElement.innerHTML = marked.parseInline(aiReply);
 
     conversation.push({
       role: "model",
