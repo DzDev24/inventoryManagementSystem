@@ -33,7 +33,7 @@ foreach ($cart as $item) {
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Checkout - IMS-24</title>
+    <title>Checkout - IMS-24</title> 
     <link href="../css/vendor/bootstrap.css" rel="stylesheet" />
     <link href="../css/styles.css" rel="stylesheet" />
     <script src="../js/vendor/bootstrap.bundle.min.js"></script>

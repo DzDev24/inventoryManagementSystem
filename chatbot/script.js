@@ -296,7 +296,7 @@ const handleChat = () => {
     role: "user",
     parts: [{ text: userMessage }],
   });
-
+  //
   // Generate and display AI's response
   setTimeout(() => {
     const incomingChatLi = createChatLi("Thinking...", "incoming");
