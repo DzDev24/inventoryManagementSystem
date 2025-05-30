@@ -12,7 +12,7 @@ $userMessage = $input['contents'][0]['parts'][0]['text'] ?? '';
 
 if (!$API_KEY || !$userMessage) {
     echo json_encode([
-        'error' => 'Missing API key or message',
+        'error' => 'Missing API key or message ',
     ]);
     exit;
 }
