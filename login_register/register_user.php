@@ -2,7 +2,7 @@
 require_once "../includes/db.php";
 
 // Fetch roles from database (excluding Customer and Supplier roles)
-$roles = $conn->query("SELECT Role_ID, Role_Name FROM roles WHERE Role_Name IN ('Admin', 'Product Manager', 'Sales Manager')");
+$roles = $conn->query("SELECT Role_ID, Role_Name FROM roles WHERE Role_Name IN ('Product Manager', 'Sales Manager')");
 ?>
 
 <!DOCTYPE html>

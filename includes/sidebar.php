@@ -113,6 +113,9 @@ $roleId = $_SESSION['user_role'];
                 <div class="collapse" id="collapseUsers" data-bs-parent="#accordionSidenav">
                     <nav class="sidenav-menu-nested nav">
                         <a class="nav-link" href="users_list.php">List Users</a>
+                        <a class="nav-link" href="users_pending.php">Pending Users</a>
+
+                        
                         <a class="nav-link" href="users_add_edit.php">Add User</a>
                     </nav>
                 </div>

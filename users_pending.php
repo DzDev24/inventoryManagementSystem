@@ -6,7 +6,7 @@ $sql = "SELECT u.*, m.File_Path, r.Role_Name
         FROM users u
         LEFT JOIN media m ON u.Media_ID = m.Media_ID
         LEFT JOIN roles r ON u.Role_ID = r.Role_ID
-        WHERE u.Accepted = 1 AND u.Role_ID IN (2, 3) 
+        WHERE u.Accepted = 0 AND u.Role_ID IN (2, 3) 
         ORDER BY u.Created_At DESC";
 $result = $conn->query($sql);
 
@@ -109,7 +109,7 @@ while ($row = $result->fetch_assoc()) {
                             <?php endif; ?>
 
                             <?php foreach ($users as $user): ?>
-                                <?php include 'components/users_details_modal.php'; ?>
+                                <?php include 'components/userspending_details_modal.php'; ?>
                             <?php endforeach; ?>
 
                             <table id="datatablesSimple" class="table-customers table">
@@ -119,11 +119,10 @@ while ($row = $result->fetch_assoc()) {
                                         <th>User</th>
                                         <th>Email</th>
                                         <!-- <th>Password</th> -->
-                                        <th>Status</th>
                                         <th>Role</th>
-                                        <th>Last Login</th>
                                         <th>Created At</th>
                                         <th>Actions</th>
+                                        <th>Accepted ?</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -144,18 +143,8 @@ while ($row = $result->fetch_assoc()) {
                                             </td>
                                             <td><?= htmlspecialchars($row['Email']) ?></td>
                                             <!-- <td><?= htmlspecialchars($row['Password']) ?></td> -->
-                                            <td>
-                                                <?php
-                                                $statusClass = match ($row['Status']) {
-                                                    'Online' => 'bg-success',
-                                                    'Offline' => 'bg-secondary',
-                                                    default => 'bg-light text-dark'
-                                                };
-                                                ?>
-                                                <span class="badge <?= $statusClass ?> text-white"><?= $row['Status'] ?></span>
-                                            </td>
+
                                             <td><?= htmlspecialchars($row['Role_Name']) ?: '<span class="text-muted">N/A</span>' ?></td>
-                                            <td><?= $row['Last_Login'] ? date('Y-m-d H:i', strtotime($row['Last_Login'])) : 'Never' ?></td>
                                             <td>
                                                 <div class="mx-auto text-center">
                                                     <div class="fw-bold text-dark"><?= date('Y-m-d', strtotime($row['Created_At'])) ?></div>
@@ -166,11 +155,17 @@ while ($row = $result->fetch_assoc()) {
                                                 <a class="btn btn-datatable btn-icon btn-transparent-dark" title="View" data-bs-toggle="modal" data-bs-target="#viewModalDetails<?= $row['User_ID'] ?>">
                                                     <i data-feather="eye"></i>
                                                 </a>
-                                                <a href="users_add_edit.php?id=<?= $row['User_ID'] ?>" class="btn btn-datatable btn-icon btn-transparent-dark" title="Edit">
-                                                    <i data-feather="edit"></i>
+
+                                            </td>
+
+                                            <td style="width: 120px;">
+
+                                                <a class="btn btn-datatable btn-icon text-success" title="Accept" onclick="return confirmAccept(<?= $row['User_ID'] ?>)">
+                                                    <i data-feather="check-circle" style="width: 24px; height: 24px;"></i>
                                                 </a>
-                                                <a class="btn btn-datatable btn-icon btn-transparent-dark" title="Delete" onclick="return confirmDelete(<?= $row['User_ID'] ?>)">
-                                                    <i data-feather="trash-2"></i>
+
+                                                <a class="btn btn-datatable btn-icon text-danger" title="Reject" onclick="return confirmDelete(<?= $row['User_ID'] ?>)">
+                                                    <i data-feather="x-circle" style="width: 24px; height: 24px;"></i>
                                                 </a>
                                             </td>
                                         </tr>
@@ -194,7 +189,7 @@ while ($row = $result->fetch_assoc()) {
     <script>
         function confirmDelete(userId) {
             Swal.fire({
-                title: 'Are you sure?',
+                title: 'Are you sure to not accept the user ?',
                 text: "This user will be permanently deleted.",
                 icon: 'warning',
                 showCancelButton: true,
@@ -203,7 +198,23 @@ while ($row = $result->fetch_assoc()) {
                 confirmButtonText: 'Yes, delete it!'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    window.location.href = 'backend/users_handler.php?deleteid=' + userId;
+                    window.location.href = 'backend/userspending_handler.php?rejectedid=' + userId;
+                }
+            });
+        }
+
+        function confirmAccept(userId) {
+            Swal.fire({
+                title: 'Are you sure you want to accept this system user?',
+                text: "This system user will be marked as accepted.",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6', // Blue for accept
+                cancelButtonColor: '#d33', // Red for cancel
+                confirmButtonText: 'Yes, Accept it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = 'backend/userspending_handler.php?acceptid=' + userId;
                 }
             });
         }

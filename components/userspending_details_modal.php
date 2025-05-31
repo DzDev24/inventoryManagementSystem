@@ -48,6 +48,7 @@
                             </div>
 
 
+
                             <div class="col-6 mb-2">
                                 <strong><i class="fas fa-user-tag me-1"></i>Role:</strong>
                                 <div><?= htmlspecialchars($user['Role_Name'] ?? 'N/A') ?></div>
@@ -59,18 +60,7 @@
                             </div>
                         </div>
 
-                        <!-- Bottom: ID + Actions -->
-                        <div class="d-flex justify-content-between align-items-center pt-3 border-top mt-auto">
-                            <small class="text-muted"><i class="fas fa-id-badge me-1"></i> ID: <?= $user['User_ID'] ?></small>
-                            <div>
-                                <a href="users_add_edit.php?id=<?= $user['User_ID'] ?>" class="btn btn-warning btn-sm me-2">
-                                    <i class="fas fa-edit me-1"></i> Edit
-                                </a>
-                                <button class="btn btn-danger btn-sm" onclick="confirmDelete(<?= $user['User_ID'] ?>)">
-                                    <i class="fas fa-trash me-1"></i> Delete
-                                </button>
-                            </div>
-                        </div>
+
 
                     </div>
                 </div>

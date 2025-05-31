@@ -32,8 +32,14 @@ require_once "../includes/db.php";
                                     if (isset($_GET['error']) && $_GET['error'] == 'invalid') {
                                         echo '<div class="alert alert-danger text-center">Invalid email or password!</div>';
                                     }
+                                    if (isset($_GET['error']) && $_GET['error'] == 'not_accepted') {
+                                        echo '<div class="alert alert-warning text-center">Your account is not yet approved by the admin. Please wait for approval.</div>';
+                                    }
                                     if (isset($_GET['registered']) && $_GET['registered'] == 'success') {
-                                        echo '<div class="alert alert-success text-center">Account registered successfully. Please log in.</div>';
+                                        if ($_GET['type'] == 'user')
+                                            echo '<div class="alert alert-success text-center">Account registered successfully. Your account requires admin approval before you can log in.</div>';
+                                        else
+                                            echo '<div class="alert alert-success text-center">Account registered successfully. Please log in.</div>';
                                     }
                                     ?>
                                     <form action="auth_login.php" method="POST">

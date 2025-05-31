@@ -58,12 +58,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     // Insert user into database
     $status = 'Offline'; // User is Offline at registration
-
-    $stmt = $conn->prepare("INSERT INTO users (Username, Real_Name, Email, Password, Role_ID, Status, Media_ID) VALUES (?, ?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param("ssssisi", $username, $realName, $email, $password, $roleID, $status, $mediaID);
+    $accepted = 0; // Default to not accepted
+    $password = password_hash($password, PASSWORD_DEFAULT); // Hash the password
+    $stmt = $conn->prepare("INSERT INTO users (Username, Real_Name, Email, Password, Role_ID, Status, Media_ID, Accepted) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("ssssisii", $username, $realName, $email, $password, $roleID, $status, $mediaID, $accepted);
 
     if ($stmt->execute()) {
-        header("Location: login.php?registered=success");
+        header("Location: login.php?registered=success&type=user");
         exit;
     } else {
         echo "<p style='color:red; text-align:center;'>Error occurred during registration. Please try again.</p>";
@@ -77,5 +78,3 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     header("Location: register_user.php");
     exit;
 }
-?>
-
