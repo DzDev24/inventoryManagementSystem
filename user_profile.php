@@ -21,8 +21,8 @@ $user = $conn->query("SELECT * FROM users WHERE User_ID = $user_id")->fetch_asso
     <link href="css/vendor/bootstrap.css" rel="stylesheet" />
     <link href="css/styles.css" rel="stylesheet" />
     <link rel="icon" href="assets/img/icon.svg" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/js/all.min.js" defer></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.29.0/feather.min.js"></script>
+    <script src="./js/vendor/all.min.js" defer></script>
+    <script src="./js/vendor/feather.min.js"></script>
     <?php include 'includes/common_head_elements.php'; ?>
 
 </head>

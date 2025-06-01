@@ -121,7 +121,7 @@ $products = $conn->query("SELECT p.*, m.File_Path, u.Unit_abrev, c.Category_Name
     </script>
 
     <!-- SweetAlert2 -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="../js/vendor/sweetalert2@11_.js"></script>
 
     <?php if (isset($_SESSION['success'])): ?>
         <script>
@@ -137,7 +137,7 @@ $products = $conn->query("SELECT p.*, m.File_Path, u.Unit_abrev, c.Category_Name
     <?php endif; ?>
 
     <?php if (isset($_SESSION['profile_updated'])): ?>
-        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script src="../js/vendor/sweetalert2@11_.js"></script>
         <script>
             Swal.fire({
                 icon: 'success',

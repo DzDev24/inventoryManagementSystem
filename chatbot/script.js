@@ -9,7 +9,7 @@ const inputInitHeight = chatInput.scrollHeight;
 
 const API_URL = document
   .querySelector('meta[name="api-url"]')
-  .getAttribute("content");
+  .getAttribute("content"); // chatbot/chatbot_api.php
 
 let conversation = []; // Stores the entire chat history, will include page context
 let pageContentCache = ""; // Cache for extracted page content
@@ -26,6 +26,7 @@ const getPageContentForChatbot = () => {
   const articleElement = document.querySelector("article");
 
   if (mainElement) {
+    //hadi hiya li takhdm !!! IMPORTANT
     relevantContent = mainElement.innerText;
   } else if (articleElement) {
     relevantContent = articleElement.innerText;
@@ -54,9 +55,10 @@ const getPageContentForChatbot = () => {
 };
 
 // Function to initialize or prepend page context to the conversation
+// TAKHDEM AWAL MARA BARK BAH INSERI CONTENT F TOP TA3 CONVERSATION
 const ensurePageContextInConversation = () => {
   // Check if context is already the first message (and is a context-setting message)
-  if (conversation.length > 0 && conversation[0].isContextSetter) {
+  if (conversation.length > 0 && conversation[0].isContextSetter) { // bAH YZIDO MARA WAHDA 
     return; // Context already set
   }
 
@@ -83,10 +85,15 @@ const ensurePageContextInConversation = () => {
 const createChatLi = (message, className) => {
   const chatLi = document.createElement("li");
   chatLi.classList.add("chat", `${className}`);
-  let chatContent =
-    className === "outgoing"
-      ? `<p></p>`
-      : `<span class="material-symbols-outlined">smart_toy</span><p></p>`;
+
+  let chatContent = "";
+
+  if (className === "outgoing") {
+    chatContent = `<p></p>`;
+  } else {
+    chatContent = `<span class="material-symbols-outlined">smart_toy</span><p></p>`;
+  }
+
   chatLi.innerHTML = chatContent;
   chatLi.querySelector("p").textContent = message;
   return chatLi;
@@ -103,6 +110,7 @@ const generateResponse = async (chatElement) => {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       contents: conversation.map((turn) => ({
+        //CONTENTS IS THE CONVERSATION
         role: turn.role,
         parts: turn.parts,
       })), // Strip custom flags like isContextSetter
@@ -110,45 +118,10 @@ const generateResponse = async (chatElement) => {
   };
 
   try {
-    const response = await fetch(API_URL, requestOptions);
-    const data = await response.json();
+    const response = await fetch(API_URL, requestOptions); //await bah nasanaw 7ata tarja3 response m server ta3 google
 
-    if (
-      !response.ok ||
-      !data.candidates ||
-      !data.candidates[0] ||
-      !data.candidates[0].content
-    ) {
-      let errorMessage = "Error from API.";
-      if (data.error && data.error.message) {
-        // Gemini specific error
-        errorMessage = `API Error: ${data.error.message}`;
-      } else if (
-        data.candidates &&
-        data.candidates[0] &&
-        data.candidates[0].finishReason &&
-        data.candidates[0].finishReason !== "STOP"
-      ) {
-        errorMessage = `Model generation stopped: ${data.candidates[0].finishReason}.`;
-        if (data.candidates[0].safetyRatings) {
-          errorMessage += ` Safety: ${data.candidates[0].safetyRatings
-            .map(
-              (r) =>
-                `${r.category.replace("HARM_CATEGORY_", "")}: ${r.probability}`
-            )
-            .join(", ")}`;
-        }
-      } else if (
-        !data.candidates ||
-        !data.candidates[0] ||
-        !data.candidates[0].content
-      ) {
-        errorMessage =
-          "No valid response content from Gemini. The request might have been blocked or resulted in an empty response.";
-        console.error("Full API response for debugging:", data); // Log the full response
-      }
-      throw new Error(errorMessage);
-    }
+    const data = await response.json();
+    console.log(data);
 
     const aiReply = data.candidates[0].content.parts[0].text;
     messageElement.innerHTML = marked.parseInline(aiReply);
@@ -182,6 +155,7 @@ const handleChat = () => {
     role: "user",
     parts: [{ text: userMessage }],
   });
+
   //
   // Generate and display AI's response
   setTimeout(() => {
@@ -189,7 +163,7 @@ const handleChat = () => {
     chatbox.appendChild(incomingChatLi);
     chatbox.scrollTo(0, chatbox.scrollHeight);
     generateResponse(incomingChatLi);
-  }, 600);
+  }, 600); //600ms delay for better UX
 };
 
 chatInput.addEventListener("input", () => {

@@ -22,8 +22,8 @@ $states = $conn->query("SELECT * FROM states")->fetch_all(MYSQLI_ASSOC);
     <link href="../css/vendor/bootstrap.css" rel="stylesheet" />
     <link href="../css/styles.css" rel="stylesheet" />
     <link rel="icon" href="../assets/img/icon.svg" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/js/all.min.js" defer></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.29.0/feather.min.js"></script>
+    <script src="../js/vendor/all.min.js" defer></script>
+    <script src="../js/vendor/feather.min.js"></script>
 </head>
 
 <body>

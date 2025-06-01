@@ -20,7 +20,7 @@ if ($_SESSION['user_role'] != 1) {
     <meta name="description" content="Administrator Dashboard" />
     <meta name="author" content="" />
     <title>Administrator Dashboard - Inventory System</title>
-    <link href="https://cdn.jsdelivr.net/npm/litepicker/dist/css/litepicker.css" rel="stylesheet" />
+    <link href="./css/vendor/litepicker.css" rel="stylesheet" />
     <link href="css/vendor/datatables-style.min.css" rel="stylesheet" />
     <link href="css/vendor/bootstrap.css" rel="stylesheet" />
     <link rel="icon" type="image/x-icon" href="assets/img/icon.svg" />
@@ -389,12 +389,12 @@ if ($_SESSION['user_role'] != 1) {
     </div>
 
     <!-- JavaScript Libraries -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    <script src="./js/vendor/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <script src="js/scripts.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/litepicker/dist/bundle.js" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="./js/vendor/Chart.min.js" crossorigin="anonymous"></script>
+    <script src="./js/vendor/simple-datatables.min.js" crossorigin="anonymous"></script>
+    <script src="./js/vendor/bundle.js" crossorigin="anonymous"></script>
+    <script src="./js/vendor/html2pdf.bundle.min.js"></script>
 
     <!-- Custom JavaScript for Admin Dashboard -->
     <script>

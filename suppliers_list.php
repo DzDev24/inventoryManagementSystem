@@ -36,7 +36,6 @@ while ($row = $result->fetch_assoc()) {
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <title>Suppliers List</title>
     <link href="css/vendor/datatables-style.min.css" rel="stylesheet" />
-    <!-- <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" type="text/css"> -->
 
     <link href="css/vendor/bootstrap.css" rel="stylesheet" />
     <link rel="icon" type="image/x-icon" href="assets/img/icon.svg" />
