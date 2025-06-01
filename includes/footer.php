@@ -16,9 +16,6 @@
                                <p>Hi there 👋<br />I am chatbot of IMS-25. How can I help you today?</p>
 
                            </li>
-                            <li class="chat outgoing"><p>afoja fafkaofaof</p></li>
-                            <li class="chat incoming"><span></span><p>Thinking</p></li>
-
 
 
                        </ul>
