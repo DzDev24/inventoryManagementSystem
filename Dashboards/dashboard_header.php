@@ -33,33 +33,35 @@ if (!empty($query) && $query->num_rows > 0) {
 ?>
 
 <style>
-.cart-dropdown {
-    max-height: 400px;
-    overflow-y: auto;
-    scrollbar-width: none; /* Firefox */
-}
+    .cart-dropdown {
+        max-height: 400px;
+        overflow-y: auto;
+        scrollbar-width: none;
+        /* Firefox */
+    }
 
-.cart-dropdown::-webkit-scrollbar {
-    display: none; /* Chrome, Safari */
-}
+    .cart-dropdown::-webkit-scrollbar {
+        display: none;
+        /* Chrome, Safari */
+    }
 
-/* Force full alert message to show inside dropdown */
-.dropdown-notifications-item-content-text {
-    white-space: normal !important;
-    overflow: visible !important;
-    text-overflow: unset !important;
-    display: block !important;
-    word-break: break-word !important;
-    max-width: 100% !important;
-}
+    /* Force full alert message to show inside dropdown */
+    .dropdown-notifications-item-content-text {
+        white-space: normal !important;
+        overflow: visible !important;
+        text-overflow: unset !important;
+        display: block !important;
+        word-break: break-word !important;
+        max-width: 100% !important;
+    }
 </style>
 
 <nav class="topnav navbar navbar-expand shadow justify-content-between justify-content-sm-start navbar-light bg-white" id="sidenavAccordion">
-    
+
     <!-- Placeholder to preserve spacing of removed sidebar toggle -->
-<button class="btn btn-icon btn-transparent-dark order-1 order-lg-0 me-2 ms-lg-2 me-lg-0 invisible" disabled>
-    <i data-feather="menu"></i>
-</button>
+    <button class="btn btn-icon btn-transparent-dark order-1 order-lg-0 me-2 ms-lg-2 me-lg-0 invisible" disabled>
+        <i data-feather="menu"></i>
+    </button>
 
     <!-- Navbar Brand -->
     <a class="navbar-brand pe-3 ps-4 ps-lg-2 d-flex align-items-center gap-2 fw-semibold fs-4 text-dark" href="customer_dashboard.php">
@@ -67,14 +69,14 @@ if (!empty($query) && $query->num_rows > 0) {
         <span><strong>IMS-24</strong></span>
     </a>
 
-      <!-- Search (aligned) -->
-      <div class="d-none d-lg-block" style="flex: 1; max-width: 300px;">
+    <!-- Search (aligned) -->
+    <div class="d-none d-lg-block" style="flex: 1; max-width: 300px;">
         <div class="input-group input-group-joined input-group-solid">
             <input class="form-control pe-0" type="search" placeholder="Search" aria-label="Search">
             <div class="input-group-text"><i data-feather="search"></i></div>
         </div>
     </div>
-</div>
+    </div>
     </form>
 
     <!-- Navbar Items -->
@@ -87,54 +89,54 @@ if (!empty($query) && $query->num_rows > 0) {
                 <h6 class="dropdown-header dropdown-notifications-header"><i class="me-2" data-feather="bell"></i>Alerts Center</h6>
 
                 <?php if (!empty($_SESSION['alerts'])): ?>
-    <?php foreach ($_SESSION['alerts'] as $alert): ?>
-        <a class="dropdown-item dropdown-notifications-item" href="#">
-            <div class="dropdown-notifications-item-icon bg-<?= htmlspecialchars($alert['color']) ?>">
-                <i data-feather="<?= htmlspecialchars($alert['icon']) ?>"></i>
-            </div>
-            <div class="dropdown-notifications-item-content">
-                <div class="dropdown-notifications-item-content-details"><?= htmlspecialchars($alert['time']) ?></div>
-                <div class="dropdown-notifications-item-content-text"><?= htmlspecialchars($alert['message']) ?></div>
-            </div>
-        </a>
-    <?php endforeach; ?>
-<?php else: ?>
-    <div class="text-center p-3 text-muted">No alerts.</div>
-<?php endif; ?>
+                    <?php foreach ($_SESSION['alerts'] as $alert): ?>
+                        <a class="dropdown-item dropdown-notifications-item" href="#">
+                            <div class="dropdown-notifications-item-icon bg-<?= htmlspecialchars($alert['color']) ?>">
+                                <i data-feather="<?= htmlspecialchars($alert['icon']) ?>"></i>
+                            </div>
+                            <div class="dropdown-notifications-item-content">
+                                <div class="dropdown-notifications-item-content-details"><?= htmlspecialchars($alert['time']) ?></div>
+                                <div class="dropdown-notifications-item-content-text"><?= htmlspecialchars($alert['message']) ?></div>
+                            </div>
+                        </a>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <div class="text-center p-3 text-muted">No alerts.</div>
+                <?php endif; ?>
 
-</div>
+            </div>
         </li>
 
         <!-- Shopping Cart -->
         <li class="nav-item dropdown no-caret d-none d-sm-block me-3 dropdown-notifications">
             <a class="btn btn-icon btn-transparent-dark dropdown-toggle" id="navbarDropdownMessages" href="#" role="button" data-bs-toggle="dropdown"><i data-feather="shopping-cart"></i></a>
             <div class="dropdown-menu dropdown-menu-end border-0 shadow animated--fade-in-up cart-dropdown" aria-labelledby="navbarDropdownMessages">
-    <h6 class="dropdown-header dropdown-notifications-header">
-        <i class="me-2" data-feather="shopping-cart"></i>Shopping Cart
-    </h6>
+                <h6 class="dropdown-header dropdown-notifications-header">
+                    <i class="me-2" data-feather="shopping-cart"></i>Shopping Cart
+                </h6>
 
-    <?php if (!empty($_SESSION['cart'])): ?>
-        <?php foreach ($_SESSION['cart'] as $item): ?>
-            <a class="dropdown-item dropdown-notifications-item" href="product.php?id=<?= $item['id'] ?>">
-                <img class="dropdown-notifications-item-img" src="../<?= $item['image'] ?>" />
-                <div class="dropdown-notifications-item-content">
-                    <div class="dropdown-notifications-item-content-text"><?= htmlspecialchars($item['name']) ?></div>
-                    <div class="dropdown-notifications-item-content-details"><?= $item['quantity'] ?> × <?= number_format($item['price'], 2) ?> DA</div>
-            
-                </div>
-    <form method="POST" action="remove_from_cart.php" onsubmit="return confirm('Remove this item from cart?');">
-        <input type="hidden" name="product_id" value="<?= $item['id'] ?>">
-        <button type="submit" class="btn btn-sm btn-link text-danger ms-2 p-0" title="Remove">
-            <i class="fas fa-trash-alt"></i>
-        </button>
-    </form>
-            </a>
-        <?php endforeach; ?>
-        <a class="dropdown-item dropdown-notifications-footer" href="checkout.php">Checkout</a>
-    <?php else: ?>
-        <div class="text-center p-3 text-muted">Your cart is empty.</div>
-    <?php endif; ?>
-</div>
+                <?php if (!empty($_SESSION['cart'])): ?>
+                    <?php foreach ($_SESSION['cart'] as $item): ?>
+                        <a class="dropdown-item dropdown-notifications-item" href="product.php?id=<?= $item['id'] ?>">
+                            <img class="dropdown-notifications-item-img" src="../<?= $item['image'] ?>" />
+                            <div class="dropdown-notifications-item-content">
+                                <div class="dropdown-notifications-item-content-text"><?= htmlspecialchars($item['name']) ?></div>
+                                <div class="dropdown-notifications-item-content-details"><?= $item['quantity'] ?> × <?= number_format($item['price'], 2) ?> DA</div>
+
+                            </div>
+                            <form method="POST" action="remove_from_cart.php" onsubmit="return confirm('Remove this item from cart?');">
+                                <input type="hidden" name="product_id" value="<?= $item['id'] ?>">
+                                <button type="submit" class="btn btn-sm btn-link text-danger ms-2 p-0" title="Remove">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </form>
+                        </a>
+                    <?php endforeach; ?>
+                    <a class="dropdown-item dropdown-notifications-footer" href="checkout.php">Checkout</a>
+                <?php else: ?>
+                    <div class="text-center p-3 text-muted">Your cart is empty.</div>
+                <?php endif; ?>
+            </div>
             </div>
         </li>
 
@@ -155,13 +157,10 @@ if (!empty($query) && $query->num_rows > 0) {
                 <a class="dropdown-item" href="customer_profile.php">
                     <div class="dropdown-item-icon"><i data-feather="settings"></i></div>Account
                 </a>
-                <a class="dropdown-item" href="../../login_register/logout.php">
+                <a class="dropdown-item" href="../login_register/logout.php">
                     <div class="dropdown-item-icon"><i data-feather="log-out"></i></div>Logout
                 </a>
             </div>
         </li>
     </ul>
 </nav>
-
-
-

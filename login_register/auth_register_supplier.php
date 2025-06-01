@@ -71,7 +71,7 @@ if (move_uploaded_file($_FILES['image']['tmp_name'], $targetPath)) {
 
     // Insert into supplier table
     $status = 'Available'; // Always Available at registration
-
+    $password = password_hash($password, PASSWORD_DEFAULT); // Hash the password
     $stmt = $conn->prepare("INSERT INTO supplier (Supplier_Name, Company_Name, Password, Email, Phone, Address, State_ID, Description, Media_ID, Status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
     $stmt->bind_param("ssssssisss", $supplierName, $companyName, $password, $email, $phone, $address, $stateID, $description, $mediaID, $status);
 

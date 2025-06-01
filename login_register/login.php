@@ -36,7 +36,7 @@ require_once "../includes/db.php";
                                         echo '<div class="alert alert-warning text-center">Your account is not yet approved by the admin. Please wait for approval.</div>';
                                     }
                                     if (isset($_GET['registered']) && $_GET['registered'] == 'success') {
-                                        if ($_GET['type'] == 'user')
+                                        if (isset($_GET['type']) && $_GET['type'] == 'user')
                                             echo '<div class="alert alert-success text-center">Account registered successfully. Your account requires admin approval before you can log in.</div>';
                                         else
                                             echo '<div class="alert alert-success text-center">Account registered successfully. Please log in.</div>';
