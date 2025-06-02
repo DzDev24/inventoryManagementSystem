@@ -33,23 +33,23 @@
                     <!-- Right: Info -->
                     <div class="col-md-7 bg-white p-4 d-flex flex-column">
                         <div class="mb-3">
-                        <div class="d-flex justify-content-between align-items-center">
-                        <?php
-                        $statusClass = match ($customer['Status']) {
-                            'Available' => 'bg-green-soft text-green',
-                            'Unavailable' => 'bg-red-soft text-red',
-                            default => 'bg-secondary'
-                        };
-                        
-                        ?>
-<h4 class="fw-bold mb-0"><?= htmlspecialchars($customer['Name']) ?></h4>
-<span class="badge <?= $statusClass ?> text-white">
-    Status: <?= htmlspecialchars($customer['Status']) ?>
-</span>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <?php
+                                $statusClass = match ($customer['Status']) {
+                                    'Available' => 'bg-green-soft text-green',
+                                    'Unavailable' => 'bg-red-soft text-red',
+                                    default => 'bg-secondary'
+                                };
+
+                                ?>
+                                <h4 class="fw-bold mb-0"><?= htmlspecialchars($customer['Name']) ?></h4>
+                                <span class="badge <?= $statusClass ?> text-white">
+                                    Status: <?= htmlspecialchars($customer['Status']) ?>
+                                </span>
 
 
-                            
-</div>
+
+                            </div>
                         </div>
 
                         <div class="mb-3">
@@ -59,14 +59,14 @@
 
                         <div class="row small mb-3">
 
-                        <div class="col-6 mb-2">
+                            <div class="col-6 mb-2">
                                 <strong><i class="fas fa-envelope me-1"></i>Email:</strong>
                                 <div><?= htmlspecialchars($customer['Email']) ?></div>
                             </div>
 
-                        <div class="col-6 mb-2">
-                               <strong><i class="fas fa-solid fa-key"></i> Password:</strong>
-                               <div>hidden</div>
+                            <div class="col-6 mb-2">
+                                <strong><i class="fas fa-solid fa-key"></i> Password:</strong>
+                                <div>hidden</div>
                             </div>
 
 
@@ -79,7 +79,7 @@
                                 <strong><i class="fas fa-map me-1"></i>State:</strong>
                                 <div><?= htmlspecialchars($customer['State_Name'] ?? 'N/A') ?></div>
                             </div>
-                           
+
                             <div class="col-6 mb-2">
                                 <strong><i class="fas fa-box-open me-1"></i>Orders:</strong>
                                 <div><?= htmlspecialchars($customer['Orders']) ?></div>
@@ -90,7 +90,7 @@
                                 <div><?= htmlspecialchars($customer['Total_Spend']) ?> DZD</div>
                             </div>
 
-                            
+
                         </div>
 
                         <!-- Bottom: ID + Actions -->

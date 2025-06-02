@@ -32,13 +32,13 @@
                     <!-- Right: Info -->
                     <div class="col-md-7 bg-white p-4 d-flex flex-column">
                         <div class="mb-3">
-                        <div class="d-flex justify-content-between align-items-center">
-                        <h4 class="fw-bold mb-0"><?= htmlspecialchars($supplier['Supplier_Name']) ?></h4>
-                            <span class="badge <?= $supplier['Status'] === 'Available' ? 'bg-green-soft text-green' : 'bg-purple-soft text-purple' ?>">
-                                Status: <?= htmlspecialchars($supplier['Status']) ?>
-                            </span>
-                            
-                        </div>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h4 class="fw-bold mb-0"><?= htmlspecialchars($supplier['Supplier_Name']) ?></h4>
+                                <span class="badge <?= $supplier['Status'] === 'Available' ? 'bg-green-soft text-green' : 'bg-purple-soft text-purple' ?>">
+                                    Status: <?= htmlspecialchars($supplier['Status']) ?>
+                                </span>
+
+                            </div>
                             <small class="text-muted">Company Name: <?= htmlspecialchars($supplier['Company_Name']) ?></small>
                         </div>
 
@@ -64,11 +64,11 @@
                                 <div><?= htmlspecialchars($supplier['Email']) ?></div>
                             </div>
 
-                            <div class="col-6 mb-2">
+                            <!-- <div class="col-6 mb-2">
                                 <strong><i class="fas fa-solid fa-key"></i> Password:</strong>
                                 <div><?= htmlspecialchars($supplier['Password']) ?></div>
-                            </div>
-                            
+                            </div> -->
+
                             <div class="col-6 mb-2">
                                 <strong><i class="fas fa-phone me-1"></i>Phone:</strong>
                                 <div><?= htmlspecialchars($supplier['Phone']) ?></div>
