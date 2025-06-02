@@ -27,9 +27,9 @@ $customer = [
 ];
 
 if ($isEdit) {
-    $id = intval($_GET['id']);
+    $idcust = intval($_GET['id']);
     $stmt = $conn->prepare("SELECT * FROM customers WHERE Customer_ID = ?");
-    $stmt->bind_param("i", $id);
+    $stmt->bind_param("i", $idcust);
     $stmt->execute();
     $result = $stmt->get_result();
     $customer = $result->fetch_assoc();
@@ -96,7 +96,7 @@ if (!empty($customer['Media_ID'])) {
                 <div class="container-xl px-4 mt-4">
                     <form method="POST" enctype="multipart/form-data" action="backend/customers_handler.php">
                         <?php if ($isEdit): ?>
-                            <input type="hidden" name="customer_id" value="<?= $id ?>">
+                            <input type="hidden" name="customer_id" value="<?= $idcust ?>">
                         <?php endif; ?>
 
                         <div class="card mb-4">
@@ -111,7 +111,7 @@ if (!empty($customer['Media_ID'])) {
                                     </div>
                                     <div class="col-md-6">
                                         <label class="form-label">Email <span class="text-danger">*</span></label>
-                                        <input class="form-control" type="email" name="email" required placeholder="e.g. user@example.com"  value="<?= htmlspecialchars($customer['Email']) ?>">
+                                        <input class="form-control" type="email" name="email" required placeholder="e.g. user@example.com" value="<?= htmlspecialchars($customer['Email']) ?>">
                                     </div>
                                 </div>
 

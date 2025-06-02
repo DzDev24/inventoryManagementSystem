@@ -13,9 +13,9 @@ $user = [
 ];
 
 if ($isEdit) {
-    $id = intval($_GET['id']);
+    $iduser = intval($_GET['id']);
     $stmt = $conn->prepare("SELECT * FROM users WHERE User_ID = ?");
-    $stmt->bind_param("i", $id);
+    $stmt->bind_param("i", $iduser);
     $stmt->execute();
     $result = $stmt->get_result();
     $user = $result->fetch_assoc();
@@ -78,7 +78,7 @@ if (!empty($user['Media_ID'])) {
                 <div class="container-xl px-4 mt-4">
                     <form method="POST" enctype="multipart/form-data" action="backend/users_handler.php">
                         <?php if ($isEdit): ?>
-                            <input type="hidden" name="user_id" value="<?= $id ?>">
+                            <input type="hidden" name="user_id" value="<?= $iduser ?>">
                         <?php endif; ?>
 
                         <div class="card mb-4">

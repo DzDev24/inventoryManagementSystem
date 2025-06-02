@@ -1,6 +1,7 @@
 <?php
 require_once "../includes/db.php";
 
+
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $supplierName = trim($_POST['supplier_name']);
     $companyName  = trim($_POST['company_name']);
@@ -35,67 +36,67 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $stmtMedia->close();
         }
     }
-        $password = password_hash($password, PASSWORD_DEFAULT); // Hash the password
+    $password = password_hash($password, PASSWORD_DEFAULT); // Hash the password
+
 
     if (isset($_POST['supplier_id'])) {
         // UPDATE existing supplier
         $id = intval($_POST['supplier_id']);
         $fields = [];
-$types = '';
-$params = [];
+        $types = '';
+        $params = [];
 
-$fields[] = "Supplier_Name=?";
-$types .= "s";
-$params[] = $supplierName;
+        $fields[] = "Supplier_Name=?";
+        $types .= "s";
+        $params[] = $supplierName;
 
-$fields[] = "Email=?";
-$types .= "s";
-$params[] = $email;
+        $fields[] = "Email=?";
+        $types .= "s";
+        $params[] = $email;
 
-$fields[] = "Phone=?";
-$types .= "s";
-$params[] = $phone;
+        $fields[] = "Phone=?";
+        $types .= "s";
+        $params[] = $phone;
 
-$fields[] = "Company_Name=?";
-$types .= "s";
-$params[] = $companyName;
+        $fields[] = "Company_Name=?";
+        $types .= "s";
+        $params[] = $companyName;
 
-$fields[] = "Address=?";
-$types .= "s";
-$params[] = $address;
+        $fields[] = "Address=?";
+        $types .= "s";
+        $params[] = $address;
 
-$fields[] = "State_ID=?";
-$types .= "i";
-$params[] = $stateId;
+        $fields[] = "State_ID=?";
+        $types .= "i";
+        $params[] = $stateId;
 
-$fields[] = "Status=?";
-$types .= "s";
-$params[] = $status;
+        $fields[] = "Status=?";
+        $types .= "s";
+        $params[] = $status;
 
-$fields[] = "Description=?";
-$types .= "s";
-$params[] = $description;
+        $fields[] = "Description=?";
+        $types .= "s";
+        $params[] = $description;
 
-if ($mediaId !== null) {
-    $fields[] = "Media_ID=?";
-    $types .= "i";
-    $params[] = $mediaId;
-}
+        if ($mediaId !== null) {
+            $fields[] = "Media_ID=?";
+            $types .= "i";
+            $params[] = $mediaId;
+        }
 
-if (!empty($password)) {
-    $fields[] = "Password=?";
-    $types .= "s";
-    $params[] = $password;
-}
+        if (!empty($password)) {
+            $fields[] = "Password=?";
+            $types .= "s";
+            $params[] = $password;
+        }
 
-$fieldsSQL = implode(", ", $fields) . " WHERE Supplier_ID=?";
-$types .= "i";
-$params[] = $id;
+        $fieldsSQL = implode(", ", $fields) . " WHERE Supplier_ID=?";
+        $types .= "i";
+        $params[] = $id;
 
-$sql = "UPDATE supplier SET $fieldsSQL";
-$stmt = $conn->prepare($sql);
-$stmt->bind_param($types, ...$params);
-
+        $sql = "UPDATE supplier SET $fieldsSQL";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param($types, ...$params);
     } else {
         // INSERT new supplier (password is required here)
         $sql = "INSERT INTO supplier (Supplier_Name, Email, Phone, Company_Name, Address, State_ID, Media_ID, Status, Description, Password)
@@ -128,5 +129,3 @@ if (isset($_GET['deleteid'])) {
 
     $stmt->close();
 }
-
-
