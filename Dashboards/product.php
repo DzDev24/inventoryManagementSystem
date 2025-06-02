@@ -50,7 +50,7 @@ $similar_products = $similar_result->fetch_all(MYSQLI_ASSOC);
     <title><?= htmlspecialchars($product['Product_Name']) ?> - IMS-24</title>
     <link href="../css/vendor/bootstrap.css" rel="stylesheet" />
     <link href="../css/styles.css" rel="stylesheet" />
-    <link href="../css/vendor/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
         :root {
             --primary-color: #4e73df;

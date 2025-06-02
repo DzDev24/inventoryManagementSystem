@@ -139,7 +139,7 @@ while ($row = $result->fetch_assoc()) {
                                         <th>Customer</th>
                                         <th>Address</th>
                                         <th>Email</th>
-                                        <th>Password</th>
+                                        
                                         <th>Phone</th>
                                         <th>State</th>
                                         <th>Orders</th>
@@ -167,7 +167,7 @@ while ($row = $result->fetch_assoc()) {
                                             </td>
                                             <td><?= htmlspecialchars($row['Shipping Address']) ?></td>
                                             <td class="text-nowrap"><?= htmlspecialchars($row['Email']) ?></td>
-                                            <td><?= htmlspecialchars($row['Password']) ?></td>
+                                            
                                             <td><?= htmlspecialchars($row['Phone']) ?></td>
 
 

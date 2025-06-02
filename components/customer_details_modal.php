@@ -66,7 +66,7 @@
 
                         <div class="col-6 mb-2">
                                <strong><i class="fas fa-solid fa-key"></i> Password:</strong>
-                               <div><?= htmlspecialchars($customer['Password']) ?></div>
+                               <div>hidden</div>
                             </div>
 
 

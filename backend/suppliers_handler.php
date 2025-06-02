@@ -35,6 +35,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $stmtMedia->close();
         }
     }
+        $password = password_hash($password, PASSWORD_DEFAULT); // Hash the password
 
     if (isset($_POST['supplier_id'])) {
         // UPDATE existing supplier

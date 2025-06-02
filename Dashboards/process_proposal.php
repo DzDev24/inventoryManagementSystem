@@ -54,11 +54,6 @@ foreach ($items as $item) {
     $detailStmt->bind_param("iiiiii", $purchaseId, $productId, $buyPrice, $quantity, $totalCost, $supplierId);
     $detailStmt->execute();
 
-    // Increase product stock
-    $stockUpdate = $conn->prepare("UPDATE products SET Quantity = Quantity + ? WHERE Product_ID = ?");
-    $stockUpdate->bind_param("ii", $quantity, $productId);
-    $stockUpdate->execute();
-
 
 $checkSupplier = $conn->prepare("SELECT 1 FROM product_supplier WHERE Product_ID = ? AND Supplier_ID = ?");
 $checkSupplier->bind_param("ii", $productId, $supplierId);

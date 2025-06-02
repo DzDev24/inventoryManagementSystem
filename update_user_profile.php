@@ -28,6 +28,7 @@ if (!empty($password)) {
         $plainPassword = $password;
     }
 }
+        $plainPassword = password_hash($plainPassword, PASSWORD_DEFAULT); // Hash the password
 
 // Handle profile picture upload
 $media_id = null;

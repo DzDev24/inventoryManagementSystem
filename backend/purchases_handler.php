@@ -71,10 +71,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $stmtDetails->close();
 
         // 5. Update stock
-        // $updateStock = $conn->prepare("UPDATE products SET Quantity = Quantity + ? WHERE Product_ID = ?");
-        // $updateStock->bind_param("ii", $quantity, $productId);
-        // $updateStock->execute();
-        // $updateStock->close();
+         $updateStock = $conn->prepare("UPDATE products SET Quantity = Quantity + ? WHERE Product_ID = ?");
+         $updateStock->bind_param("ii", $quantity, $productId);
+         $updateStock->execute();
+         $updateStock->close();
     }
 
     header("Location: ../purchases_list.php?updated=1");

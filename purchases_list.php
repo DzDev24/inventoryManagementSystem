@@ -2,7 +2,7 @@
 
 require_once "./login_register/auth_session.php";
 
-if ($_SESSION['user_role'] != 1 && $_SESSION['user_role'] != 2) {
+if ($_SESSION['user_role'] != 1 && $_SESSION['user_role'] != 3) {
     header("Location: ./unauthorized.php");
     exit;
 }

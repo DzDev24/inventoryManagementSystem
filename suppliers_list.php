@@ -147,7 +147,7 @@ while ($row = $result->fetch_assoc()) {
                                         <th>Supplier</th>
                                         <th>Address</th>
                                         <th>Email</th>
-                                        <th>Password</th>
+                                        
                                         <th>Phone</th>
                                         <th>State</th>
                                         <th>Status</th>
@@ -176,7 +176,7 @@ while ($row = $result->fetch_assoc()) {
 
                                             <td><?= htmlspecialchars($row['Address']) ?></td>
                                             <td class="text-nowrap"><?= htmlspecialchars($row['Email']) ?></td>
-                                            <td><?= htmlspecialchars($row['Password']) ?></td>
+                                            
                                             <td><?= htmlspecialchars($row['Phone']) ?></td>
                                             <td class="text-center"><?= htmlspecialchars($row['State_Name']) ?></td>
                                             <td class="text-center">
