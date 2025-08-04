@@ -1,4 +1,4 @@
-           <?php if (isset($_SESSION['user_role'])): ?>
+           <?php if (isset($_SESSION['user_role']) && in_array($_SESSION['user_role'], [1, 2, 3])): ?>
 
                <div class=chatbot-main>
                    <button class="chatbot-toggler">
