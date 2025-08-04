@@ -15,9 +15,9 @@ $isEdit = isset($_GET['id']);
 $category = ['Category_Name' => '', 'Description' => ''];
 
 if ($isEdit) {
-    $id = intval($_GET['id']);
+    $idcateg = intval($_GET['id']);
     $stmt = $conn->prepare("SELECT * FROM category WHERE Category_ID = ?");
-    $stmt->bind_param("i", $id);
+    $stmt->bind_param("i", $idcateg);
     $stmt->execute();
     $result = $stmt->get_result();
     $category = $result->fetch_assoc();
@@ -81,7 +81,7 @@ if ($isEdit) {
                             </div>
                             <div class="card-body">
                                 <?php if ($isEdit): ?>
-                                    <input type="hidden" name="category_id" value="<?= $id ?>">
+                                    <input type="hidden" name="category_id" value="<?= $idcateg ?>">
                                 <?php endif; ?>
 
                                 <div class="mb-3">

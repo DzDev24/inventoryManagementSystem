@@ -7,7 +7,7 @@ if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
     exit;
 }
 
-$id = intval($_GET['id']);
+$idprod = intval($_GET['id']);
 
 $stmt = $conn->prepare(
     "SELECT p.*, c.Category_Name, u.Unit_abrev, m.File_Path
@@ -17,7 +17,7 @@ $stmt = $conn->prepare(
      LEFT JOIN media m ON p.Media_ID = m.Media_ID
      WHERE Product_ID = ?"
 );
-$stmt->bind_param("i", $id);
+$stmt->bind_param("i", $idprod);
 $stmt->execute();
 $result = $stmt->get_result();
 $product = $result->fetch_assoc();
@@ -34,7 +34,7 @@ $similar_stmt = $conn->prepare(
      WHERE p.Category_ID = ? AND p.Product_ID != ?
      LIMIT 4"
 );
-$similar_stmt->bind_param("ii", $product['Category_ID'], $id);
+$similar_stmt->bind_param("ii", $product['Category_ID'], $idprod);
 $similar_stmt->execute();
 $similar_result = $similar_stmt->get_result();
 $similar_products = $similar_result->fetch_all(MYSQLI_ASSOC);
