@@ -51,7 +51,7 @@
 <body>
     <script>
         (async () => {
-            // Create container with modern styling
+            
             const container = document.createElement('div');
             container.style.padding = '2.5rem';
             container.style.fontFamily = "'Inter', sans-serif";
@@ -59,7 +59,7 @@
             container.style.margin = '0 auto';
             container.style.color = '#2d3748';
 
-            // Header with gradient background
+            
             const header = document.createElement('div');
             header.style.background = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
             header.style.color = 'white';
@@ -85,7 +85,7 @@
 
             container.appendChild(header);
 
-            // Stats cards - now perfectly centered and aligned
+           
             const statsRes = await fetch('../api/product-stats.php');
             const stats = await statsRes.json();
 
@@ -213,7 +213,7 @@
             document.body.appendChild(container);
             document.body.style.visibility = 'visible';
 
-            // Auto-generate and download PDF
+            
             const opt = {
                 margin: [10, 10, 10, 10],
                 filename: `Inventory_Status_Report_${new Date().toISOString().slice(0,10)}.pdf`,

@@ -61,7 +61,7 @@ if ($_SESSION['user_role'] != 2) {
                 </header>
 
                 <div class="container-fluid px-4 mt-4">
-                    <!-- Welcome Card -->
+                    
                     <div class="card card-waves mb-4 mt-5">
                         <div class="card-body p-5">
                             <div class="row align-items-center justify-content-between">
@@ -76,7 +76,7 @@ if ($_SESSION['user_role'] != 2) {
                         </div>
                     </div>
 
-                    <!-- Sales KPI Cards -->
+                    
                     <div class="row">
                         <div class="col-lg-6 col-xl-3 mb-4">
                             <div class="card bg-primary text-white h-100">
@@ -148,7 +148,7 @@ if ($_SESSION['user_role'] != 2) {
                             </div>
                         </div>
                     </div>
-                    <!-- Charts Row -->
+                   
                     <div class="row">
                         <!-- Monthly Sales/Revenue Chart -->
                         <div class="col-xl-6 mb-4">
@@ -199,7 +199,7 @@ if ($_SESSION['user_role'] != 2) {
                         </div>
                     </div>
 
-                    <!-- Recent Orders and Customer Stats -->
+                    
                     <div class="row">
                         <!-- Recent Orders Table -->
                         <div class="col-lg-8 mb-4">
@@ -231,7 +231,7 @@ if ($_SESSION['user_role'] != 2) {
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <!-- Orders will be populated by JavaScript -->
+                                                
                                             </tbody>
                                         </table>
                                     </div>
@@ -257,7 +257,7 @@ if ($_SESSION['user_role'] != 2) {
                                                 </tr>
                                             </thead>
                                             <tbody id="topCustomersTable">
-                                                <!-- Customer data will be populated by JavaScript -->
+                                                
                                             </tbody>
                                         </table>
                                     </div>
@@ -304,34 +304,34 @@ if ($_SESSION['user_role'] != 2) {
     <script src="./js/vendor/bundle.js" crossorigin="anonymous"></script>
     <script src="./js/vendor/html2pdf.bundle.min.js"></script>
 
-    <!-- Custom JavaScript for Sales Manager Dashboard -->
+    
     <script>
-        // Global chart variables
+        
         let salesTrendsChart;
         let productsSalesChart;
 
-        // Document ready function
+       
         document.addEventListener('DOMContentLoaded', function() {
-            // Initialize charts and load data
+            
             initializeCharts();
             loadDashboardData();
 
-            // Initialize tooltips
+           
             var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
             var tooltipList = tooltipTriggerList.map(function(tooltipTriggerEl) {
                 return new bootstrap.Tooltip(tooltipTriggerEl);
             });
 
-            // Feather icons
+           
             feather.replace();
 
-            // Initialize date/time display
+            
             updateDateTime();
             setInterval(updateDateTime, 60000);
         });
 
         function initializeCharts() {
-            // Sales Trends Chart (Area Chart)
+            
             var salesTrendsCtx = document.getElementById('salesTrendsChart').getContext('2d');
             salesTrendsChart = new Chart(salesTrendsCtx, {
                 type: 'line',
@@ -371,7 +371,7 @@ if ($_SESSION['user_role'] != 2) {
                 }
             });
 
-            // Products Sales Chart (Bar Chart)
+            
             var productsSalesCtx = document.getElementById('productsSalesChart').getContext('2d');
             productsSalesChart = new Chart(productsSalesCtx, {
                 type: 'bar',
@@ -386,7 +386,7 @@ if ($_SESSION['user_role'] != 2) {
                     }]
                 },
                 options: {
-                    indexAxis: 'y', // Horizontal bar chart
+                    indexAxis: 'y', 
                     maintainAspectRatio: false,
                     scales: {
                         x: {
@@ -409,7 +409,7 @@ if ($_SESSION['user_role'] != 2) {
             });
         }
 
-        // Load all dashboard data
+        
         function loadDashboardData() {
             // Load KPI cards
             fetch('api/sales-kpis.php')
@@ -422,16 +422,16 @@ if ($_SESSION['user_role'] != 2) {
 
                 });
 
-            // Load sales trends chart data
+           
             updateSalesTrendsChart('6');
 
-            // Load products sales chart data
+            
             updateProductsSalesChart('30');
 
-            // Load recent orders
+           
             loadRecentOrders('30');
 
-            // Load top customers
+            
             fetch('api/top-customers.php')
                 .then(response => response.json())
                 .then(data => {
@@ -459,7 +459,7 @@ if ($_SESSION['user_role'] != 2) {
                 });
         }
 
-        // Update sales trends chart based on months
+        
         function updateSalesTrendsChart(months) {
             fetch(`api/sales-trends.php?months=${months}`)
                 .then(response => response.json())
@@ -470,7 +470,7 @@ if ($_SESSION['user_role'] != 2) {
                 });
         }
 
-        // Update products sales chart based on days
+        
         function updateProductsSalesChart(days) {
             fetch(`api/products-sales.php?days=${days}`)
                 .then(response => response.json())
@@ -481,7 +481,7 @@ if ($_SESSION['user_role'] != 2) {
                 });
         }
 
-        // Load recent orders based on days
+        
         function loadRecentOrders(days) {
             fetch(`api/recent-orders.php?days=${days}`)
                 .then(response => response.json())
@@ -524,30 +524,30 @@ if ($_SESSION['user_role'] != 2) {
                 });
         }
 
-        // View order details
+        
         function viewOrderDetails(orderId) {
-            // Implement order details modal or page navigation
+            
             window.location.href = `order_details.php?id=${orderId}`;
         }
 
-        // Function to update date and time display
+       
         function updateDateTime() {
             const now = new Date();
 
-            // Format day of week
+            
             const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
             document.getElementById('current-day').textContent = days[now.getDay()];
 
-            // Format date (e.g., September 20, 2021)
+            
             const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
             const dateStr = `${months[now.getMonth()]} ${now.getDate()}, ${now.getFullYear()}`;
             document.getElementById('current-date').textContent = dateStr;
 
-            // Format time (12-hour format with AM/PM)
+           
             let hours = now.getHours();
             const ampm = hours >= 12 ? 'PM' : 'AM';
             hours = hours % 12;
-            hours = hours ? hours : 12; // Convert 0 to 12
+            hours = hours ? hours : 12; 
             const minutes = now.getMinutes().toString().padStart(2, '0');
             document.getElementById('current-time').textContent = `${hours}:${minutes} ${ampm}`;
         }

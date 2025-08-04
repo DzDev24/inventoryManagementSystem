@@ -68,23 +68,23 @@ foreach ($categories as $cat) {
     <script src="js/vendor/feather.min.js" crossorigin="anonymous"></script>
     <style>
         table#datatablesSimple thead th:nth-child(3),
-        /* Category */
+        
         table#datatablesSimple thead th:nth-child(4),
-        /* Products */
+        
         table#datatablesSimple thead th:nth-child(5),
-        /* Updated At */
+       
         table#datatablesSimple thead th:nth-child(6)
 
-        /* Actions */
+       
             {
             text-align: center !important;
         }
 
         table#datatablesSimple tbody td:nth-child(4),
-        /* Products */
+       
         table#datatablesSimple tbody td:nth-child(6)
 
-        /* Actions */
+        
             {
             text-align: center !important;
             vertical-align: middle !important;
@@ -278,8 +278,7 @@ foreach ($categories as $cat) {
         }
 
         window.addEventListener("DOMContentLoaded", (event) => {
-            // Simple-DataTables
-            // https://github.com/fiduswriter/Simple-DataTables/wiki
+           
 
             const datatablesSimple = document.getElementById("datatablesSimple");
             if (datatablesSimple) {

@@ -24,7 +24,7 @@ try {
             'name' => $row['name'],
             'company' => $row['company'],
             'status' => $row['status'],
-            'product_count' => (int)$row['product_count'] // Ensure count is integer
+            'product_count' => (int)$row['product_count'] 
         ];
     }
     

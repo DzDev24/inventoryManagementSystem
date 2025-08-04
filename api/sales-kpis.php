@@ -29,7 +29,7 @@ $ordersCount = $result->fetch_assoc()['ordersCount'];
 // Average Order Value
 $avgOrderValue = $ordersCount > 0 ? $monthlyRevenue / $ordersCount : 0;
 
-// Total Customers (replacing conversion rate)
+
 $query = "SELECT COUNT(*) as totalCustomers FROM customers";
 $result = $conn->query($query);
 $totalCustomers = $result->fetch_assoc()['totalCustomers'];
@@ -38,7 +38,7 @@ echo json_encode([
     'monthlyRevenue' => (float)$monthlyRevenue,
     'ordersCount' => (int)$ordersCount,
     'avgOrderValue' => round($avgOrderValue, 2),
-    'totalCustomers' => (int)$totalCustomers  // Changed from conversionRate to totalCustomers
+    'totalCustomers' => (int)$totalCustomers  
 ]);
 
 $conn->close();

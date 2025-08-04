@@ -344,7 +344,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
     </script>
 
     <script>
-        // 🛠️ Make updateTotal() global
+        
         function updateTotal() {
             let total = 0;
             const entries = document.querySelectorAll('.product-entry');
@@ -361,25 +361,25 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
         }
 
         document.addEventListener("DOMContentLoaded", function() {
-            // Update total if quantity input changes
+            
             document.getElementById('productList').addEventListener('input', function(event) {
                 if (event.target.matches('input[name*="[quantity]"]')) {
                     updateTotal();
                 }
             });
 
-            // Update total if product is removed
+            
             document.getElementById('productList').addEventListener('click', function(event) {
                 if (event.target.closest('.remove-entry-btn')) {
                     const productEntry = event.target.closest('.product-entry');
                     if (productEntry) {
                         productEntry.remove();
-                        updateTotal(); // ✅ recalculates properly
+                        updateTotal(); 
                     }
                 }
             });
 
-            updateTotal(); // initial load
+            updateTotal(); 
         });
     </script>
 
@@ -387,7 +387,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
     <script src="js/vendor/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <script src="js/scripts.js"></script>
 
-    <!-- Feather Icons -->
+    
     <script src="js/vendor/feather.min.js" crossorigin="anonymous"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function() {

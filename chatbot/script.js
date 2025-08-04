@@ -43,8 +43,7 @@ const getPageContentForChatbot = () => {
   relevantContent = relevantContent.replace(/\s\s+/g, " ").trim();
 
   // Truncate if too long to avoid exceeding API limits (adjust MAX_CHARS as needed)
-  // Gemini models (like 1.5 Flash) have large context windows, but be mindful of overall request size.
-  const MAX_CHARS = 15000; // Roughly 3000-5000 tokens.
+  const MAX_CHARS = 15000; 
   if (relevantContent.length > MAX_CHARS) {
     relevantContent =
       relevantContent.substring(0, MAX_CHARS) +

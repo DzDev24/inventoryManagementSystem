@@ -209,8 +209,8 @@ while ($row = $result->fetch_assoc()) {
                 text: "This system user will be marked as accepted.",
                 icon: 'warning',
                 showCancelButton: true,
-                confirmButtonColor: '#3085d6', // Blue for accept
-                cancelButtonColor: '#d33', // Red for cancel
+                confirmButtonColor: '#3085d6', 
+                cancelButtonColor: '#d33', 
                 confirmButtonText: 'Yes, Accept it!'
             }).then((result) => {
                 if (result.isConfirmed) {

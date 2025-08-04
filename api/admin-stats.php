@@ -44,9 +44,9 @@ $query = "SELECT SUM(Quantity * Buy_Price) as value FROM products";
 $result = $conn->query($query);
 $currentInventoryValue = $result->fetch_assoc()['value'];
 
-// Note: For inventory change, you might want to track this differently as it doesn't change monthly like revenue
+
 $response['inventoryValue'] = $currentInventoryValue;
-$response['inventoryChange'] = 0; // You can implement proper tracking for this
+$response['inventoryChange'] = 0; 
 
 // Low Stock Count
 $query = "SELECT COUNT(*) as low_stock FROM products WHERE Quantity <= Minimum_Stock";

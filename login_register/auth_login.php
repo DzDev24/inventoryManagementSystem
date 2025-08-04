@@ -64,7 +64,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         }
     }
 
-    // === 2. Check in CUSTOMERS table ===
+    //  Check in CUSTOMERS table
     $stmt = $conn->prepare("SELECT * FROM customers WHERE Email = ?");
     $stmt->bind_param("s", $email);
     $stmt->execute();
@@ -83,7 +83,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         }
     }
 
-    // === 3. Check in SUPPLIER table ===
+    //  3. Check in SUPPLIER table 
     $stmt = $conn->prepare("SELECT * FROM supplier WHERE Email = ?");
     $stmt->bind_param("s", $email);
     $stmt->execute();
@@ -102,7 +102,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         }
     }
 
-    // ❌ No valid match
+    
     header("Location: login.php?error=invalid");
     exit;
 } else {

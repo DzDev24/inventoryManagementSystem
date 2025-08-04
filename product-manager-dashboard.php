@@ -67,8 +67,7 @@ if ($_SESSION['user_role'] != 3) {
                 <div class="container-fluid px-4 mt-4">
 
 
-                    <!-- Add this after your existing welcome card -->
-                    <!-- Illustration dashboard card example-->
+                   
                     <div class="card card-waves mb-4 mt-5">
                         <div class="card-body p-5">
                             <div class="row align-items-center justify-content-between">
@@ -85,7 +84,7 @@ if ($_SESSION['user_role'] != 3) {
                     </div>
 
 
-                    <!-- Product Stats Cards -->
+                
                     <div class="row">
                         <div class="col-lg-6 col-xl-3 mb-4">
                             <div class="card bg-primary text-white h-100">
@@ -157,7 +156,7 @@ if ($_SESSION['user_role'] != 3) {
                         </div>
                     </div>
 
-                    <!-- Charts Row -->
+                
                     <div class="row">
 
                         <!-- Top Selling Products -->
@@ -209,7 +208,7 @@ if ($_SESSION['user_role'] != 3) {
                         </div>
                     </div>
 
-                    <!-- Category Distribution and Recent Activity -->
+                   
                     <div class="row">
                         <!-- Category Distribution -->
                         <div class="col-lg-6 mb-4">
@@ -220,7 +219,7 @@ if ($_SESSION['user_role'] != 3) {
                                         <canvas id="categoryDistributionChart" width="100%" height="50"></canvas>
                                     </div>
                                     <div class="list-group list-group-flush" id="categoryLegend">
-                                        <!-- Category legend will be populated by JavaScript -->
+                                        
                                     </div>
                                 </div>
                             </div>
@@ -245,7 +244,7 @@ if ($_SESSION['user_role'] != 3) {
                                 </div>
                                 <div class="card-body">
                                     <div class="timeline timeline-xs" id="productActivityTimeline">
-                                        <!-- Timeline items will be populated by JavaScript -->
+                                        
                                     </div>
                                 </div>
                             </div>
@@ -273,7 +272,7 @@ if ($_SESSION['user_role'] != 3) {
                                                 </tr>
                                             </thead>
                                             <tbody id="topSuppliersTable">
-                                                <!-- Supplier data will be populated by JavaScript -->
+                                                
                                             </tbody>
                                         </table>
                                     </div>
@@ -300,7 +299,7 @@ if ($_SESSION['user_role'] != 3) {
                                                 </tr>
                                             </thead>
                                             <tbody id="lowStockProductsTable">
-                                                <!-- Low stock products will be populated by JavaScript -->
+                                                
                                             </tbody>
                                         </table>
                                     </div>
@@ -309,7 +308,7 @@ if ($_SESSION['user_role'] != 3) {
                         </div>
                     </div>
 
-                    <!-- Report summary card example (adapted for Product Manager Reports) -->
+                    
                     <div class="card mb-4">
                         <div class="card-header bg-primary text-white"> <i class="fas fa-file-pdf me-2"></i> Generate Reports</div>
                         <div class="list-group list-group-flush small">
@@ -334,7 +333,7 @@ if ($_SESSION['user_role'] != 3) {
 
 
 
-                    <!-- JavaScript Libraries -->
+                    
                     <script src="./js/vendor/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
                     <script src="js/scripts.js"></script>
                     <script src="./js/vendor/Chart.min.js" crossorigin="anonymous"></script>
@@ -342,20 +341,20 @@ if ($_SESSION['user_role'] != 3) {
                     <script src="./js/vendor/bundle.js" crossorigin="anonymous"></script>
                     <script src="./js/vendor/html2pdf.bundle.min.js"></script>
 
-                    <!-- Custom JavaScript for Product Manager Dashboard -->
+                    
                     <script>
-                        // Global chart variables
+                        
                         let topProductsChart;
                         let productsAddedChart;
                         let categoryDistributionChart;
 
-                        // Document ready function
+                        
                         document.addEventListener('DOMContentLoaded', function() {
-                            // Initialize charts and load data
+                            
                             initializeCharts();
                             loadDashboardData();
 
-                            // Initialize tooltips
+                            
                             var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
                             var tooltipList = tooltipTriggerList.map(function(tooltipTriggerEl) {
                                 return new bootstrap.Tooltip(tooltipTriggerEl);
@@ -468,10 +467,10 @@ if ($_SESSION['user_role'] != 3) {
 
                             updateTopProductsChart('30');
 
-                            // Load products added chart data
+                          
                             updateProductsAddedChart('12');
 
-                            // Load category distribution data
+                           
                             fetch('api/category-distribution.php')
                                 .then(response => response.json())
                                 .then(data => {
@@ -479,7 +478,7 @@ if ($_SESSION['user_role'] != 3) {
                                     categoryDistributionChart.data.datasets[0].data = data.data;
                                     categoryDistributionChart.update();
 
-                                    // Update legend
+                                    
                                     let legendHtml = '';
                                     data.labels.forEach((label, index) => {
                                         const color = categoryDistributionChart.data.datasets[0].backgroundColor[index];
@@ -496,7 +495,7 @@ if ($_SESSION['user_role'] != 3) {
                                     document.getElementById('categoryLegend').innerHTML = legendHtml;
                                 });
 
-                            // Load recent product activity
+                        
                             fetch('api/recent-product-activity.php')
                                 .then(response => response.json())
                                 .then(data => {
@@ -534,7 +533,7 @@ if ($_SESSION['user_role'] != 3) {
                                     feather.replace();
                                 });
 
-                            // Load top suppliers
+                           
                             fetch('api/top-suppliers.php')
                                 .then(response => response.json())
                                 .then(data => {
@@ -552,7 +551,6 @@ if ($_SESSION['user_role'] != 3) {
                                     document.getElementById('topSuppliersTable').innerHTML = suppliersHtml;
                                 });
 
-                            // Load low stock products
                             fetch('api/low-stock-products.php')
                                 .then(response => response.json())
                                 .then(data => {
@@ -582,7 +580,7 @@ if ($_SESSION['user_role'] != 3) {
                                 });
                         }
 
-                        // Top Products Chart
+                       
 
                         function initializeTopProductsChart() {
                             var ctx = document.getElementById('topProductsChart').getContext('2d');
@@ -599,7 +597,7 @@ if ($_SESSION['user_role'] != 3) {
                                     }]
                                 },
                                 options: {
-                                    indexAxis: 'y', // Horizontal bar chart
+                                    indexAxis: 'y', 
                                     maintainAspectRatio: false,
                                     scales: {
                                         x: {
@@ -620,7 +618,7 @@ if ($_SESSION['user_role'] != 3) {
                                 });
                         }
 
-                        // Update products added chart based on months
+                        
                         function updateProductsAddedChart(months) {
                             fetch(`api/products-added.php?months=${months}`)
                                 .then(response => response.json())
@@ -645,7 +643,7 @@ if ($_SESSION['user_role'] != 3) {
                     </script>
 
                     <script>
-                        // Function to update date and time display
+                       
                         function updateDateTime() {
                             const now = new Date();
 
@@ -653,31 +651,31 @@ if ($_SESSION['user_role'] != 3) {
                             const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
                             document.getElementById('current-day').textContent = days[now.getDay()];
 
-                            // Format date (e.g., September 20, 2021)
+                            // Format date
                             const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
                             const dateStr = `${months[now.getMonth()]} ${now.getDate()}, ${now.getFullYear()}`;
                             document.getElementById('current-date').textContent = dateStr;
 
-                            // Format time (12-hour format with AM/PM)
+                            // Format time
                             let hours = now.getHours();
                             const ampm = hours >= 12 ? 'PM' : 'AM';
                             hours = hours % 12;
-                            hours = hours ? hours : 12; // Convert 0 to 12
+                            hours = hours ? hours : 12; 
                             const minutes = now.getMinutes().toString().padStart(2, '0');
                             document.getElementById('current-time').textContent = `${hours}:${minutes} ${ampm}`;
                         }
 
-                        // Update immediately when page loads
+                        
                         updateDateTime();
 
-                        // Update every minute to keep time current
+                        
                         setInterval(updateDateTime, 60000);
                     </script>
 
             </main>
             <?php include 'includes/footer.php'; ?>
-        </div> <!-- closes layoutSidenav_content -->
-    </div> <!-- closes layoutSidenav -->
+        </div> 
+    </div> 
 </body>
 
 </html>

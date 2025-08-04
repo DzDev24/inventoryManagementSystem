@@ -3,7 +3,7 @@ header('Content-Type: application/json');
 require_once '../includes/db.php';
 
 try {
-    // Get recent product additions
+    
     $query = "SELECT 
                 Product_ID as product_id,
                 Product_Name as product_name,
@@ -20,7 +20,7 @@ try {
         $activities[] = $row;
     }
     
-    // Format the response
+    
     $response = [];
     foreach ($activities as $activity) {
         $date = new DateTime($activity['created_at']);
@@ -97,14 +97,14 @@ try {
         ];
     }
     
-    // Sort all activities by date (newest first)
+   
     usort($response, function($a, $b) {
         $timeA = strtotime($a['type'] === 'added' ? $a['created_at'] : $a['updated_at']);
         $timeB = strtotime($b['type'] === 'added' ? $b['created_at'] : $b['updated_at']);
         return $timeB - $timeA;
     });
     
-    // Return only the 10 most recent activities
+    
     $response = array_slice($response, 0, 10);
     
     echo json_encode($response);

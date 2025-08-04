@@ -1,15 +1,22 @@
+
 <?php
 require_once "../login_register/auth_session.php";
 
-// Restrict access to customers only
-if ($_SESSION['user_type'] !== 'customer') {
+$is_customer = isset($_SESSION['user_type']) && $_SESSION['user_type'] === 'customer';
+$is_guest = isset($_SESSION['user_type']) && $_SESSION['user_type'] === 'guest';
+
+if (!$is_customer && !$is_guest) {
     header("Location: ../login_register/login.php");
     exit;
 }
 
+
 require_once "../includes/db.php";
-$customer_id = $_SESSION['customer_id'];
-$conn->query("UPDATE customers SET Status = 'available' WHERE Customer_ID = $customer_id");
+if (isset($_SESSION['customer_id'])) {
+    $customer_id = intval($_SESSION['customer_id']);
+    $conn->query("UPDATE customers SET Status = 'available' WHERE Customer_ID = $customer_id");
+}
+
 
 require_once "../includes/db.php";
 include 'dashboard_header.php';
@@ -53,7 +60,16 @@ $products = $conn->query("SELECT p.*, m.File_Path, u.Unit_abrev, c.Category_Name
                     <div class="col-auto mt-4">
                         <h1 class="page-header-title">
                             <div class="page-header-icon"><i data-feather="user"></i></div>
-                            Welcome, <?= htmlspecialchars($_SESSION['customer_name']) ?>!
+                            <?php
+$display_name = 'Guest';
+if (isset($_SESSION['customer_name'])) {
+    $display_name = $_SESSION['customer_name'];
+} elseif (isset($_SESSION['user_name'])) {
+    $display_name = $_SESSION['user_name'];
+}
+?>
+Welcome, <?= htmlspecialchars($display_name) ?>!
+
                         </h1>
                         <div class="page-header-subtitle">Browse available products below</div>
                     </div>

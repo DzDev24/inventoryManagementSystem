@@ -150,7 +150,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
                             <div class="card-header"><?= $editingSale ? 'Edit Sale Details' : 'Sale Details' ?></div>
                             <div class="card-body">
 
-                                <!-- Sale Date -->
+                                
                                 <div class="mb-3">
                                     <label class="form-label">Sale Date</label>
                                     <input type="date" name="sale_date" class="form-control"
@@ -158,7 +158,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
                                         required>
                                 </div>
 
-                                <!-- Customer Selection -->
+                               
                                 <div class="mb-3">
                                     <label class="form-label">Select Customer</label>
                                     <select name="customer_id" class="form-select" required>
@@ -172,7 +172,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
                                     </select>
                                 </div>
 
-                                <!-- Payment Method -->
+                                
                                 <div class="mb-3">
                                     <label class="form-label">Payment Method</label>
                                     <select name="payment_method" class="form-select" required>
@@ -184,7 +184,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
                                     </select>
                                 </div>
 
-                                <!-- Payment Status and Delivery Status -->
+                                
                                 <div class="row gx-3 mb-3">
                                     <div class="col-md-6">
                                         <label class="form-label">Payment Status</label>
@@ -207,13 +207,13 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
                                     </div>
                                 </div>
 
-                                <!-- Notes -->
+                                
                                 <div class="mb-3">
                                     <label class="form-label">Notes</label>
                                     <textarea name="notes" class="form-control" rows="3"><?= $editingSale ? htmlspecialchars($editSaleData['Notes']) : '' ?></textarea>
                                 </div>
 
-                                <!-- Select Products -->
+                               
                                 <div class="mb-3">
                                     <label class="form-label">Select Product</label>
                                     <select class="form-select" id="productDropdown">
@@ -279,7 +279,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
                                                 })();
                                         <?php endforeach; ?>
 
-                                        updateTotal(); // ✅ After adding all existing products
+                                        updateTotal(); 
                                     });
                                 </script>
 
@@ -290,7 +290,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
 
 
 
-                                <!-- Total and Submit -->
+                                
                                 <div class="d-flex justify-content-start mt-4 mb-3">
                                     <div class="border rounded px-4 py-2 bg-light shadow-sm text-start" style="min-width: 220px;">
                                         <h6 class="text-muted mb-1">Total Amount</h6>
@@ -398,7 +398,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
         }
     </script>
 
-    <!-- Feather Icons Refresh -->
+    
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             feather.replace();

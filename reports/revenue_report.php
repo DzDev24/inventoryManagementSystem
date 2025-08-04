@@ -216,7 +216,7 @@
       document.body.appendChild(container);
       document.body.style.visibility = 'visible';
 
-      // Render charts after container is visible
+     
 
       // Generate PDF
       html2pdf().set({

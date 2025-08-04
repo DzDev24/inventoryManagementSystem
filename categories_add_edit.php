@@ -8,8 +8,7 @@ if ($_SESSION['user_role'] != 1 && $_SESSION['user_role'] != 3) {
 }
 
 
-// categories_add_edit.php nazim
-// This file handles both adding and editing categories.
+
 require_once "includes/db.php";
 
 $isEdit = isset($_GET['id']);

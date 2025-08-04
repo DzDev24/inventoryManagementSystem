@@ -27,7 +27,7 @@ if ($isEdit) {
     $product = $result->fetch_assoc();
     $stmt->close();
 
-    // ✅ Add this block to fetch multiple suppliers
+   
     $selected_suppliers = [];
     $stmt = $conn->prepare("SELECT Supplier_ID FROM product_supplier WHERE Product_ID = ?");
     $stmt->bind_param("i", $product_id);
@@ -103,7 +103,6 @@ $units = $conn->query("SELECT Unit_ID, Unit_name, Unit_abrev FROM units");
                     </div>
                 </header>
 
-                <!-- Main page content -->
                 <!-- Main page content -->
                 <div class="container-xl px-4 mt-4">
 
@@ -210,13 +209,13 @@ $units = $conn->query("SELECT Unit_ID, Unit_name, Unit_abrev FROM units");
 
 
                                     <div class="row gx-3 mb-3 align-items-center">
-                                        <!-- 9 cols: File input -->
+                                       
                                         <div class="col-md-9">
                                             <label class="form-label">Product Image</label>
                                             <input class="form-control" type="file" name="image" id="imageInput" accept="image/*" onchange="previewImage(event)">
                                         </div>
 
-                                        <!-- 3 cols: Image preview -->
+                                        
                                         <div class="col-md-3 text-center">
 
                                             <img id="imagePreview"
@@ -233,7 +232,7 @@ $units = $conn->query("SELECT Unit_ID, Unit_name, Unit_abrev FROM units");
                                     </div>
 
 
-                                    <!-- ✅ Submit Button -->
+                                    
                                     <div class="text-center">
                                         <button class="btn btn-primary px-5" type="submit">
                                             <i class="fas <?= $isEdit ? 'fa-save' : 'fa-plus-circle' ?> me-1"></i>

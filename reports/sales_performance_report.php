@@ -124,7 +124,7 @@
         } = await res.json();
         if (!summary || !recent_sales) throw new Error('Missing data from API');
 
-        // 🟢 Continue rendering only if data is valid
+        
         const statsContainer = document.createElement('div');
         statsContainer.className = 'stats-container';
 

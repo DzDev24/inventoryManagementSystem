@@ -396,25 +396,25 @@ if ($_SESSION['user_role'] != 1) {
     <script src="./js/vendor/bundle.js" crossorigin="anonymous"></script>
     <script src="./js/vendor/html2pdf.bundle.min.js"></script>
 
-    <!-- Custom JavaScript for Admin Dashboard -->
+    
     <script>
         // Global chart variables
         let revenueTrendChart;
         let rolesDistributionChart;
 
-        // Document ready function
+        
         document.addEventListener('DOMContentLoaded', function() {
-            // Initialize charts and load data
+            
             initializeCharts();
             loadDashboardData();
 
-            // Initialize tooltips
+          
             var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
             var tooltipList = tooltipTriggerList.map(function(tooltipTriggerEl) {
                 return new bootstrap.Tooltip(tooltipTriggerEl);
             });
 
-            // Feather icons
+           
             feather.replace();
 
             // Update date and time
@@ -491,7 +491,7 @@ if ($_SESSION['user_role'] != 1) {
 
         // Load all dashboard data
         function loadDashboardData() {
-            // Load stats cards
+            
             fetch('api/admin-stats.php')
                 .then(response => response.json())
                 .then(data => {
@@ -500,7 +500,7 @@ if ($_SESSION['user_role'] != 1) {
                     document.getElementById('inventoryValue').textContent = formatCurrency(data.inventoryValue);
                     document.getElementById('lowStockCount').textContent = data.lowStockCount;
 
-                    // Update change indicators
+                   
                     updateChangeIndicator('revenueChange', data.revenueChange);
                     updateChangeIndicator('signupsChange', data.signupsChange);
                     updateChangeIndicator('inventoryChange', data.inventoryChange);
@@ -674,12 +674,12 @@ if ($_SESSION['user_role'] != 1) {
             const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
             document.getElementById('current-day').textContent = days[now.getDay()];
 
-            // Format date (e.g., September 20, 2021)
+            
             const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
             const dateStr = `${months[now.getMonth()]} ${now.getDate()}, ${now.getFullYear()}`;
             document.getElementById('current-date').textContent = dateStr;
 
-            // Format time (12-hour format with AM/PM)
+            // Format time
             let hours = now.getHours();
             const ampm = hours >= 12 ? 'PM' : 'AM';
             hours = hours % 12;

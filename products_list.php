@@ -65,40 +65,40 @@ while ($row = $result->fetch_assoc()) {
     <script src="js/vendor/feather.min.js" crossorigin="anonymous"></script>
 
     <style>
-        /* Center header columns */
+       
         table#datatablesSimple thead th:nth-child(3),
-        /* Supplier */
+        
         table#datatablesSimple thead th:nth-child(4),
-        /* Quantity */
+       
         table#datatablesSimple thead th:nth-child(5),
-        /* Buy Price */
+        
         table#datatablesSimple thead th:nth-child(6),
-        /* Sale Price */
+        
         table#datatablesSimple thead th:nth-child(7),
-        /* Updated At */
+        
         table#datatablesSimple thead th:nth-child(8)
 
-        /* Actions */
+        
             {
             text-align: center !important;
         }
 
 
 
-        /* Center table body cells */
+       
         table#datatablesSimple tbody td:nth-child(3),
-        /* Supplier */
+       
         table#datatablesSimple tbody td:nth-child(4),
-        /* Quantity */
+        
         table#datatablesSimple tbody td:nth-child(5),
-        /* Buy Price */
+       
         table#datatablesSimple tbody td:nth-child(6),
-        /* Sale Price */
+        
         table#datatablesSimple tbody td:nth-child(7),
-        /* Updated At */
+        
         table#datatablesSimple tbody td:nth-child(8)
 
-        /* Actions */
+        
             {
             text-align: center !important;
             vertical-align: middle !important;
@@ -144,7 +144,7 @@ while ($row = $result->fetch_assoc()) {
                     <div class="card">
                         <div class="card-body">
 
-                            <!-- display alert messages here -->
+                            
                             <?php if (isset($_GET['deleted']) && $_GET['deleted'] == '1'): ?>
                                 <div class="alert alert-success alert-icon d-flex align-items-start" role="alert">
                                     <button class="btn-close" type="button" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -176,12 +176,12 @@ while ($row = $result->fetch_assoc()) {
                                     </div>
                                 </div>
                             <?php endif; ?>
-                            <!-- end of alert messages -->
+                            
 
 
                             <?php foreach ($products as &$product): ?>
                                 <?php
-                                // 🔁 Step 1: Fetch all suppliers for this product
+                                
                                 $product_id = $product['Product_ID'];
                                 $supplier_stmt = $conn->prepare("SELECT s.Supplier_Name FROM product_supplier ps JOIN supplier s ON ps.Supplier_ID = s.Supplier_ID WHERE ps.Product_ID = ?");
                                 $supplier_stmt->bind_param("i", $product_id);
@@ -193,11 +193,11 @@ while ($row = $result->fetch_assoc()) {
                                 }
                                 $supplier_stmt->close();
 
-                                // Add supplier names to the product array
+                                
                                 $product['Suppliers_List'] = $suppliers_list;
                                 ?>
 
-                                <!-- 🔁 Include modal with the enriched $product -->
+                                
                                 <?php include 'components/product_details_modal.php'; ?>
                             <?php endforeach; ?>
 
@@ -209,13 +209,13 @@ while ($row = $result->fetch_assoc()) {
                                         <th>ID</th>
 
                                         <th>Product</th>
-                                        <!-- <th>Category</th> -->
+                                       
                                         <th>Supplier</th>
                                         <th>Quantity</th>
                                         <th>Buy Price</th>
                                         <th>Sale Price</th>
                                         <th>Updated At</th>
-                                        <!-- <th>Min. Stock</th> -->
+                                        
                                         <th>Actions</th>
 
                                     </tr>
